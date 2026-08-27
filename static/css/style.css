@@ -108,6 +108,12 @@ h4 { font-size: 18px; font-weight: 600; }
   height: 74px;
 }
 
+.header,
+.header-nav-bar,
+.header-nav-container {
+  overflow: visible !important;
+}
+
 .nav-logo {
   display: inline-flex;
   align-items: center;
@@ -115,21 +121,27 @@ h4 { font-size: 18px; font-weight: 600; }
   text-decoration: none;
   flex-shrink: 0;
   height: 100%;
+  position: relative;
+  z-index: 120;
+  overflow: visible;
 }
 .nav-logo-img {
-  height: 58px;
+  height: 84px;
   width: auto;
-  max-height: 60px;
+  max-height: none;
   object-fit: contain;
   background: transparent;
   padding: 0;
   border-radius: 0;
   box-shadow: none;
-  transition: transform .2s ease;
+  transform: translateY(10px);
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.12));
+  transition: transform .2s ease, filter .2s ease;
   display: block;
 }
 .nav-logo:hover .nav-logo-img {
-  transform: scale(1.03);
+  transform: translateY(10px) scale(1.04);
+  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.2));
 }
 
 .nav {
