@@ -2904,6 +2904,11 @@ main.main-home { padding-top: 0; }
   pointer-events: none;
   max-width: 100%;
   max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: auto;
 }
 
 /* Khi hover / hold (chuột bấm giữ) vào thì thu nhỏ logo lại */
