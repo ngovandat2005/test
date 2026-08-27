@@ -1,0 +1,80 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Dự Án – Keo Vữa Sông Hồng{% endblock %}
+{% block meta_desc %}Các dự án dân dụng và công nghiệp đã sử dụng sản phẩm Keo Vữa Sông Hồng – SHK Mortar{% endblock %}
+
+{% block content %}
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="container">
+    <h1><i class="fas fa-building"></i> Dự án</h1>
+    <p>Công trình dân dụng và công nghiệp tin dùng SHK Mortar</p>
+    <nav class="breadcrumb-nav">
+      <a href="{% url 'home' %}">Trang chủ</a>
+      <i class="fas fa-chevron-right"></i>
+      <span>Dự án</span>
+    </nav>
+  </div>
+</section>
+
+<!-- ── FILTER ── -->
+<div class="filter-bar">
+  <div class="container">
+    <a href="{% url 'project_list' %}" class="filter-btn {% if not current_category %}active{% endif %}">Tất cả</a>
+    <a href="?category=dan-dung" class="filter-btn {% if current_category == 'dan-dung' %}active{% endif %}">Dự án dân dụng</a>
+    <a href="?category=cong-nghiep" class="filter-btn {% if current_category == 'cong-nghiep' %}active{% endif %}">Công nghiệp / Thương mại</a>
+  </div>
+</div>
+
+<!-- ── PROJECT GRID ── -->
+<section class="pl-wrap">
+  <div class="container" style="max-width:1280px;margin:0 auto;padding:0 64px;">
+    {% if projects %}
+    <div class="project-grid">
+      {% for project in projects %}
+      <a href="{% url 'project_detail' project.slug %}" class="project-card reveal">
+        <div class="project-img">
+          {% if project.image %}
+            <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
+          {% else %}
+            <div class="project-img-placeholder">
+              <i class="fas fa-building"></i>
+              <span>{{ forloop.counter }}</span>
+            </div>
+          {% endif %}
+          <span class="project-cat-badge">{{ project.get_category_display }}</span>
+        </div>
+        <div class="project-info">
+          <h3>{{ project.title }}</h3>
+          {% if project.client %}<p class="project-meta"><i class="fas fa-user-tie"></i> {{ project.client }}</p>{% endif %}
+          {% if project.location %}<p class="project-meta"><i class="fas fa-map-marker-alt"></i> {{ project.location }}</p>{% endif %}
+          {% if project.description %}<p class="project-desc">{{ project.description|truncatewords:20 }}</p>{% endif %}
+          <span class="project-link">Xem chi tiết <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center;padding:80px 0;color:var(--muted);">
+      <i class="fas fa-building" style="font-size:48px;color:var(--amber);margin-bottom:20px;display:block;"></i>
+      <p>Chưa có dự án nào được cập nhật.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="container" style="max-width:1280px;margin:0 auto;padding:0 64px;">
+    <h2>Bạn có dự án cần tư vấn vật liệu?</h2>
+    <p>Đội ngũ kỹ thuật SHK Mortar sẵn sàng hỗ trợ lựa chọn sản phẩm phù hợp</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:28px;">
+      <a href="{% url 'consultation' %}" class="cta-btn-dark">Đăng ký tư vấn miễn phí</a>
+      <a href="tel:0386360797" class="cta-btn-bd">Gọi ngay: 0386.360.797</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

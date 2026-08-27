@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Tin tức – Keo Vữa Sông Hồng{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-newspaper"></i> Tin tức</h1>
+        <p>Kiến thức xây dựng, tin tức doanh nghiệp và phóng sự</p>
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Trang chủ</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
+            <span>Tin tức</span>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <div class="container">
+        <a href="{% url 'news_list' %}" class="filter-btn {% if not current_category %}active{% endif %}">Tất cả</a>
+        {% for cat in categories %}
+        <a href="{% url 'news_list' %}?category={{ cat.slug }}" class="filter-btn {% if current_category.slug == cat.slug %}active{% endif %}">{{ cat.name }}</a>
+        {% endfor %}
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        {% if news_items %}
+        <div class="news-grid">
+            {% for item in news_items %}
+            <div class="news-card">
+                <div class="news-card-img">
+                    {% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    {% else %}<div class="news-no-img"><i class="fas fa-newspaper"></i></div>{% endif %}
+                </div>
+                <div class="news-card-body">
+                    <div class="news-meta">
+                        {% if item.category %}<span class="news-cat">{{ item.category.name }}</span>{% endif %}
+                        <span><i class="fas fa-calendar"></i> {{ item.published_at|date:"d/m/Y" }}</span>
+                    </div>
+                    <h3><a href="{% url 'news_detail' item.slug %}">{{ item.title }}</a></h3>
+                    {% if item.summary %}<p>{{ item.summary|truncatechars:110 }}</p>{% endif %}
+                    <a href="{% url 'news_detail' item.slug %}" class="news-read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center;padding:80px 0;color:#999;">
+            <i class="fas fa-newspaper" style="font-size:56px;margin-bottom:16px;display:block;opacity:0.3;"></i>
+            <p style="font-size:16px;">Chưa có bài viết nào. Vui lòng quay lại sau.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

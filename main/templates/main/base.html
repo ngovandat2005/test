@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Keo Vữa Sông Hồng - SHK Mortar{% endblock %}</title>
+    <meta name="description" content="{% block meta_desc %}Keo Vữa Sông Hồng – Nhà sản xuất vữa khô trộn sẵn, keo dán gạch và cát sạch chất lượng cao tại Hưng Yên{% endblock %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=203">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header {% if request.resolver_match.url_name == 'home' %}header-transparent{% endif %}" id="header">
+    <div class="header-nav-bar">
+        <div class="header-nav-container">
+            <a href="{% url 'home' %}" class="nav-logo">
+                <img src="{% static 'images/logo.png' %}" alt="Keo Vữa Sông Hồng" class="nav-logo-img"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="logo-text" style="display:none">
+                    <span class="logo-main" style="color:#fff">KEO VỮA SÔNG HỒNG</span>
+                    <span class="logo-sub" style="color:#FF7E2E">SHK MORTAR</span>
+                </div>
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="nav">
+                <button class="nav-close" id="navClose"><i class="fas fa-times"></i></button>
+                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Trang Chủ</a>
+                <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">Giới Thiệu</a>
+                <div class="nav-drop">
+                    <a href="{% url 'product_list' %}" class="nav-link {% if 'product' in request.resolver_match.url_name %}active{% endif %}">
+                        Sản Phẩm <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
+                    </a>
+                    <div class="drop-menu">
+                        <a href="{% url 'product_list' %}?category=vua-kho-tron-san"><i class="fas fa-layer-group"></i> Vữa khô trộn sẵn</a>
+                        <a href="{% url 'product_list' %}?category=keo-dan-gach-da"><i class="fas fa-th-large"></i> Keo dán gạch & đá</a>
+                        <a href="{% url 'product_list' %}?category=cat-sach-say-kho"><i class="fas fa-filter"></i> Cát sạch sấy khô</a>
+                    </div>
+                </div>
+                <div class="nav-drop">
+                    <a href="{% url 'project_list' %}" class="nav-link {% if 'project' in request.resolver_match.url_name %}active{% endif %}">
+                        Dự Án <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
+                    </a>
+                    <div class="drop-menu">
+                        <a href="{% url 'project_list' %}?category=dan-dung"><i class="fas fa-home"></i> Dự án dân dụng</a>
+                        <a href="{% url 'project_list' %}?category=cong-nghiep"><i class="fas fa-industry"></i> Công nghiệp - Thương mại</a>
+                    </div>
+                </div>
+                <a href="{% url 'distributors' %}" class="nav-link {% if request.resolver_match.url_name == 'distributors' %}active{% endif %}">Phân Phối</a>
+                <a href="{% url 'catalogue' %}" class="nav-link {% if request.resolver_match.url_name == 'catalogue' %}active{% endif %}">E-Catalog</a>
+                <a href="{% url 'calculator' %}" class="nav-link {% if request.resolver_match.url_name == 'calculator' %}active{% endif %}">Công Cụ Tính</a>
+                <div class="nav-drop">
+                    <a href="{% url 'news_list' %}" class="nav-link {% if 'news' in request.resolver_match.url_name %}active{% endif %}">
+                        Tin Tức <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
+                    </a>
+                    <div class="drop-menu">
+                        <a href="{% url 'news_list' %}?category=kien-thuc-chuyen-mon"><i class="fas fa-lightbulb"></i> Kiến thức chuyên môn</a>
+                        <a href="{% url 'news_list' %}?category=van-hoa-doanh-nghiep"><i class="fas fa-building"></i> Văn hoá doanh nghiệp</a>
+                        <a href="{% url 'news_list' %}?category=phong-su-thuc-te"><i class="fas fa-video"></i> Phóng sự thực tế</a>
+                    </div>
+                </div>
+                <a href="{% url 'consultation' %}" class="nav-cta-pill">Đăng Ký Đại Lý</a>
+            </nav>
+            <div class="lang-switcher">
+                <button type="button" class="lang-btn active" data-lang="vi" title="Tiếng Việt" aria-label="Tiếng Việt">
+                    <svg viewBox="0 0 30 20" width="22" height="15" class="flag-icon"><rect width="30" height="20" fill="#DA251D"/><polygon points="15,4 17.47,11.6 11,6.9 19,6.9 12.53,11.6" fill="#FFFF00"/></svg>
+                </button>
+                <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English">
+                    <svg viewBox="0 0 60 30" width="22" height="15" class="flag-icon"><clipPath id="gb-s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="gb-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#gb-s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#gb-t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+                </button>
+                <button type="button" class="lang-btn" data-lang="zh-CN" title="中文 (Chinese)" aria-label="中文">
+                    <svg viewBox="0 0 30 20" width="22" height="15" class="flag-icon"><rect width="30" height="20" fill="#DE2910"/><polygon points="5,2 5.9,4.8 3.5,3.1 6.5,3.1 4.1,4.8" fill="#FFDE00"/><polygon points="10,1.5 10.4,2.5 9.4,2 10.6,2 9.6,2.5" fill="#FFDE00"/><polygon points="12,3.5 12.4,4.5 11.4,4 12.6,4 11.6,4.5" fill="#FFDE00"/><polygon points="12,6.5 12.4,7.5 11.4,7 12.6,7 11.6,7.5" fill="#FFDE00"/><polygon points="10,8.5 10.4,9.5 9.4,9 10.6,9 9.6,9.5" fill="#FFDE00"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ── MOBILE OVERLAY ── -->
+<div class="mob-overlay" id="mobOverlay"></div>
+
+{% if messages %}
+<div class="msg-wrap">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        <span>{{ message }}</span>
+        <button class="alert-close">&times;</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main class="{% if request.resolver_match.url_name == 'home' %}main-home{% else %}main-page{% endif %}">{% block content %}{% endblock %}</main>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+    <div class="footer-inner">
+        <!-- Col 1: Thông tin công ty -->
+        <div class="footer-col footer-col-company">
+            <h3 class="footer-company-title">Công ty TNHH Keo Vữa Sông Hồng</h3>
+            <div class="footer-company-info">
+                <p><span class="info-label">Nhà Máy:</span> <span class="info-val">Thôn Ninh Tập, xã Châu Ninh, Hưng Yên</span></p>
+                <p><span class="info-label">Văn Phòng:</span> <span class="info-val">Vinhomes Ocean Park 2, Văn Giang, Hưng Yên</span></p>
+                <p><span class="info-label">Email Phòng Kinh Doanh:</span> <a href="mailto:kinhdoanh@keovuasonghong.vn" class="info-val">kinhdoanh@keovuasonghong.vn</a></p>
+                <p><span class="info-label">Hợp tác Truyền Thông:</span> <a href="mailto:admin@keovuasonghong.vn" class="info-val">admin@keovuasonghong.vn</a></p>
+            </div>
+        </div>
+
+        <!-- Col 2: Tài liệu tham khảo -->
+        <div class="footer-col footer-col-docs">
+            <div class="footer-col-top">
+                <h4 class="footer-section-title">Tài liệu tham khảo</h4>
+                <ul class="footer-link-list">
+                    <li><a href="{% url 'catalogue' %}">Chính Sách Khách Hàng</a></li>
+                    <li><a href="{% url 'catalogue' %}">Chính Sách Bảo Hành</a></li>
+                    <li><a href="{% url 'catalogue' %}">Hồ Sơ Năng Lực</a></li>
+                </ul>
+            </div>
+            <div class="footer-bct-badge-wrap">
+                <img src="{% static 'images/da-thong-bao-bct.svg' %}" alt="Đã thông báo Bộ Công Thương" class="bct-badge-img">
+            </div>
+        </div>
+
+        <!-- Col 3: Kết nối với doanh nghiệp -->
+        <div class="footer-col footer-col-connect">
+            <div class="footer-col-top">
+                <h4 class="footer-section-title">Kết nối với doanh nghiệp</h4>
+                <div class="footer-group-item">
+                    <a href="https://www.facebook.com/keovuasonghong.vn/" target="_blank" rel="noopener noreferrer">Group Cộng Đồng Kết Nối Vật Liệu</a>
+                </div>
+                <div class="footer-social-duo-grid">
+                    <div class="footer-social-col">
+                        <a href="https://www.facebook.com/keovuasonghong.vn/" target="_blank" rel="noopener noreferrer">Fanpage</a>
+                        <a href="https://www.tiktok.com/@shkmortar" target="_blank" rel="noopener noreferrer">TikTok</a>
+                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">Youtube</a>
+                    </div>
+                    <div class="footer-social-col">
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">Linkedin</a>
+                        <a href="https://shopee.vn/shop/1658539442" target="_blank" rel="noopener noreferrer">Shopee</a>
+                        <a href="https://zalo.me/3423135266242009757" target="_blank" rel="noopener noreferrer">Zalo OA</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bct-badge-wrap">
+                <img src="{% static 'images/da-thong-bao-bct.svg' %}" alt="Đã thông báo Bộ Công Thương" class="bct-badge-img">
+            </div>
+        </div>
+
+        <!-- Col 4: Bản đồ -->
+        <div class="footer-col footer-col-map">
+            <div class="footer-map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3730.0519155167885!2d105.9292376!3d20.7891875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135b7ebaf798ae9%3A0x12abc2f8114a7f71!2sNh%C3%A0%20m%C3%A1y%20Keo%20V%E1%BB%AFa%20S%C3%B4ng%20H%E1%BB%93ng%20-%20SHK%20Mortar!5e0!3m2!1svi!2svn!4v1700000000000!5m2!1svi!2svn" title="Nhà máy Keo Vữa Sông Hồng - SHK Mortar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+        <div class="footer-bottom-inner">
+            <p>© 2026. Mọi bản quyền được bảo lưu bởi Công ty TNHH Keo Vữa Sông Hồng</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Floating -->
+<div class="floating-actions">
+    <a href="tel:0386360797" class="float-btn float-phone" title="Gọi ngay"><i class="fas fa-phone-alt"></i></a>
+    <a href="https://zalo.me/3423135266242009757" target="_blank" class="float-btn float-zalo" title="Zalo"><i class="fas fa-comment-dots"></i></a>
+    <button class="float-btn float-top" id="backToTop" title="Lên đầu trang"><i class="fas fa-chevron-up"></i></button>
+</div>
+
+<div id="google_translate_element" style="display:none"></div>
+<script>
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'vi',
+        includedLanguages: 'vi,en,zh-CN',
+        autoDisplay: false
+    }, 'google_translate_element');
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="{% static 'js/main.js' %}?v=3"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

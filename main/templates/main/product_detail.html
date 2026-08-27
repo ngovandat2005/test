@@ -1,0 +1,157 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}{{ product.name }} – Keo Vữa Sông Hồng{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1>{{ product.name }}</h1>
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Trang chủ</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
+            <a href="{% url 'product_list' %}">Sản phẩm</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
+            <span>{{ product.name|truncatechars:40 }}</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="product-detail-grid">
+            <div class="product-main-img">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="{% static 'img/1.png' %}" alt="{{ product.name }}">
+                {% endif %}
+            </div>
+            <div class="product-info">
+                {% if product.category %}
+                <div style="margin-bottom:12px;">
+                    <a href="{% url 'product_list' %}?category={{ product.category.slug }}" style="font-size:12px;background:#fef2f2;color:var(--red);padding:3px 12px;border-radius:10px;font-weight:600;">{{ product.category.name }}</a>
+                </div>
+                {% endif %}
+                <h1>{{ product.name }}</h1>
+                {% if product.short_description %}
+                <p class="short-desc">{{ product.short_description }}</p>
+                {% endif %}
+                {% if product.specifications %}
+                <div class="specs">
+                    <h4><i class="fas fa-list-ul"></i> Thông số kỹ thuật</h4>
+                    <p>{{ product.specifications }}</p>
+                </div>
+                {% endif %}
+                <div class="product-cta">
+                    <a href="tel:0386360797" class="btn-call"><i class="fas fa-phone"></i> Gọi tư vấn: 0386.360.797</a>
+                    <a href="https://zalo.me/0386360797" target="_blank" class="btn-zalo"><i class="fas fa-comment"></i> Zalo</a>
+                </div>
+                <div style="margin-top:20px;padding:16px;background:#f0fdf4;border-radius:8px;border:1px solid #86efac;font-size:13px;color:#166534;">
+                    <i class="fas fa-shield-alt"></i> &nbsp;Sản phẩm đạt tiêu chuẩn ISO 9001 và TCVN. Bảo hành chất lượng toàn diện.
+                </div>
+            </div>
+        </div>
+
+        {% if product.description %}
+        <div class="product-tabs">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="tab-desc">Mô tả chi tiết</button>
+                {% if product.specifications %}<button class="tab-btn" data-tab="tab-spec">Thông số kỹ thuật</button>{% endif %}
+                <button class="tab-btn" data-tab="tab-guide">Hướng dẫn sử dụng</button>
+            </div>
+            <div id="tab-desc" class="tab-pane active">
+                <div class="tab-pane-content">{{ product.description }}</div>
+            </div>
+            {% if product.specifications %}
+            <div id="tab-spec" class="tab-pane">
+                <div class="tab-pane-content">{{ product.specifications }}</div>
+            </div>
+            {% endif %}
+            <div id="tab-guide" class="tab-pane">
+                <div class="tab-pane-content">Vui lòng liên hệ hotline <strong>0386.360.797</strong> hoặc email <strong>admin@keovuasonghong.vn</strong> để được hỗ trợ hướng dẫn sử dụng chi tiết và tư vấn kỹ thuật.</div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if related %}
+        <div style="margin-top:60px;">
+            <h2 style="font-size:18px;font-weight:800;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--text);">Sản phẩm cùng danh mục</h2>
+            <div class="products-grid">
+                {% for p in related %}
+                <div class="product-card">
+                    <div class="product-card-img">
+                        {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}">{% else %}<div class="product-no-img"><i class="fas fa-box"></i></div>{% endif %}
+                    </div>
+                    <div class="product-card-body">
+                        <h3>{{ p.name }}</h3>
+                        {% if p.short_description %}<p>{{ p.short_description|truncatechars:80 }}</p>{% endif %}
+                        <a href="{% url 'product_detail' p.slug %}" class="btn-detail">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Cross-links: Dự án sử dụng sản phẩm -->
+        {% if related_projects %}
+        <div style="margin-top:56px;">
+          <h2 style="font-size:18px;font-weight:800;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--text);">Dự án sử dụng sản phẩm này</h2>
+          <div class="project-grid" style="grid-template-columns:repeat(3,1fr);">
+            {% for proj in related_projects %}
+            <a href="{% url 'project_detail' proj.slug %}" class="project-card">
+              <div class="project-img">
+                {% if proj.image %}<img src="{{ proj.image.url }}" alt="{{ proj.title }}" loading="lazy">
+                {% else %}<div class="project-img-placeholder"><i class="fas fa-building"></i></div>{% endif %}
+                <span class="project-cat-badge">{{ proj.get_category_display }}</span>
+              </div>
+              <div class="project-info">
+                <h3>{{ proj.title }}</h3>
+                {% if proj.location %}<p class="project-meta"><i class="fas fa-map-marker-alt"></i> {{ proj.location }}</p>{% endif %}
+                <span class="project-link">Xem dự án <i class="fas fa-arrow-right"></i></span>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Cross-links: Catalogue & Calculator -->
+        <div style="margin-top:56px;display:grid;grid-template-columns:{% if related_catalogues %}1fr 1fr{% else %}1fr{% endif %};gap:24px;">
+          {% if related_catalogues %}
+          <div style="background:var(--br2);border-radius:var(--rad);padding:28px;border:1px solid var(--line);">
+            <h3 style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;"><i class="fas fa-file-pdf"></i> Catalogue liên quan</h3>
+            {% for cat in related_catalogues %}
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);">
+              <i class="fas fa-file-pdf" style="color:var(--amber);font-size:18px;flex-shrink:0;"></i>
+              <div style="flex:1;min-width:0;">
+                <p style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;">{{ cat.title }}</p>
+                <p style="font-size:11px;color:var(--muted);">{{ cat.get_category_display }}</p>
+              </div>
+              {% if cat.file %}
+              <a href="{{ cat.file.url }}" target="_blank" style="font-size:10px;font-weight:800;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;"><i class="fas fa-download"></i> Tải</a>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <a href="{% url 'catalogue' %}" style="display:block;text-align:center;margin-top:16px;font-size:11px;font-weight:800;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;">Xem tất cả catalogue <i class="fas fa-arrow-right"></i></a>
+          </div>
+          {% endif %}
+
+          <div style="background:var(--br2);border-radius:var(--rad);padding:28px;border:1px solid var(--line);">
+            <h3 style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;"><i class="fas fa-calculator"></i> Công cụ tính</h3>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;">Tính lượng vật liệu cần dùng cho diện tích thi công của bạn.</p>
+            <a href="{% url 'calculator' %}" class="btn-gold" style="width:100%;justify-content:center;"><i class="fas fa-calculator"></i> Tính ngay</a>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="margin-top:40px;background:var(--gold);border-radius:var(--rad);padding:40px;text-align:center;color:#fff;">
+          <h3 style="font-size:20px;font-weight:900;margin-bottom:10px;">Cần tư vấn sản phẩm này?</h3>
+          <p style="font-size:14px;opacity:.85;margin-bottom:24px;">Chuyên gia SHK Mortar sẽ liên hệ trong vòng 24 giờ làm việc</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="{% url 'consultation' %}" style="padding:12px 28px;background:#fff;color:var(--gold);border-radius:20px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;">Đăng ký tư vấn</a>
+            <a href="tel:0386360797" style="padding:12px 28px;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:20px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;">Gọi: 0386.360.797</a>
+          </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Đại lý phân phối – Keo Vữa Sông Hồng{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-map-marker-alt"></i> Đại lý phân phối</h1>
+        <p>Tìm đại lý Keo Vữa Sông Hồng gần bạn nhất</p>
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Trang chủ</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
+            <span>Đại lý phân phối</span>
+        </div>
+    </div>
+</div>
+
+<div class="distributor-search">
+    <div class="container">
+        <form method="get">
+            <select name="province">
+                <option value="">-- Tất cả tỉnh/thành phố --</option>
+                {% for p in provinces %}
+                <option value="{{ p }}" {% if selected_province == p %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
+        </form>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        {% if distributors %}
+        <p style="color:#666;margin-bottom:24px;font-size:14px;">Tìm thấy <strong>{{ distributors|length }}</strong> đại lý{% if selected_province %} tại <strong>{{ selected_province }}</strong>{% endif %}</p>
+        <div class="distributor-grid">
+            {% for d in distributors %}
+            <div class="distributor-card">
+                <h3><i class="fas fa-store"></i> {{ d.name }}</h3>
+                <p><i class="fas fa-map-marker-alt"></i> {{ d.address }}</p>
+                <p><i class="fas fa-city"></i> {{ d.province }}</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:{{ d.phone }}" style="color:var(--red);font-weight:600;">{{ d.phone }}</a></p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center;padding:80px 0;color:#999;">
+            <i class="fas fa-map-marker-alt" style="font-size:56px;margin-bottom:16px;display:block;opacity:0.3;"></i>
+            <p style="font-size:16px;margin-bottom:20px;">Chưa có đại lý nào{% if selected_province %} tại <strong>{{ selected_province }}</strong>{% endif %}.</p>
+            <a href="{% url 'dealer_register' %}" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:var(--red);color:#fff;border-radius:30px;font-weight:700;">
+                <i class="fas fa-user-plus"></i> Đăng ký trở thành đại lý
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section style="background:var(--light-gray);padding:48px 0;text-align:center;">
+    <div class="container">
+        <h2 style="font-size:26px;font-weight:800;margin-bottom:12px;">Bạn muốn trở thành đại lý?</h2>
+        <p style="color:#666;margin-bottom:24px;">Liên hệ ngay để nhận chính sách ưu đãi đặc biệt dành cho đại lý mới</p>
+        <a href="{% url 'dealer_register' %}" style="display:inline-flex;align-items:center;gap:8px;padding:13px 36px;background:var(--red);color:#fff;border-radius:30px;font-weight:700;font-size:15px;">
+            <i class="fas fa-user-plus"></i> Đăng ký đại lý ngay
+        </a>
+    </div>
+</section>
+{% endblock %}

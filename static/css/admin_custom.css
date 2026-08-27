@@ -1,0 +1,313 @@
+/* ── SHK Mortar Admin — AdminLTE 4 / Bootstrap 5 ── */
+
+/* ── Sidebar ── */
+.app-sidebar {
+  background-color: #1e1b18 !important;
+  border-right: 1px solid rgba(255,145,76,.15) !important;
+}
+
+.sidebar-brand,
+.sidebar-brand .brand-link {
+  background-color: #131110 !important;
+  border-bottom: 1px solid rgba(255,145,76,.25) !important;
+  text-decoration: none !important;
+}
+
+.sidebar-brand .brand-text,
+.sidebar-brand span {
+  color: #FF914C !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  letter-spacing: .06em !important;
+}
+
+.sidebar-brand img { max-height: 36px !important; }
+
+/* Nav section headers */
+.app-sidebar .nav-header {
+  color: rgba(255,145,76,.55) !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: .18em !important;
+  padding: 14px 16px 4px !important;
+}
+
+/* Nav items */
+.app-sidebar .nav-item .nav-link {
+  color: rgba(255,255,255,.7) !important;
+  border-radius: 8px !important;
+  margin: 2px 8px !important;
+  padding: 8px 12px !important;
+  transition: background .2s, color .2s !important;
+}
+.app-sidebar .nav-item .nav-link:hover {
+  background: rgba(255,145,76,.15) !important;
+  color: #FF914C !important;
+}
+.app-sidebar .nav-item .nav-link.active {
+  background: rgba(255,145,76,.2) !important;
+  color: #FF914C !important;
+  box-shadow: inset 3px 0 0 #FF914C !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+/* Icons in nav */
+.app-sidebar .nav-link .nav-icon {
+  color: rgba(255,255,255,.45) !important;
+  transition: color .2s !important;
+}
+.app-sidebar .nav-link:hover .nav-icon,
+.app-sidebar .nav-link.active .nav-icon {
+  color: #FF914C !important;
+}
+
+/* Sub-items (treeview) */
+.app-sidebar .nav-treeview .nav-link {
+  color: rgba(255,255,255,.5) !important;
+  padding-left: 2.8rem !important;
+  border-radius: 6px !important;
+  margin: 1px 8px !important;
+}
+.app-sidebar .nav-treeview .nav-link:hover,
+.app-sidebar .nav-treeview .nav-link.active {
+  background: rgba(255,145,76,.12) !important;
+  color: #FFA870 !important;
+}
+
+/* ── Top Navbar ── */
+.app-header {
+  background-color: #131110 !important;
+  border-bottom: 1px solid rgba(255,145,76,.2) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,.4) !important;
+}
+.app-header .navbar-nav .nav-link {
+  color: rgba(255,255,255,.7) !important;
+}
+.app-header .navbar-nav .nav-link:hover { color: #FF914C !important; }
+
+/* Search */
+.app-header .form-control {
+  background: rgba(255,255,255,.08) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+}
+.app-header .form-control::placeholder { color: rgba(255,255,255,.3) !important; }
+.app-header .btn { border-radius: 8px !important; }
+
+/* Breadcrumb */
+.app-header .breadcrumb-item a { color: #FF914C !important; }
+.app-header .breadcrumb-item.active { color: rgba(255,255,255,.45) !important; }
+
+/* ── Content wrapper ── */
+.app-wrapper {
+  background-color: #201d1a !important;
+}
+.app-main { background-color: #201d1a !important; }
+
+/* ── Cards ── */
+.card {
+  background-color: #272421 !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.28) !important;
+}
+.card-header {
+  background-color: #302D29 !important;
+  border-bottom: 1px solid rgba(255,255,255,.07) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+.card-title { color: #FF914C !important; font-weight: 700 !important; }
+.card-body { color: rgba(255,255,255,.82) !important; }
+
+/* ── Tables ── */
+.table {
+  color: rgba(255,255,255,.82) !important;
+  --bs-table-bg: transparent !important;
+  --bs-table-striped-bg: rgba(255,255,255,.03) !important;
+  --bs-table-hover-bg: rgba(255,145,76,.07) !important;
+  --bs-table-border-color: rgba(255,255,255,.07) !important;
+}
+.table thead th {
+  background-color: #302D29 !important;
+  border-bottom: 2px solid rgba(255,145,76,.3) !important;
+  color: #FF914C !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(255,255,255,.03) !important;
+}
+.table > tbody > tr:hover > * {
+  background-color: rgba(255,145,76,.07) !important;
+}
+
+/* ── Buttons ── */
+.btn { border-radius: 8px !important; font-weight: 600 !important; }
+.btn-primary   { background-color: #FF914C !important; border-color: #FF914C !important; color: #1A1815 !important; }
+.btn-primary:hover { background-color: #FFA870 !important; border-color: #FFA870 !important; }
+.btn-success   { background-color: #2a7a46 !important; border-color: #2a7a46 !important; color: #fff !important; }
+.btn-danger    { background-color: #9b2c2c !important; border-color: #9b2c2c !important; }
+.btn-warning   { background-color: #e07a30 !important; border-color: #e07a30 !important; color: #fff !important; }
+.btn-secondary { background-color: #3a3733 !important; border-color: #3a3733 !important; color: rgba(255,255,255,.8) !important; }
+.btn-info      { background-color: #1a5f8a !important; border-color: #1a5f8a !important; color: #fff !important; }
+
+/* ── Forms ── */
+.form-control, .form-select {
+  background-color: #302D29 !important;
+  border-color: rgba(255,255,255,.12) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+}
+.form-control:focus, .form-select:focus {
+  background-color: #3a3733 !important;
+  border-color: #FF914C !important;
+  box-shadow: 0 0 0 3px rgba(255,145,76,.15) !important;
+  color: #fff !important;
+}
+.form-control::placeholder { color: rgba(255,255,255,.3) !important; }
+.form-select option { background: #302D29 !important; }
+
+/* Select2 */
+.select2-container .select2-selection {
+  background-color: #302D29 !important;
+  border-color: rgba(255,255,255,.12) !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+}
+.select2-dropdown {
+  background-color: #302D29 !important;
+  border-color: rgba(255,145,76,.3) !important;
+  border-radius: 8px !important;
+}
+.select2-results__option { color: rgba(255,255,255,.8) !important; }
+.select2-results__option--highlighted {
+  background-color: rgba(255,145,76,.2) !important;
+  color: #FF914C !important;
+}
+.select2-selection__rendered { color: #fff !important; }
+
+/* Labels */
+.form-label, label { color: rgba(255,255,255,.75) !important; }
+
+/* Fieldset */
+.module h2, fieldset.module h2 {
+  background: #302D29 !important;
+  color: #FF914C !important;
+}
+
+/* ── Info boxes ── */
+.small-box {
+  background-color: #302D29 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255,255,255,.06) !important;
+}
+.small-box .inner h3 { color: #fff !important; }
+.small-box .inner p { color: rgba(255,255,255,.6) !important; }
+.small-box .icon { color: rgba(255,145,76,.3) !important; }
+
+/* ── Pagination ── */
+.page-link {
+  background-color: #302D29 !important;
+  border-color: rgba(255,255,255,.1) !important;
+  color: rgba(255,255,255,.7) !important;
+  border-radius: 6px !important;
+  margin: 0 2px !important;
+}
+.page-link:hover { background-color: rgba(255,145,76,.2) !important; color: #FF914C !important; }
+.page-item.active .page-link {
+  background-color: #FF914C !important;
+  border-color: #FF914C !important;
+  color: #1A1815 !important;
+}
+
+/* ── Tabs ── */
+.nav-tabs { border-bottom-color: rgba(255,255,255,.12) !important; }
+.nav-tabs .nav-link {
+  color: rgba(255,255,255,.55) !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+.nav-tabs .nav-link.active {
+  background-color: #302D29 !important;
+  border-color: rgba(255,145,76,.3) rgba(255,145,76,.3) #302D29 !important;
+  color: #FF914C !important;
+}
+
+/* ── Breadcrumb bar ── */
+.content-header, .app-content-header {
+  background-color: #1e1b18 !important;
+  border-bottom: 1px solid rgba(255,255,255,.06) !important;
+}
+.breadcrumb-item a { color: #FF914C !important; }
+.breadcrumb-item.active { color: rgba(255,255,255,.45) !important; }
+.breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,.25) !important; }
+
+/* ── Alerts ── */
+.alert-success { background-color: rgba(42,122,70,.2) !important; border-color: rgba(42,122,70,.4) !important; color: #7dd4a0 !important; }
+.alert-warning { background-color: rgba(255,145,76,.15) !important; border-color: rgba(255,145,76,.4) !important; color: #FF914C !important; }
+.alert-danger  { background-color: rgba(155,44,44,.2) !important; border-color: rgba(155,44,44,.4) !important; color: #e88 !important; }
+.alert-info    { background-color: rgba(26,95,138,.2) !important; border-color: rgba(26,95,138,.4) !important; color: #7ab8f5 !important; }
+
+/* ── Footer ── */
+.app-footer {
+  background-color: #131110 !important;
+  border-top: 1px solid rgba(255,145,76,.15) !important;
+  color: rgba(255,255,255,.4) !important;
+}
+
+/* ── Login page ── */
+.login-page { background-color: #1A1815 !important; }
+.login-box .card { border: 1px solid rgba(255,145,76,.25) !important; }
+.login-logo a { color: #FF914C !important; font-weight: 800 !important; }
+
+/* ── Dropdown menus ── */
+.dropdown-menu {
+  background-color: #272421 !important;
+  border: 1px solid rgba(255,145,76,.2) !important;
+  border-radius: 10px !important;
+}
+.dropdown-item { color: rgba(255,255,255,.75) !important; }
+.dropdown-item:hover { background-color: rgba(255,145,76,.15) !important; color: #FF914C !important; }
+.dropdown-divider { border-color: rgba(255,255,255,.1) !important; }
+
+/* ── Badges ── */
+.badge.bg-warning { background-color: rgba(255,145,76,.25) !important; color: #FF914C !important; }
+.badge.bg-success { background-color: rgba(42,122,70,.25) !important; color: #7dd4a0 !important; }
+.badge.bg-danger  { background-color: rgba(155,44,44,.25) !important; color: #e88 !important; }
+
+/* ── Modals ── */
+.modal-content {
+  background-color: #272421 !important;
+  border: 1px solid rgba(255,145,76,.2) !important;
+  border-radius: 14px !important;
+}
+.modal-header {
+  background-color: #302D29 !important;
+  border-bottom-color: rgba(255,255,255,.08) !important;
+  border-radius: 14px 14px 0 0 !important;
+}
+.modal-title { color: #FF914C !important; }
+
+/* ── Misc text ── */
+.text-muted { color: rgba(255,255,255,.4) !important; }
+h1, h2, h3, h4, h5, h6 { color: rgba(255,255,255,.9) !important; }
+a { color: #FF914C !important; }
+a:hover { color: #FFA870 !important; }
+
+/* Override Bootstrap dark vars */
+[data-bs-theme="dark"] {
+  --bs-body-bg: #201d1a !important;
+  --bs-body-color: rgba(255,255,255,.82) !important;
+  --bs-card-bg: #272421 !important;
+  --bs-border-color: rgba(255,255,255,.08) !important;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #1A1815; }
+::-webkit-scrollbar-thumb { background: rgba(255,145,76,.35); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #FF914C; }

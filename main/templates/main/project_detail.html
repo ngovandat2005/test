@@ -1,0 +1,122 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} – Keo Vữa Sông Hồng{% endblock %}
+{% block meta_desc %}{{ project.description|truncatewords:25 }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <h1><i class="fas fa-building"></i> {{ project.title }}</h1>
+    <p>{{ project.get_category_display }}</p>
+    <nav class="breadcrumb-nav">
+      <a href="{% url 'home' %}">Trang chủ</a>
+      <i class="fas fa-chevron-right"></i>
+      <a href="{% url 'project_list' %}">Dự án</a>
+      <i class="fas fa-chevron-right"></i>
+      <span>{{ project.title }}</span>
+    </nav>
+  </div>
+</section>
+
+<section style="background:var(--br1);padding:64px 0 80px;">
+  <div class="container" style="max-width:1280px;margin:0 auto;padding:0 64px;">
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:56px;align-items:start;">
+
+      <!-- Main content -->
+      <div>
+        {% if project.image %}
+        <div style="border-radius:var(--rad);overflow:hidden;margin-bottom:36px;aspect-ratio:16/9;background:var(--br4);">
+          <img src="{{ project.image.url }}" alt="{{ project.title }}" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        {% endif %}
+
+        <div style="font-size:15px;color:var(--muted);line-height:1.9;white-space:pre-line;">
+          {{ project.description }}
+        </div>
+
+        {% if project.products_used.all %}
+        <div style="margin-top:40px;padding:28px;background:var(--br3);border-radius:var(--rad);border-left:3px solid var(--amber);">
+          <h3 style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;">Sản phẩm sử dụng</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            {% for p in project.products_used.all %}
+            <a href="{% url 'product_detail' p.slug %}" style="padding:8px 18px;background:var(--br4);border:1px solid var(--line);border-radius:20px;font-size:13px;font-weight:600;color:var(--text);transition:all var(--tr);">
+              {{ p.name }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Sidebar -->
+      <div>
+        <div style="background:var(--br3);border-radius:var(--rad);padding:28px;position:sticky;top:88px;">
+          <h3 style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(255,145,76,.12);">Thông tin dự án</h3>
+
+          {% if project.client %}
+          <div style="margin-bottom:14px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Chủ đầu tư</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text);">{{ project.client }}</span>
+          </div>
+          {% endif %}
+
+          {% if project.location %}
+          <div style="margin-bottom:14px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Địa điểm</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text);">{{ project.location }}</span>
+          </div>
+          {% endif %}
+
+          <div style="margin-bottom:24px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;">Phân loại</span>
+            <span style="font-size:14px;font-weight:600;color:var(--text);">{{ project.get_category_display }}</span>
+          </div>
+
+          <a href="{% url 'consultation' %}" class="btn-gold" style="width:100%;justify-content:center;margin-bottom:16px;">
+            <i class="fas fa-comments"></i> Tư vấn dự án tương tự
+          </a>
+          {% if related_catalogues %}
+          <div style="border-top:1px solid var(--line);padding-top:16px;margin-top:4px;">
+            <p style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Catalogue liên quan</p>
+            {% for cat in related_catalogues %}
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <i class="fas fa-file-pdf" style="color:var(--amber);font-size:13px;flex-shrink:0;"></i>
+              <a href="{% url 'catalogue' %}" style="font-size:12px;font-weight:600;color:var(--text);line-height:1.3;">{{ cat.title }}</a>
+              {% if cat.file %}<a href="{{ cat.file.url }}" target="_blank" style="margin-left:auto;font-size:10px;color:var(--amber);font-weight:700;"><i class="fas fa-download"></i></a>{% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Related projects -->
+    {% if related %}
+    <div style="margin-top:72px;">
+      <h2 style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--line);">Dự án liên quan</h2>
+      <div class="project-grid" style="grid-template-columns:repeat(3,1fr);">
+        {% for p in related %}
+        <a href="{% url 'project_detail' p.slug %}" class="project-card">
+          <div class="project-img">
+            {% if p.image %}
+              <img src="{{ p.image.url }}" alt="{{ p.title }}" loading="lazy">
+            {% else %}
+              <div class="project-img-placeholder"><i class="fas fa-building"></i></div>
+            {% endif %}
+          </div>
+          <div class="project-info">
+            <h3>{{ p.title }}</h3>
+            {% if p.location %}<p class="project-meta"><i class="fas fa-map-marker-alt"></i> {{ p.location }}</p>{% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

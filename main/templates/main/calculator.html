@@ -1,0 +1,177 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Công cụ tính – Keo Vữa Sông Hồng{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-calculator"></i> Công cụ tính</h1>
+        <p>Tính toán lượng vật liệu cần dùng cho công trình của bạn</p>
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Trang chủ</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
+            <span>Công cụ tính</span>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container" style="max-width:800px;">
+        <div class="section-header">
+            <div class="section-tag">Tiện ích</div>
+            <h2 class="section-title">Tính lượng <span>vật liệu</span> cần dùng</h2>
+            <p class="section-desc">Nhập thông số công trình để tính toán nhanh lượng vật liệu</p>
+        </div>
+
+        <div class="calc-tabs">
+            <button class="calc-tab {% if not result or result.tool == 'mortar' %}active{% endif %}" data-calc="calc-mortar">
+                <i class="fas fa-cube"></i> Vữa khô trộn sẵn
+            </button>
+            <button class="calc-tab {% if result.tool == 'tile_adhesive' %}active{% endif %}" data-calc="calc-tile">
+                <i class="fas fa-layer-group"></i> Keo dán gạch
+            </button>
+            <button class="calc-tab {% if result.tool == 'sand' %}active{% endif %}" data-calc="calc-sand">
+                <i class="fas fa-mountain"></i> Cát sạch
+            </button>
+        </div>
+
+        <!-- Vữa -->
+        <div id="calc-mortar" class="calc-panel {% if not result or result.tool == 'mortar' %}active{% endif %}">
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;color:var(--red);"><i class="fas fa-cube"></i> Tính lượng vữa khô trộn sẵn</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="tool" value="mortar">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Diện tích cần trát (m²) <span class="required">*</span></label>
+                        <input type="number" name="area" step="0.1" min="0" placeholder="Ví dụ: 50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Độ dày lớp vữa (mm)</label>
+                        <input type="number" name="thickness" step="1" min="1" value="10" placeholder="10">
+                    </div>
+                </div>
+                <div style="background:#fef2f2;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#666;">
+                    <i class="fas fa-info-circle" style="color:var(--red)"></i>
+                    Định mức tham khảo: ~1.85 kg/m²/mm. Nên mua thêm 10% dự phòng hao hụt.
+                </div>
+                <button type="submit" class="form-submit"><i class="fas fa-calculator"></i> Tính ngay</button>
+            </form>
+            {% if result and result.tool == 'mortar' %}
+            <div class="calc-result">
+                <div class="result-label">{{ result.label }}</div>
+                <div class="result-value">{{ result.value }}</div>
+                <p style="font-size:13px;opacity:0.8;margin-top:8px;">* Nên mua thêm 10% dự phòng hao hụt thi công</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Keo dán gạch -->
+        <div id="calc-tile" class="calc-panel {% if result.tool == 'tile_adhesive' %}active{% endif %}">
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;color:var(--red);"><i class="fas fa-layer-group"></i> Tính lượng keo dán gạch</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="tool" value="tile_adhesive">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Diện tích ốp/lát (m²) <span class="required">*</span></label>
+                        <input type="number" name="area" step="0.1" min="0" placeholder="Ví dụ: 30" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kích thước gạch</label>
+                        <select name="tile_size">
+                            <option value="small">Nhỏ (dưới 30×30 cm) – ~4.5 kg/m²</option>
+                            <option value="medium" selected>Vừa (30×60 đến 60×60 cm) – ~5.5 kg/m²</option>
+                            <option value="large">Lớn (trên 60×60 cm) – ~7.0 kg/m²</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="background:#fef2f2;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#666;">
+                    <i class="fas fa-info-circle" style="color:var(--red)"></i>
+                    Định mức phụ thuộc kích thước gạch và kỹ thuật thi công (phủ 2 mặt hoặc 1 mặt).
+                </div>
+                <button type="submit" class="form-submit"><i class="fas fa-calculator"></i> Tính ngay</button>
+            </form>
+            {% if result and result.tool == 'tile_adhesive' %}
+            <div class="calc-result">
+                <div class="result-label">{{ result.label }}</div>
+                <div class="result-value">{{ result.value }}</div>
+                <p style="font-size:13px;opacity:0.8;margin-top:8px;">* Nên mua thêm 10% dự phòng hao hụt thi công</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Cát -->
+        <div id="calc-sand" class="calc-panel {% if result.tool == 'sand' %}active{% endif %}">
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;color:var(--red);"><i class="fas fa-mountain"></i> Tính lượng cát sạch sấy khô</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="tool" value="sand">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Diện tích (m²) <span class="required">*</span></label>
+                        <input type="number" name="area" step="0.1" min="0" placeholder="Ví dụ: 50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Độ dày lớp cát (mm)</label>
+                        <input type="number" name="thickness" step="1" min="1" value="10" placeholder="10">
+                    </div>
+                </div>
+                <div style="background:#fef2f2;border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:#666;">
+                    <i class="fas fa-info-circle" style="color:var(--red)"></i>
+                    Khối lượng riêng cát sạch sấy khô: ~1,600 kg/m³.
+                </div>
+                <button type="submit" class="form-submit"><i class="fas fa-calculator"></i> Tính ngay</button>
+            </form>
+            {% if result and result.tool == 'sand' %}
+            <div class="calc-result">
+                <div class="result-label">{{ result.label }}</div>
+                <div class="result-value">{{ result.value }}</div>
+                <p style="font-size:13px;opacity:0.8;margin-top:8px;">* Nên mua thêm 5–10% dự phòng hao hụt</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div style="margin-top:32px;padding:16px 20px;background:var(--br2);border-radius:12px;text-align:center;font-size:13px;color:var(--muted);border:1px solid var(--line);">
+            <i class="fas fa-exclamation-triangle" style="color:var(--amber)"></i>
+            Kết quả mang tính tham khảo. Liên hệ <strong style="color:var(--amber)">0386.360.797</strong> để được tư vấn chính xác theo công trình thực tế.
+        </div>
+
+        <!-- Recommended products -->
+        {% if recommended_products %}
+        <div style="margin-top:48px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--line);">
+            <span style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);">Sản phẩm phù hợp</span>
+            {% if result %}<span style="font-size:11px;color:var(--muted);">cho {{ result.tool_name }}</span>{% endif %}
+          </div>
+          <div class="products-grid">
+            {% for p in recommended_products %}
+            <div class="product-card">
+              <div class="product-card-img">
+                {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}">
+                {% else %}<div class="product-no-img"><i class="fas fa-box"></i></div>{% endif %}
+              </div>
+              <div class="product-card-body">
+                <h3>{{ p.name }}</h3>
+                {% if p.short_description %}<p>{{ p.short_description|truncatechars:80 }}</p>{% endif %}
+                <a href="{% url 'product_detail' p.slug %}" class="btn-detail">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- CTA -->
+        {% if result %}
+        <div style="margin-top:36px;background:var(--gold);border-radius:var(--rad);padding:32px;text-align:center;color:#fff;">
+          <h3 style="font-size:18px;font-weight:900;margin-bottom:8px;">Cần tư vấn cho dự án của bạn?</h3>
+          <p style="font-size:13px;opacity:.85;margin-bottom:20px;">Chuyên gia SHK Mortar sẽ giúp bạn chọn đúng sản phẩm và lập dự toán vật liệu</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="{% url 'consultation' %}" style="padding:11px 24px;background:#fff;color:var(--gold);border-radius:20px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;">Đăng ký tư vấn miễn phí</a>
+            <a href="tel:0386360797" style="padding:11px 24px;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:20px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;">Gọi ngay</a>
+          </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

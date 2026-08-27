@@ -1,0 +1,1384 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Keo Vữa Sông Hồng – SHK Mortar | Vữa khô, Keo dán gạch, Cát sạch{% endblock %}
+{% block content %}
+
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+  <div class="hero-bgs">
+    <video class="hero-video" autoplay muted loop playsinline poster="{% static 'images/hero-bg.jpg' %}">
+      <source src="{% static 'video/hero-banner.mp4' %}" type="video/mp4">
+    </video>
+    <div class="hero-grad"></div>
+  </div>
+  <div class="hero-wm">SHK</div>
+  <div class="hero-vline"></div>
+  <div class="hero-inner hero-centered">
+    <h1 class="hero-title">Công ty TNHH Keo Vữa Sông Hồng</h1>
+    <p class="hero-desc">Nhà máy sản xuất vữa khô trộn sẵn, keo dán gạch chất lượng cao</p>
+    <div class="hero-btns hero-btns-center">
+      <a href="{% url 'product_list' %}" class="btn-hero-brown">Khám Phá Sản Phẩm</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── GIỚI THIỆU / VỀ CHÚNG TÔI ── -->
+<section class="section" style="background:#FAF7F2;padding:44px 0 36px;">
+  <div class="container">
+    <div class="about-home-grid">
+      <!-- Video column (Left) - Stretches full height to match text column -->
+      <div class="about-home-video reveal">
+        <div class="video-tvc-wrap" style="border-radius:0 !important; border:none !important; box-shadow:none !important;">
+          <iframe 
+            src="https://www.youtube.com/embed/N-FLw-piwlc" 
+            title="Keo Vữa Sông Hồng - SHK Mortar" 
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Text column (Right) -->
+      <div class="about-home-text reveal">
+        <div class="about-title-block">
+          <span class="about-pre-title">Giới thiệu</span>
+          <h2 class="about-main-title">Về chúng tôi</h2>
+        </div>
+        
+        <p class="about-para">
+          Công ty TNHH Keo Vữa Sông Hồng là đơn vị hoạt động trong lĩnh vực sản xuất vật liệu xây dựng tại Hưng Yên. Với kinh nghiệm trong ngành cùng hệ thống dây chuyền, máy móc và công nghệ hiện đại, chúng tôi tập trung nghiên cứu và sản xuất những sản phẩm đáp ứng yêu cầu ngày càng cao của thị trường.
+        </p>
+        <p class="about-para">
+          Không chỉ tạo ra vật liệu mới, SHK Mortar hướng tới những giải pháp phù hợp với phương thức xây dựng hiện đại – nơi chất lượng, tính ổn định và hiệu quả thi công được đặt lên hàng đầu. Mỗi sản phẩm được nghiên cứu, kiểm soát và kiểm định chặt chẽ, nhằm tạo ra giá trị thiết thực cho công trình và đối tác.
+        </p>
+        <p class="about-para">
+          Với định hướng đưa các sản phẩm chất lượng đến gần hơn với thị trường, từ dự án đến công trình dân dụng, SHK Mortar từng bước phát triển hệ giải pháp vật liệu giúp tối ưu quy trình thi công và chi phí, hướng tới một phương thức xây dựng hiệu quả hơn và tạo nên một cách tiếp cận mới cho ngành xây dựng.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SẢN PHẨM ── -->
+<section class="section" style="background:#FAF7F2;padding:36px 0 44px;">
+  <div class="container">
+    <!-- Header Row: Title on Left, Button on Right -->
+    <div class="prod-section-header">
+      <div class="about-title-block" style="margin-bottom:0;">
+        <span class="about-pre-title">Khám phá</span>
+        <h2 class="about-main-title">Danh mục sản phẩm</h2>
+      </div>
+      <a href="{% url 'product_list' %}" class="btn-prod-all">
+        Xem tất cả sản phẩm
+      </a>
+    </div>
+
+    <!-- 4-Column Responsive Grid (Exactly 4 Products) -->
+    <div class="prod-grid-4">
+      <!-- Sản phẩm 1: Vữa khô trộn sẵn -->
+      <a href="{% url 'product_list' %}?category=vua-kho-tron-san" class="prod-unit-card">
+        <div class="prod-unit-img-box">
+          <img src="{% static 'img/Vua_kho_chon_san.png' %}" alt="Vữa khô trộn sẵn SHK Mortar" loading="lazy">
+        </div>
+        <div class="prod-unit-info">
+          <h2 class="prod-unit-title">Vữa khô trộn sẵn</h2>
+        </div>
+      </a>
+
+      <!-- Sản phẩm 2: Vữa xây trát AAC -->
+      <a href="{% url 'product_list' %}?category=vua-kho-tron-san" class="prod-unit-card">
+        <div class="prod-unit-img-box">
+          <img src="{% static 'img/Vua_kho.png' %}" alt="Vữa xây trát AAC SHK Mortar" loading="lazy">
+        </div>
+        <div class="prod-unit-info">
+          <h2 class="prod-unit-title">Vữa xây trát AAC</h2>
+        </div>
+      </a>
+
+      <!-- Sản phẩm 3: Keo dán gạch -->
+      <a href="{% url 'product_list' %}?category=keo-dan-gach-da" class="prod-unit-card">
+        <div class="prod-unit-img-box">
+          <img src="{% static 'img/keo_dan_gach_c1.png' %}" alt="Keo dán gạch SHK Mortar" loading="lazy">
+        </div>
+        <div class="prod-unit-info">
+          <h2 class="prod-unit-title">Keo dán gạch</h2>
+        </div>
+      </a>
+
+      <!-- Sản phẩm 4: Cát sấy khô -->
+      <a href="{% url 'product_list' %}?category=cat-say-kho" class="prod-unit-card">
+        <div class="prod-unit-img-box">
+          <img src="{% static 'img/Cat_say.png' %}" alt="Cát sấy khô SHK Mortar" loading="lazy">
+        </div>
+        <div class="prod-unit-info">
+          <h2 class="prod-unit-title">Cát sấy khô</h2>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHÓNG SỰ THỰC TẾ ── -->
+<section class="section ps-section-wrap" style="background:#FAF7F2;padding:36px 0 0 0;">
+  <div class="container">
+    <!-- Centered Header with Accent Bar -->
+    <div class="ps-center-header">
+      <h2 class="ps-main-title">Phóng sự thực tế</h2>
+      <div class="ps-title-bar"></div>
+    </div>
+  </div>
+
+  <!-- Full-Width 2-Column Split Box (Edge-to-Edge, No Border Radius) -->
+  <div class="ps-split-box">
+    <!-- Left Orange Banner with CTA -->
+    <div class="ps-left-banner">
+      <div class="ps-banner-content">
+        <div class="ps-banner-subtitle">Xem thêm</div>
+        <h3 class="ps-banner-heading">Phóng sự thực tế</h3>
+        <p class="ps-banner-desc">Theo sát những công trình thực tế, ghi nhận câu chuyện và trải nghiệm từ thợ thi công, đại lý, nhà thầu và chủ đầu tư. Qua đó, thương hiệu giới thiệu chất lượng sản phẩm, giải pháp thi công và dấu ấn đồng hành trên từng công trình.</p>
+        <a href="{% url 'news_list' %}?category=phong-su" class="btn-ps-more">
+          XEM TẤT CẢ
+        </a>
+      </div>
+    </div>
+
+    <!-- Right 3x2 Grid (6 Featured 16:9 Videos) -->
+    <div class="ps-right-grid">
+      <!-- Video 1 -->
+      <div class="ps-grid-item" onclick="playPsVideo(this, 'QZ9jP3b47xU')">
+        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80');">
+          <div class="ps-card-topbar">
+            <div class="ps-card-channel">
+              <div class="ps-channel-avatar"><i class="fas fa-user-circle"></i></div>
+              <div class="ps-channel-info">
+                <div class="ps-card-title">Khảo sát chất lượng vữa khô trộn sẵn tại công trình</div>
+                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
+              </div>
+            </div>
+            <div class="ps-card-icons">
+              <i class="fas fa-volume-up"></i>
+              <i class="fas fa-closed-captioning"></i>
+              <i class="fas fa-cog"></i>
+            </div>
+          </div>
+          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
+          <div class="ps-card-bottombar">
+            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 2: Phản hồi thợ xây -->
+      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
+        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&auto=format&fit=crop&q=80');">
+          <div class="ps-card-topbar">
+            <div class="ps-card-channel">
+              <div class="ps-channel-avatar" style="background:#FF7E2E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
+              <div class="ps-channel-info">
+                <div class="ps-card-title">(Công trình thực tế) Phản hồi thợ xây khi dùng vữa khô SHK</div>
+                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
+              </div>
+            </div>
+            <div class="ps-card-icons">
+              <i class="fas fa-volume-up"></i>
+              <i class="fas fa-closed-captioning"></i>
+              <i class="fas fa-cog"></i>
+            </div>
+          </div>
+          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
+          <div class="ps-card-bottombar">
+            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 3: TVC Keo Vữa Sông Hồng 2025 -->
+      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
+        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80');">
+          <div class="ps-card-topbar">
+            <div class="ps-card-channel">
+              <div class="ps-channel-avatar" style="background:#FF7E2E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
+              <div class="ps-channel-info">
+                <div class="ps-card-title">Công ty TNHH Keo Vữa Sông Hồng - SHK Mortar TVC 2025</div>
+                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
+              </div>
+            </div>
+            <div class="ps-card-icons">
+              <i class="fas fa-volume-up"></i>
+              <i class="fas fa-closed-captioning"></i>
+              <i class="fas fa-cog"></i>
+            </div>
+          </div>
+          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
+          <div class="ps-card-bottombar">
+            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 4: Vữa khô SHK Hướng tới tương lai -->
+      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
+        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&auto=format&fit=crop&q=80');">
+          <div class="ps-card-topbar">
+            <div class="ps-card-channel">
+              <div class="ps-channel-avatar" style="background:#6F8A3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
+              <div class="ps-channel-info">
+                <div class="ps-card-title">Vữa khô SHK, sản phẩm hướng tới tương lai #vuakhotronsan</div>
+                <div class="ps-card-sub">Mortar keovuasonghong</div>
+              </div>
+            </div>
+            <div class="ps-card-icons">
+              <i class="fas fa-volume-up"></i>
+              <i class="fas fa-closed-captioning"></i>
+              <i class="fas fa-cog"></i>
+            </div>
+          </div>
+          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
+          <div class="ps-card-bottombar">
+            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 5: Thử nghiệm độ bám dính keo dán gạch SHK -->
+      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
+        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=600&auto=format&fit=crop&q=80');">
+          <div class="ps-card-topbar">
+            <div class="ps-card-channel">
+              <div class="ps-channel-avatar" style="background:#FF7E2E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
+              <div class="ps-channel-info">
+                <div class="ps-card-title">Quy trình kiểm định và thử nghiệm độ bám dính keo dán gạch SHK</div>
+                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
+              </div>
+            </div>
+            <div class="ps-card-icons">
+              <i class="fas fa-volume-up"></i>
+              <i class="fas fa-closed-captioning"></i>
+              <i class="fas fa-cog"></i>
+            </div>
+          </div>
+          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
+          <div class="ps-card-bottombar">
+            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 6: Giải pháp vữa xây trát gạch nhẹ AAC -->
+      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
+        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80');">
+          <div class="ps-card-topbar">
+            <div class="ps-card-channel">
+              <div class="ps-channel-avatar" style="background:#8C5A2B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
+              <div class="ps-channel-info">
+                <div class="ps-card-title">Giải pháp vữa xây trát chuyên dụng cho tường gạch nhẹ AAC & ALC</div>
+                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
+              </div>
+            </div>
+            <div class="ps-card-icons">
+              <i class="fas fa-volume-up"></i>
+              <i class="fas fa-closed-captioning"></i>
+              <i class="fas fa-cog"></i>
+            </div>
+          </div>
+          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
+          <div class="ps-card-bottombar">
+            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function playPsVideo(container, videoId) {
+  container.innerHTML = '<iframe src="https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0" title="YouTube Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width:100%;height:100%;border:none;display:block;"></iframe>';
+}
+</script>
+
+<!-- ── DỰ ÁN NỔI BẬT ── -->
+<section class="section" style="background:#FAF7F2;padding:44px 0 48px;border-top:1px solid rgba(0,0,0,0.04);">
+  <div class="container">
+    <!-- Centered Header with Yellow Accent Bar matching Phóng sự thực tế -->
+    <div class="ps-center-header" style="margin-bottom:36px;">
+      <h2 class="ps-main-title">Dự án nổi bật</h2>
+      <div class="ps-title-bar"></div>
+    </div>
+
+    <!-- Multi-page Projects Slider Wrapper with Floating Side Arrows -->
+    <div class="featured-proj-slider-wrapper">
+      <!-- Left Floating Navigation Arrow -->
+      <button type="button" class="proj-nav-arrow-float prev" onclick="prevProjSlide()" aria-label="Previous Projects">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <!-- Multi-page Projects Container (4 Pages of 6 Projects) -->
+      <div class="featured-proj-slider-container">
+        <!-- Page 0 -->
+        <div class="featured-proj-grid featured-proj-page active" id="projPage-0">
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80" alt="Ciputra Hà Nội" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Ciputra Hà Nội</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=80" alt="Vinhomes Ocean Park" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Vinhomes Ocean Park</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=80" alt="Ecopark Hưng Yên" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Ecopark Hưng Yên</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80" alt="The Manor Central Park" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">The Manor Central Park</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&auto=format&fit=crop&q=80" alt="Khu đô thị Starlake Tây Hồ Tây" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Khu đô thị Starlake</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=80" alt="Grand Mercure Hà Nội" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Grand Mercure Hà Nội</h3>
+          </a>
+        </div>
+
+        <!-- Page 1 -->
+        <div class="featured-proj-grid featured-proj-page" id="projPage-1">
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&auto=format&fit=crop&q=80" alt="Vinhomes Smart City" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Vinhomes Smart City</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&auto=format&fit=crop&q=80" alt="Vinhomes Riverside" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Vinhomes Riverside</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80" alt="Gamuda Gardens" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Gamuda Gardens</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop&q=80" alt="Splendora An Khánh" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Splendora An Khánh</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&auto=format&fit=crop&q=80" alt="ParkCity Hà Nội" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">ParkCity Hà Nội</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?w=800&auto=format&fit=crop&q=80" alt="Sunshine City" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Sunshine City</h3>
+          </a>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="featured-proj-grid featured-proj-page" id="projPage-2">
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop&q=80" alt="Flamingo Đại Lải" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Flamingo Đại Lải Resort</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&auto=format&fit=crop&q=80" alt="InterContinental Phú Quốc" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">InterContinental Phú Quốc</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=80" alt="JW Marriott Hotel Hanoi" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">JW Marriott Hanoi</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&auto=format&fit=crop&q=80" alt="Vinpearl Resort Nha Trang" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Vinpearl Resort Nha Trang</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&auto=format&fit=crop&q=80" alt="Meliá Ba Vì" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Meliá Ba Vì Resort</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&auto=format&fit=crop&q=80" alt="Silk Path Grand Sapa" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Silk Path Grand Sapa</h3>
+          </a>
+        </div>
+
+        <!-- Page 3 -->
+        <div class="featured-proj-grid featured-proj-page" id="projPage-3">
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&auto=format&fit=crop&q=80" alt="Lotte Mall Tây Hồ" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">Lotte Mall Tây Hồ</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1567449303078-57ad995bd301?w=800&auto=format&fit=crop&q=80" alt="AEON Mall Hà Đông" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">AEON Mall Hà Đông</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&auto=format&fit=crop&q=80" alt="KCN VSIP Bắc Ninh" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">KCN VSIP Bắc Ninh</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=80" alt="KCN Yên Phong" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">KCN Yên Phong</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&auto=format&fit=crop&q=80" alt="KCN Phố Nối Hưng Yên" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">KCN Phố Nối Hưng Yên</h3>
+          </a>
+          <a href="{% url 'project_list' %}" class="proj-box-card">
+            <div class="proj-box-img-wrap">
+              <img src="https://images.unsplash.com/photo-1590247813693-5541d1c609fd?w=800&auto=format&fit=crop&q=80" alt="KCN DEEP C Hải Phòng" loading="lazy">
+            </div>
+            <h3 class="proj-box-name">KCN DEEP C Hải Phòng</h3>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Floating Navigation Arrow -->
+      <button type="button" class="proj-nav-arrow-float next" onclick="nextProjSlide()" aria-label="Next Projects">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Indicator Squares Centered Below the Images -->
+    <div class="proj-indicators-row-center">
+      <span class="proj-ind-sq active" onclick="setProjSlide(0)"></span>
+      <span class="proj-ind-sq" onclick="setProjSlide(1)"></span>
+      <span class="proj-ind-sq" onclick="setProjSlide(2)"></span>
+      <span class="proj-ind-sq" onclick="setProjSlide(3)"></span>
+    </div>
+  </div>
+</section>
+
+<script>
+let currentProjIdx = 0;
+const totalProjPages = 4;
+
+function showProjSlide(idx) {
+  currentProjIdx = (idx + totalProjPages) % totalProjPages;
+  const pages = document.querySelectorAll('.featured-proj-page');
+  const sqs = document.querySelectorAll('.proj-ind-sq');
+  pages.forEach((p, i) => {
+    p.classList.toggle('active', i === currentProjIdx);
+  });
+  sqs.forEach((sq, i) => {
+    sq.classList.toggle('active', i === currentProjIdx);
+  });
+}
+function setProjSlide(idx) { showProjSlide(idx); }
+function prevProjSlide() { showProjSlide(currentProjIdx - 1); }
+function nextProjSlide() { showProjSlide(currentProjIdx + 1); }
+</script>
+
+<!-- ── MINH CHỨNG CHẤT LƯỢNG (SPLIT BROWN/WHITE & OVERLAPPING SLIDER) ── -->
+<section class="proof-section-wrap">
+  <div class="container">
+    <div class="proof-split-layout">
+      <!-- Left Column: Image Overlapping Brown & White Background -->
+      <div class="proof-left-stage">
+        <div class="proof-overlap-card">
+          <!-- Slide items (Images/Certificates) - 11 Slides -->
+          <div class="proof-slide active" id="proofSlide-0">
+            <img src="{% static 'img/certificates/iso-9001_2015.jpg' %}" alt="Giấy chứng nhận ISO 9001:2015 Quản lý chất lượng SHK Mortar">
+          </div>
+          <div class="proof-slide" id="proofSlide-1">
+            <img src="{% static 'img/certificates/tcvn-4314_2022-shk.jpg' %}" alt="Giấy chứng nhận Hợp chuẩn TCVN 4314:2022 Vữa xây dựng SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-2">
+            <img src="{% static 'img/certificates/tcvn-7899_2008-shk.jpg' %}" alt="Giấy chứng nhận Tiêu chuẩn TCVN 7899-1:2008 Keo dán gạch SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-3">
+            <img src="{% static 'img/certificates/tcvn-9028_2011-shk.jpg' %}" alt="Giấy chứng nhận Hợp chuẩn TCVN 9028:2011 Vữa xây dựng SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-4">
+            <img src="{% static 'img/certificates/keo-c1-shk-test.jpg' %}" alt="Kết quả thử nghiệm Keo dán gạch C1 SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-5">
+            <img src="{% static 'img/certificates/keo-c2-shk-test.jpg' %}" alt="Kết quả thử nghiệm Keo dán gạch C2 SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-6">
+            <img src="{% static 'img/certificates/vua-mac-5-shk-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 5.0 SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-7">
+            <img src="{% static 'img/certificates/vua-mac-75-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 7.5 SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-8">
+            <img src="{% static 'img/certificates/vua-mac-10-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 10 SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-9">
+            <img src="{% static 'img/certificates/vua-xay-aac-75-shk-test.jpg' %}" alt="Kết quả thử nghiệm Vữa xây AAC Mác 7.5 SHK">
+          </div>
+          <div class="proof-slide" id="proofSlide-10">
+            <img src="{% static 'img/certificates/vua-trat-aac-75-test-shk.jpg' %}" alt="Kết quả thử nghiệm Vữa trát AAC Mác 7.5 SHK">
+          </div>
+        </div>
+
+        <!-- Slider Pagination Indicators (11 indicators) -->
+        <div class="proof-indicators-row">
+          <span class="proof-ind-sq active" onclick="setProofSlide(0)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(1)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(2)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(3)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(4)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(5)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(6)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(7)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(8)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(9)"></span>
+          <span class="proof-ind-sq" onclick="setProofSlide(10)"></span>
+        </div>
+      </div>
+
+      <!-- Right Column: Header & Detailed Typography on White Background -->
+      <div class="proof-right-content">
+        <!-- Title with Yellow Vertical Accent Bar - Đồng bộ thẳng hàng tuyệt đối với Về chúng tôi -->
+        <div class="about-title-block" style="margin-bottom: 20px;">
+          <h2 class="about-main-title">Minh chứng chất lượng</h2>
+        </div>
+
+        <p class="about-para">
+          SHK Mortar áp dụng hệ thống quản lý và kiểm soát chất lượng nghiêm ngặt, được kiểm định bởi các đơn vị chuyên môn.
+        </p>
+
+        <p class="about-para" style="margin-bottom:4px;">
+          Sản phẩm đáp ứng các tiêu chuẩn
+        </p>
+
+        <ul class="quality-bullet-list">
+          <li>ISO 9001:2015 (Hệ thống quản lý chất lượng QMS)</li>
+          <li>TCVN 4314:2022 (Tiêu chuẩn Vữa xây dựng)</li>
+          <li>TCVN 7899-1:2008 (Tiêu chuẩn Keo dán gạch)</li>
+          <li>TCVN 9028:2011 (Tiêu chuẩn Vữa cho bê tông nhẹ)</li>
+        </ul>
+
+        <p class="about-para" style="margin-top:8px;">
+          cùng các chứng nhận và hồ sơ kiểm tra chất lượng liên quan, đảm bảo tính ổn định và tin cậy trong từng công trình.
+        </p>
+
+        <a href="https://drive.google.com/drive/folders/1-2VEnOxoTh2CG0laK1VURFiEDBvzOOQd?hl=vi" target="_blank" rel="noopener noreferrer" class="btn-quality-download">
+          Tải Giấy Kiểm Nghiệm
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+let currentProofSlideIdx = 0;
+
+function showProofSlide(idx) {
+  const slides = document.querySelectorAll('.proof-slide');
+  const sqs = document.querySelectorAll('.proof-ind-sq');
+  const totalProofSlides = slides.length;
+  if (!totalProofSlides) return;
+  currentProofSlideIdx = (idx + totalProofSlides) % totalProofSlides;
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === currentProofSlideIdx);
+  });
+  sqs.forEach((sq, i) => {
+    sq.classList.toggle('active', i === currentProofSlideIdx);
+  });
+}
+function setProofSlide(idx) { showProofSlide(idx); }
+
+// Tự động chuyển slide sau mỗi 8s
+setInterval(() => {
+  showProofSlide(currentProofSlideIdx + 1);
+}, 8000);
+</script>
+
+<!-- ── ĐỐI TÁC CỦA CHÚNG TÔI ── -->
+<section class="partners-section-wrap">
+  <div class="partners-split-layout">
+    <!-- Left Column: Title & Subtitle -->
+    <div class="partner-side-text">
+      <h2 class="partner-side-title">
+        <span>Đối tác của</span>
+        <span>chúng tôi</span>
+      </h2>
+      <p class="partner-side-desc">
+        Những đối tác đã tin tưởng và cùng đồng hành với chúng tôi trong suốt những năm qua
+      </p>
+    </div>
+
+    <!-- Right Column: 1-Column Step Slider (4 Visible Columns x 3 Rows = 12 Cards on screen) -->
+    <div class="partners-slider-viewport" id="partnersViewport">
+      <div class="partners-track-flex" id="partnersTrackFlex">
+        <!-- Column 1 (Trang 1 - Cột 1) -->
+        <div class="p-col-unit">
+          <!-- 1. SCG -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 100 65" width="105" height="66" style="display:block;margin:auto;">
+              <path d="M42 8 L50 8 L50 40 L42 40 Z" fill="#DE4516"/>
+              <path d="M54 18 L62 18 L62 40 L54 40 Z" fill="#DE4516"/>
+              <path d="M42 16 L50 8 L50 16 Z" fill="#DE4516"/>
+              <path d="M38 40 L66 40" stroke="#DE4516" stroke-width="2"/>
+              <text x="52" y="56" font-family="'Arial Black', sans-serif" font-size="14" font-weight="900" fill="#DE4516" text-anchor="middle" letter-spacing="1">SCG</text>
+            </svg>
+          </div>
+          <!-- 2. Nam Dược Corp -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 45" width="145" height="52" style="display:block;margin:auto;">
+              <polygon points="22,8 35,34 9,34" fill="#E52320"/>
+              <rect x="38" y="15" width="84" height="18" fill="#F8C300"/>
+              <text x="80" y="27.5" font-family="'Bai Jamjuree', sans-serif" font-size="8" font-weight="800" fill="#E52320" text-anchor="middle">Nam Dược Corp.</text>
+            </svg>
+          </div>
+          <!-- 3. Hoàng Nguyên Construction -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 65" width="138" height="70" style="display:block;margin:auto;">
+              <polygon points="65,6 83,16 83,36 65,46 47,36 47,16" fill="none" stroke="#E52320" stroke-width="2.5"/>
+              <text x="65" y="33" font-family="'Arial Black', sans-serif" font-size="18" font-weight="900" fill="#007A3E" text-anchor="middle">HN</text>
+              <text x="65" y="53" font-family="'Bai Jamjuree', sans-serif" font-size="6" font-weight="800" fill="#E52320" text-anchor="middle">HOANG NGUYEN</text>
+              <text x="65" y="60" font-family="'Bai Jamjuree', sans-serif" font-size="5.5" font-weight="700" fill="#007A3E" text-anchor="middle">CONSTRUCTION</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Column 2 (Trang 1 - Cột 2) -->
+        <div class="p-col-unit">
+          <!-- 4. Hợp Lực (HOPLUC) -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 120 65" width="132" height="70" style="display:block;margin:auto;">
+              <path d="M38 36 C38 18 50 8 60 8 C70 8 82 18 82 36 Z" fill="#D9222A"/>
+              <rect x="52" y="18" width="6" height="18" fill="#FAD133"/>
+              <rect x="62" y="22" width="6" height="14" fill="#FAD133"/>
+              <rect x="44" y="26" width="5" height="10" fill="#FAD133"/>
+              <text x="60" y="52" font-family="'Arial Black', sans-serif" font-size="11" font-weight="900" fill="#D9222A" text-anchor="middle" letter-spacing="1">HOPLUC</text>
+            </svg>
+          </div>
+          <!-- 5. Ciputra Hanoi -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 120 60" width="142" height="68" style="display:block;margin:auto;">
+              <ellipse cx="60" cy="19" rx="26" ry="9" fill="none" stroke="#007A53" stroke-width="3" transform="rotate(-15 60 19)"/>
+              <path d="M42 21 Q58 9 76 21" fill="none" stroke="#007A53" stroke-width="3"/>
+              <text x="60" y="44" font-family="'Times New Roman', serif" font-size="8.5" font-weight="900" fill="#0F3B66" text-anchor="middle" letter-spacing="0.8">CIPUTRA HANOI</text>
+              <text x="60" y="52" font-family="'Arial', sans-serif" font-size="4.5" font-weight="600" fill="#007A53" text-anchor="middle" letter-spacing="0.5">INTERNATIONAL CITY</text>
+            </svg>
+          </div>
+          <!-- 6. VCCC / S -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 120 65" width="112" height="70" style="display:block;margin:auto;">
+              <circle cx="60" cy="30" r="22" fill="#FFFFFF" stroke="#006633" stroke-width="2"/>
+              <circle cx="60" cy="30" r="18" fill="none" stroke="#006633" stroke-width="1.5" stroke-dasharray="3 2"/>
+              <text x="60" y="37.5" font-family="'Arial Black', sans-serif" font-size="20" font-weight="900" fill="#006633" text-anchor="middle">S</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Column 3 (Trang 1 - Cột 3) -->
+        <div class="p-col-unit">
+          <!-- 7. Goertek -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 120 45" width="140" height="52" style="display:block;margin:auto;">
+              <text x="60" y="28" font-family="'Bai Jamjuree', sans-serif" font-size="18" font-weight="800" fill="#222222" text-anchor="middle" letter-spacing="0.5">Goertek</text>
+            </svg>
+          </div>
+          <!-- 8. Deli -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 65 65" width="75" height="75" style="display:block;margin:auto;">
+              <rect x="0" y="0" width="65" height="65" rx="0" fill="#B3112C"/>
+              <text x="32.5" y="42" font-family="'Arial', sans-serif" font-size="23" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="-1">deli</text>
+            </svg>
+          </div>
+          <!-- 9. Sunshine Group -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 120 55" width="142" height="64" style="display:block;margin:auto;">
+              <ellipse cx="60" cy="19" rx="16" ry="6.5" fill="none" stroke="#0B5C9E" stroke-width="2.5" transform="rotate(-30 60 19)"/>
+              <circle cx="60" cy="19" r="6.5" fill="#F37023"/>
+              <text x="60" y="44" font-family="'Arial Black', sans-serif" font-size="7.5" font-weight="900" fill="#0B5C9E" text-anchor="middle" letter-spacing="0.5">SUNSHINE GROUP</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Column 4 (Trang 1 - Cột 4) -->
+        <div class="p-col-unit">
+          <!-- 10. Luxshare-ICT -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="145" height="56" style="display:block;margin:auto;">
+              <text x="48" y="28" font-family="'Arial', sans-serif" font-size="10" font-weight="900" fill="#1C3F7C" letter-spacing="0.5">LUXSHARE</text>
+              <text x="96" y="28" font-family="'Arial', sans-serif" font-size="10" font-weight="700" fill="#1C3F7C">ICT</text>
+              <circle cx="103" cy="16" r="1.5" fill="#3AA8E0"/>
+              <circle cx="109" cy="14" r="1.5" fill="#F8C300"/>
+              <circle cx="115" cy="18" r="1.5" fill="#E52320"/>
+              <circle cx="112" cy="24" r="1.5" fill="#78BE20"/>
+              <line x1="103" y1="16" x2="109" y2="14" stroke="#888888" stroke-width="0.5"/>
+              <line x1="109" y1="14" x2="115" y2="18" stroke="#888888" stroke-width="0.5"/>
+              <line x1="115" y1="18" x2="112" y2="24" stroke="#888888" stroke-width="0.5"/>
+            </svg>
+          </div>
+          <!-- 11. BYD -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 120 55" width="135" height="60" style="display:block;margin:auto;">
+              <rect x="18" y="10" width="84" height="35" rx="17.5" fill="none" stroke="#D9222A" stroke-width="2.8"/>
+              <text x="60" y="34" font-family="'Arial', sans-serif" font-size="18" font-weight="900" fill="#D9222A" text-anchor="middle" letter-spacing="1">BYD</text>
+            </svg>
+          </div>
+          <!-- 12. Coteccons -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 140 50" width="140" height="50" style="display:block;margin:auto;">
+              <text x="70" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="16" font-weight="900" fill="#005B9E" text-anchor="middle" letter-spacing="1">COTECCONS</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Column 5 (Trang 2 - Cột 1) -->
+        <div class="p-col-unit">
+          <!-- 13. Vinhomes -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="17" font-weight="800" fill="#C99700" text-anchor="middle" letter-spacing="0.5">Vinhomes</text>
+            </svg>
+          </div>
+          <!-- 14. Hòa Bình Corp -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="16" font-weight="900" fill="#005596" text-anchor="middle" letter-spacing="1">HÒA BÌNH</text>
+            </svg>
+          </div>
+          <!-- 15. Sun Group -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <circle cx="28" cy="25" r="9" fill="#E86C00"/>
+              <text x="78" y="30" font-family="'Bai Jamjuree', sans-serif" font-size="14" font-weight="800" fill="#E86C00" letter-spacing="0.5">SUN GROUP</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Column 6 (Trang 2 - Cột 2) -->
+        <div class="p-col-unit">
+          <!-- 16. Delta Group -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Arial Black', sans-serif" font-size="17" font-weight="900" fill="#006699" text-anchor="middle" letter-spacing="1.5">DELTA</text>
+            </svg>
+          </div>
+          <!-- 17. Ricons -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="16" font-weight="800" fill="#008080" text-anchor="middle" letter-spacing="1">RICONS</text>
+            </svg>
+          </div>
+          <!-- 18. An Phong -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="16" font-weight="800" fill="#D32F2F" text-anchor="middle" letter-spacing="0.5">AN PHONG</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Column 7 (Trang 2 - Cột 3) -->
+        <div class="p-col-unit">
+          <!-- 19. Unicons -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="16" font-weight="800" fill="#1976D2" text-anchor="middle" letter-spacing="0.5">UNICONS</text>
+            </svg>
+          </div>
+          <!-- 20. Fecon -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Arial Black', sans-serif" font-size="17" font-weight="900" fill="#D84315" text-anchor="middle" letter-spacing="1">FECON</text>
+            </svg>
+          </div>
+          <!-- 21. Eurowindow -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="14" font-weight="800" fill="#00838F" text-anchor="middle">EUROWINDOW</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Column 8 (Trang 2 - Cột 4) -->
+        <div class="p-col-unit">
+          <!-- 22. Viglacera -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="15" font-weight="800" fill="#0277BD" text-anchor="middle" letter-spacing="0.5">VIGLACERA</text>
+            </svg>
+          </div>
+          <!-- 23. Vinaconex -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Arial Black', sans-serif" font-size="14" font-weight="900" fill="#2E7D32" text-anchor="middle" letter-spacing="0.5">VINACONEX</text>
+            </svg>
+          </div>
+          <!-- 24. Bitexco -->
+          <div class="p-logo-card">
+            <svg viewBox="0 0 130 50" width="135" height="50" style="display:block;margin:auto;">
+              <text x="65" y="32" font-family="'Bai Jamjuree', sans-serif" font-size="16" font-weight="800" fill="#C62828" text-anchor="middle" letter-spacing="1">BITEXCO</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination Controls (Matching user screenshot) -->
+      <div class="partner-ctrl-wrapper">
+        <div class="partner-slider-ctrls">
+          <div class="p-ctrl-dots" id="partnerDotsContainer">
+            <span class="p-dot active" onclick="setPartnerStep(0)" title="Vị trí 1 (Cột 1-4)"></span>
+            <span class="p-dot" onclick="setPartnerStep(1)" title="Vị trí 2 (Cột 2-5)"></span>
+            <span class="p-dot" onclick="setPartnerStep(2)" title="Vị trí 3 (Cột 3-6)"></span>
+            <span class="p-dot" onclick="setPartnerStep(3)" title="Vị trí 4 (Cột 4-7)"></span>
+            <span class="p-dot" onclick="setPartnerStep(4)" title="Vị trí 5 (Cột 5-8)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const track = document.getElementById('partnersTrackFlex');
+  const viewport = document.getElementById('partnersViewport');
+  const dotsContainer = document.getElementById('partnerDotsContainer');
+  if (!track || !viewport) return;
+
+  // Lấy danh sách các cột gốc ban đầu (8 cột)
+  const originalCols = Array.from(track.children);
+  const numOriginalCols = originalCols.length; // 8
+  if (numOriginalCols === 0) return;
+
+  // Nhân bản cột trước và sau để tạo vòng lặp vô tận liền mạch (Infinite Loop)
+  originalCols.forEach(col => {
+    const cloneBefore = col.cloneNode(true);
+    const cloneAfter = col.cloneNode(true);
+    cloneBefore.classList.add('p-col-clone');
+    cloneAfter.classList.add('p-col-clone');
+    track.insertBefore(cloneBefore, track.firstChild);
+    track.appendChild(cloneAfter);
+  });
+
+  let currentIndex = numOriginalCols; // Bắt đầu tại vị trí của tập gốc (index 8)
+  let isAnimating = false;
+  let autoPlayTimer = null;
+  const AUTOPLAY_DELAY = 4000; // 4 giây tự chuyển 1 cột mượt mà
+
+  function getMetrics() {
+    const isMobile = window.innerWidth <= 768;
+    const visibleCols = isMobile ? 2 : 4;
+    const gap = isMobile ? 12 : 18;
+    const colWidth = (viewport.clientWidth - (visibleCols - 1) * gap) / visibleCols;
+    const stepDistance = colWidth + gap;
+    return { colWidth, gap, stepDistance, visibleCols };
+  }
+
+  function updateActiveDot() {
+    const dots = dotsContainer ? dotsContainer.querySelectorAll('.p-dot') : [];
+    if (dots.length === 0) return;
+    const activeDotIdx = (currentIndex % numOriginalCols) % dots.length;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === activeDotIdx);
+    });
+  }
+
+  function setTrackPosition(index, animate = true) {
+    const { stepDistance } = getMetrics();
+    if (animate) {
+      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+    } else {
+      track.style.transition = 'none';
+    }
+    const offset = index * stepDistance;
+    track.style.transform = `translateX(-${offset}px)`;
+    updateActiveDot();
+  }
+
+  // Khởi tạo vị trí ban đầu
+  setTrackPosition(currentIndex, false);
+
+  // Xử lý chuyển dịch vòng lặp liền mạch khi kết thúc chuyển động
+  track.addEventListener('transitionend', () => {
+    isAnimating = false;
+    // Nếu đi quá tập gốc về phía sau
+    if (currentIndex >= numOriginalCols * 2) {
+      currentIndex -= numOriginalCols;
+      setTrackPosition(currentIndex, false);
+    } 
+    // Nếu đi quá tập gốc về phía trước
+    else if (currentIndex < numOriginalCols) {
+      currentIndex += numOriginalCols;
+      setTrackPosition(currentIndex, false);
+    }
+  });
+
+  function goToStep(index) {
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex = index;
+    setTrackPosition(currentIndex, true);
+  }
+
+  function nextStep() {
+    goToStep(currentIndex + 1);
+  }
+
+  function prevStep() {
+    goToStep(currentIndex - 1);
+  }
+
+  window.setPartnerStep = function(dotIdx) {
+    goToStep(numOriginalCols + dotIdx);
+    resetAutoPlay();
+  };
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    autoPlayTimer = setInterval(nextStep, AUTOPLAY_DELAY);
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayTimer) {
+      clearInterval(autoPlayTimer);
+      autoPlayTimer = null;
+    }
+  }
+
+  function resetAutoPlay() {
+    stopAutoPlay();
+    startAutoPlay();
+  }
+
+  // ── KÉO THẢ DI CHUYỂN BẰNG CHUỘT & CẢM ỨNG (DRAG / SWIPE TO LOOP) ──
+  let isDragging = false;
+  let startX = 0;
+  let dragTranslate = 0;
+  let prevTranslate = 0;
+
+  function getPosX(e) {
+    return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+  }
+
+  viewport.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    stopAutoPlay();
+    startX = getPosX(e);
+    const { stepDistance } = getMetrics();
+    prevTranslate = -currentIndex * stepDistance;
+    dragTranslate = prevTranslate;
+    track.style.transition = 'none';
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const currentX = getPosX(e);
+    const diff = currentX - startX;
+    dragTranslate = prevTranslate + diff;
+    track.style.transform = `translateX(${dragTranslate}px)`;
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const moved = dragTranslate - prevTranslate;
+    if (moved < -40) {
+      nextStep();
+    } else if (moved > 40) {
+      prevStep();
+    } else {
+      setTrackPosition(currentIndex, true);
+    }
+    resetAutoPlay();
+  });
+
+  viewport.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    stopAutoPlay();
+    viewport.classList.add('is-dragging');
+    startX = e.pageX;
+    const { stepDistance } = getMetrics();
+    prevTranslate = -currentIndex * stepDistance;
+    dragTranslate = prevTranslate;
+    track.style.transition = 'none';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const diff = e.pageX - startX;
+    dragTranslate = prevTranslate + diff;
+    track.style.transform = `translateX(${dragTranslate}px)`;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    viewport.classList.remove('is-dragging');
+    const moved = dragTranslate - prevTranslate;
+    if (moved < -40) {
+      nextStep();
+    } else if (moved > 40) {
+      prevStep();
+    } else {
+      setTrackPosition(currentIndex, true);
+    }
+    resetAutoPlay();
+  });
+
+  viewport.addEventListener('mouseenter', stopAutoPlay);
+  viewport.addEventListener('mouseleave', () => {
+    if (!isDragging) startAutoPlay();
+  });
+
+  startAutoPlay();
+
+  window.addEventListener('resize', () => {
+    setTrackPosition(currentIndex, false);
+  });
+})();
+</script>
+
+<!-- ── ƯỚC TÍNH VẬT LIỆU CẦN DÙNG BANNER ── -->
+<section class="calc-banner-section">
+  <div class="container">
+    <div class="calc-banner-wrapper">
+      <!-- Left Column: Information & CTA -->
+      <div class="calc-banner-left">
+        <h2 class="calc-banner-title">
+          ƯỚC TÍNH<br>
+          VẬT LIỆU CẦN DÙNG
+        </h2>
+        <p class="calc-banner-desc">
+          Công cụ tính toán của SHK Mortar giúp ước tính nhanh khối lượng vật liệu cần sử dụng dựa trên định mức tham khảo. Hỗ trợ chủ đầu tư, nhà thầu, cửa hàng vật liệu và chủ nhà dễ dàng dự toán nhu cầu, chủ động hạch toán và chuẩn bị vật tư cho từng công trình.
+        </p>
+        <a href="{% url 'calculator' %}" class="btn-calc-explore">
+          Tìm hiểu công cụ tính
+        </a>
+      </div>
+
+      <!-- Right Column: Chỗ để trống sẵn sàng để chèn ảnh -->
+      <div class="calc-banner-right" id="calcBannerImageHolder">
+        <!-- Khu vực để trống để chèn ảnh -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ĐĂNG KÝ TƯ VẤN BANNER ── -->
+<section class="consultation-home-section" id="consultation-section">
+  <div class="container">
+    <div class="consult-split-layout">
+      <!-- Left Column: Title, Subtitle, and Image placeholder -->
+      <div class="consult-left-info">
+        <h2 class="consult-home-title">ĐĂNG KÝ TƯ VẤN</h2>
+        <p class="consult-home-desc">
+          Để lại thông tin để nhận tư vấn về sản phẩm, giải pháp và chính sách phù hợp với nhu cầu của bạn.
+        </p>
+        <div class="consult-home-img-holder">
+          <img src="{% static 'img/quality_lab_bg.jpg' %}" alt="Đăng ký tư vấn SHK Mortar" loading="lazy">
+        </div>
+      </div>
+
+      <!-- Right Column: Registration Form in White Card -->
+      <div class="consult-home-form-card">
+        <form action="{% url 'consultation' %}" method="POST" class="consult-form-grid" id="consultHomeForm" novalidate>
+          {% csrf_token %}
+          <!-- Tên khách hàng (Bắt buộc) -->
+          <div class="consult-form-field" id="field_name">
+            <label for="c_full_name">Tên khách hàng:<span class="req">*</span></label>
+            <input type="text" id="c_full_name" name="full_name" placeholder="Nhập họ và tên của bạn" required>
+            <span class="field-error-msg" id="err_name">Vui lòng nhập họ và tên của bạn</span>
+          </div>
+
+          <!-- Số điện thoại (Bắt buộc) -->
+          <div class="consult-form-field" id="field_phone">
+            <label for="c_phone">Số điện thoại:<span class="req">*</span></label>
+            <input type="tel" id="c_phone" name="phone" placeholder="Nhập số điện thoại (VD: 0912345678)" required>
+            <span class="field-error-msg" id="err_phone">Số điện thoại không hợp lệ (gồm 10 chữ số)</span>
+          </div>
+
+          <!-- Email (Không bắt buộc nhưng phải đúng định dạng) -->
+          <div class="consult-form-field" id="field_email">
+            <label for="c_email">Email:<span class="opt">(không bắt buộc)</span></label>
+            <input type="email" id="c_email" name="email" placeholder="Nhập email (VD: example@gmail.com)">
+            <span class="field-error-msg" id="err_email">Email không đúng định dạng (VD: example@gmail.com)</span>
+          </div>
+
+          <!-- Khu vực: Tỉnh/Thành phố & Quận/Huyện (Cấp bậc chi tiết) -->
+          <div class="consult-form-row-2">
+            <!-- Tỉnh / Thành phố -->
+            <div class="consult-form-field" id="field_province">
+              <label for="c_province">Tỉnh / Thành phố:<span class="req">*</span></label>
+              <select id="c_province" name="province" required>
+                <option value="">-- Chọn Tỉnh/Thành --</option>
+                <option value="Hưng Yên">Hưng Yên</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="Hải Dương">Hải Dương</option>
+                <option value="Hải Phòng">Hải Phòng</option>
+                <option value="Bắc Ninh">Bắc Ninh</option>
+                <option value="Bắc Giang">Bắc Giang</option>
+                <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                <option value="Phú Thọ">Phú Thọ</option>
+                <option value="Thái Bình">Thái Bình</option>
+                <option value="Nam Định">Nam Định</option>
+                <option value="Ninh Bình">Ninh Bình</option>
+                <option value="Hà Nam">Hà Nam</option>
+                <option value="Quảng Ninh">Quảng Ninh</option>
+                <option value="Thái Nguyên">Thái Nguyên</option>
+                <option value="Thanh Hóa">Thanh Hóa</option>
+                <option value="Nghệ An">Nghệ An</option>
+                <option value="Hà Tĩnh">Hà Tĩnh</option>
+                <option value="Đà Nẵng">Đà Nẵng</option>
+                <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                <option value="Bình Dương">Bình Dương</option>
+                <option value="Đồng Nai">Đồng Nai</option>
+                <option value="Cần Thơ">Cần Thơ</option>
+                <option value="Tỉnh/Thành khác">Tỉnh/Thành khác</option>
+              </select>
+              <span class="field-error-msg" id="err_province">Vui lòng chọn Tỉnh/Thành</span>
+            </div>
+
+            <!-- Quận / Huyện -->
+            <div class="consult-form-field" id="field_district">
+              <label for="c_district">Quận / Huyện:<span class="req">*</span></label>
+              <select id="c_district" name="district" required disabled>
+                <option value="">-- Chọn Quận/Huyện --</option>
+              </select>
+              <span class="field-error-msg" id="err_district">Vui lòng chọn Quận/Huyện</span>
+            </div>
+          </div>
+
+          <!-- Địa chỉ chi tiết (Xã/Phường, số nhà) -->
+          <div class="consult-form-field" id="field_address_detail">
+            <label for="c_address_detail">Địa chỉ chi tiết:<span class="opt">(không bắt buộc)</span></label>
+            <input type="text" id="c_address_detail" name="address_detail" placeholder="Số nhà, tên đường, xã/phường (nếu có)">
+          </div>
+
+          <!-- Tên công ty/cửa hàng (Không bắt buộc) -->
+          <div class="consult-form-field" id="field_company">
+            <label for="c_company">Tên công ty/cửa hàng:<span class="opt">(không bắt buộc)</span></label>
+            <input type="text" id="c_company" name="company" placeholder="Nhập tên công ty hoặc cửa hàng (nếu có)">
+          </div>
+
+          <!-- Nhu cầu tư vấn (Bắt buộc) -->
+          <div class="consult-form-field" id="field_message">
+            <label for="c_message">Nhu cầu tư vấn:<span class="req">*</span></label>
+            <textarea id="c_message" name="message" rows="2" placeholder="Nhập nhu cầu tư vấn (loại vật liệu, khối lượng, công trình...)" required></textarea>
+            <span class="field-error-msg" id="err_message">Vui lòng nhập nhu cầu tư vấn</span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-consult-submit" id="btnConsultSubmit">
+            Đăng ký tư vấn
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const form = document.getElementById('consultHomeForm');
+  if (!form) return;
+
+  const nameInput = document.getElementById('c_full_name');
+  const phoneInput = document.getElementById('c_phone');
+  const emailInput = document.getElementById('c_email');
+  const provinceSelect = document.getElementById('c_province');
+  const districtSelect = document.getElementById('c_district');
+  const msgInput = document.getElementById('c_message');
+  const submitBtn = document.getElementById('btnConsultSubmit');
+
+  // Database of Districts by Province
+  const districtData = {
+    'Hưng Yên': ['TP. Hưng Yên', 'Thị xã Mỹ Hào', 'Huyện Văn Giang', 'Huyện Yên Mỹ', 'Huyện Văn Lâm', 'Huyện Khoái Châu', 'Huyện Kim Động', 'Huyện Ân Thi', 'Huyện Tiên Lữ', 'Huyện Phù Cừ'],
+    'Hà Nội': ['Quận Ba Đình', 'Quận Hoàn Kiếm', 'Quận Tây Hồ', 'Quận Cầu Giấy', 'Quận Đống Đa', 'Quận Hai Bà Trưng', 'Quận Hoàng Mai', 'Quận Thanh Xuân', 'Quận Nam Từ Liêm', 'Quận Bắc Từ Liêm', 'Quận Hà Đông', 'Quận Long Biên', 'Thị xã Sơn Tây', 'Huyện Đông Anh', 'Huyện Gia Lâm', 'Huyện Sóc Sơn', 'Huyện Thanh Trì', 'Huyện Mê Linh', 'Huyện Hoài Đức', 'Huyện Đan Phượng', 'Huyện Quốc Oai', 'Huyện Thạch Thất', 'Huyện Chương Mỹ', 'Huyện Thanh Oai', 'Huyện Thường Tín', 'Huyện Phú Xuyên', 'Huyện Ứng Hòa', 'Huyện Mỹ Đức', 'Huyện Ba Vì', 'Huyện Phúc Thọ'],
+    'Hải Dương': ['TP. Hải Dương', 'TP. Chí Linh', 'Thị xã Kinh Môn', 'Huyện Cẩm Giàng', 'Huyện Bình Giang', 'Huyện Gia Lộc', 'Huyện Kim Thành', 'Huyện Nam Sách', 'Huyện Ninh Giang', 'Huyện Thanh Hà', 'Huyện Thanh Miện', 'Huyện Tứ Kỳ'],
+    'Hải Phòng': ['Quận Hồng Bàng', 'Quận Ngô Quyền', 'Quận Lê Chân', 'Quận Hải An', 'Quận Kiến An', 'Quận Đồ Sơn', 'Quận Dương Kinh', 'Huyện Thủy Nguyên', 'Huyện An Dương', 'Huyện An Lão', 'Huyện Kiến Thụy', 'Huyện Tiên Lãng', 'Huyện Vĩnh Bảo', 'Huyện Cát Hải', 'Huyện Bạch Long Vĩ'],
+    'Bắc Ninh': ['TP. Bắc Ninh', 'TP. Từ Sơn', 'Thị xã Thuận Thành', 'Thị xã Quế Võ', 'Huyện Tiên Du', 'Huyện Yên Phong', 'Huyện Gia Bình', 'Huyện Lương Tài'],
+    'Bắc Giang': ['TP. Bắc Giang', 'Thị xã Việt Yên', 'Huyện Hiệp Hòa', 'Huyện Tân Yên', 'Huyện Lạng Giang', 'Huyện Lục Nam', 'Huyện Lục Ngạn', 'Huyện Sơn Động', 'Huyện Yên Dũng', 'Huyện Yên Thế'],
+    'Vĩnh Phúc': ['TP. Vĩnh Yên', 'TP. Phúc Yên', 'Huyện Bình Xuyên', 'Huyện Lập Thạch', 'Huyện Sông Lô', 'Huyện Tam Dương', 'Huyện Tam Đảo', 'Huyện Vĩnh Tường', 'Huyện Yên Lạc'],
+    'Phú Thọ': ['TP. Việt Trì', 'Thị xã Phú Thọ', 'Huyện Cẩm Khê', 'Huyện Đoan Hùng', 'Huyện Hạ Hòa', 'Huyện Lâm Thao', 'Huyện Phù Ninh', 'Huyện Tam Nông', 'Huyện Tân Sơn', 'Huyện Thanh Ba', 'Huyện Thanh Sơn', 'Huyện Thanh Thủy', 'Huyện Yên Lập'],
+    'Thái Bình': ['TP. Thái Bình', 'Huyện Đông Hưng', 'Huyện Hưng Hà', 'Huyện Kiến Xương', 'Huyện Quỳnh Phụ', 'Huyện Thái Thụy', 'Huyện Tiền Hải', 'Huyện Vũ Thư'],
+    'Nam Định': ['TP. Nam Định', 'Huyện Giao Thủy', 'Huyện Hải Hậu', 'Huyện Mỹ Lộc', 'Huyện Nam Trực', 'Huyện Nghĩa Hưng', 'Huyện Trực Ninh', 'Huyện Vụ Bản', 'Huyện Xuân Trường', 'Huyện Ý Yên'],
+    'Ninh Bình': ['TP. Ninh Bình', 'TP. Tam Điệp', 'Huyện Gia Viễn', 'Huyện Hoa Lư', 'Huyện Kim Sơn', 'Huyện Nho Quan', 'Huyện Yên Khánh', 'Huyện Yên Mô'],
+    'Hà Nam': ['TP. Phủ Lý', 'Thị xã Duy Tiên', 'Huyện Bình Lục', 'Huyện Kim Bảng', 'Huyện Lý Nhân', 'Huyện Thanh Liêm'],
+    'Quảng Ninh': ['TP. Hạ Long', 'TP. Cẩm Phả', 'TP. Móng Cái', 'TP. Uông Bí', 'Thị xã Đông Triều', 'Thị xã Quảng Yên', 'Huyện Ba Chẽ', 'Huyện Bình Liêu', 'Huyện Cô Tô', 'Huyện Đầm Hà', 'Huyện Hải Hà', 'Huyện Tiên Yên', 'Huyện Vân Đồn'],
+    'Thái Nguyên': ['TP. Thái Nguyên', 'TP. Sông Công', 'TP. Phổ Yên', 'Huyện Đại Từ', 'Huyện Định Hóa', 'Huyện Đồng Hỷ', 'Huyện Phú Bình', 'Huyện Phú Lương', 'Huyện Võ Nhai'],
+    'Thanh Hóa': ['TP. Thanh Hóa', 'TP. Sầm Sơn', 'Thị xã Bỉm Sơn', 'Thị xã Nghi Sơn', 'Huyện Đông Sơn', 'Huyện Hà Trung', 'Huyện Hậu Lộc', 'Huyện Hoằng Hóa', 'Huyện Nga Sơn', 'Huyện Nông Cống', 'Huyện Quảng Xương', 'Huyện Thiệu Hóa', 'Huyện Thọ Xuân', 'Huyện Triệu Sơn', 'Huyện Yên Định'],
+    'Nghệ An': ['TP. Vinh', 'Thị xã Cửa Lò', 'Thị xã Thái Hòa', 'Thị xã Hoàng Mai', 'Huyện Diễn Châu', 'Huyện Đô Lương', 'Huyện Hưng Nguyên', 'Huyện Nam Đàn', 'Huyện Nghi Lộc', 'Huyện Quỳnh Lưu', 'Huyện Thanh Chương', 'Huyện Yên Thành'],
+    'Hà Tĩnh': ['TP. Hà Tĩnh', 'Thị xã Hồng Lĩnh', 'Thị xã Kỳ Anh', 'Huyện Can Lộc', 'Huyện Cẩm Xuyên', 'Huyện Đức Thọ', 'Huyện Hương Khê', 'Huyện Hương Sơn', 'Huyện Kỳ Anh', 'Huyện Lộc Hà', 'Huyện Nghi Xuân', 'Huyện Thạch Hà'],
+    'Đà Nẵng': ['Quận Hải Châu', 'Quận Cẩm Lệ', 'Quận Thanh Khê', 'Quận Liên Chiểu', 'Quận Ngũ Hành Sơn', 'Quận Sơn Trà', 'Huyện Hòa Vang', 'Huyện Hoàng Sa'],
+    'TP. Hồ Chí Minh': ['TP. Thủ Đức', 'Quận 1', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 'Quận 8', 'Quận 10', 'Quận 11', 'Quận 12', 'Quận Bình Tân', 'Quận Bình Thạnh', 'Quận Gò Vấp', 'Quận Phú Nhuận', 'Quận Tân Bình', 'Quận Tân Phú', 'Huyện Bình Chánh', 'Huyện Cần Giờ', 'Huyện Củ Chi', 'Huyện Hóc Môn', 'Huyện Nhà Bè'],
+    'Bình Dương': ['TP. Thủ Dầu Một', 'TP. Dĩ An', 'TP. Thuận An', 'TP. Tân Uyên', 'TP. Bến Cát', 'Huyện Bàu Bàng', 'Huyện Bắc Tân Uyên', 'Huyện Dầu Tiếng', 'Huyện Phú Giáo'],
+    'Đồng Nai': ['TP. Biên Hòa', 'TP. Long Khánh', 'Huyện Cẩm Mỹ', 'Huyện Định Quán', 'Huyện Long Thành', 'Huyện Nhơn Trạch', 'Huyện Tân Phú', 'Huyện Thống Nhất', 'Huyện Trảng Bom', 'Huyện Vĩnh Cửu', 'Huyện Xuân Lộc'],
+    'Cần Thơ': ['Quận Ninh Kiều', 'Quận Bình Thủy', 'Quận Cái Răng', 'Quận Ô Môn', 'Quận Thốt Nốt', 'Huyện Cờ Đỏ', 'Huyện Phong Điền', 'Huyện Thới Lai', 'Huyện Vĩnh Thạnh'],
+    'Tỉnh/Thành khác': ['Trung tâm Tỉnh / Thành phố', 'Quận / Huyện trung tâm', 'Khu vực khác']
+  };
+
+  const phoneRegex = /^(0[235789])[0-9]{8}$/;
+  // Strict email regex requiring proper alphanumeric domains and valid TLDs (.com, .vn, .com.vn, etc.)
+  const emailStrictRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,6}$/;
+
+  function setFieldError(fieldId, isError) {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      if (isError) {
+        field.classList.add('has-error');
+      } else {
+        field.classList.remove('has-error');
+      }
+    }
+  }
+
+  // Handle Province change -> Load Districts
+  provinceSelect.addEventListener('change', function() {
+    const selectedProv = this.value;
+    districtSelect.innerHTML = '<option value="">-- Chọn Quận/Huyện --</option>';
+    
+    if (selectedProv && districtData[selectedProv]) {
+      districtData[selectedProv].forEach(function(district) {
+        const opt = document.createElement('option');
+        opt.value = district;
+        opt.textContent = district;
+        districtSelect.appendChild(opt);
+      });
+      districtSelect.disabled = false;
+      setFieldError('field_province', false);
+    } else {
+      districtSelect.disabled = true;
+      setFieldError('field_province', true);
+    }
+    setFieldError('field_district', false);
+  });
+
+  districtSelect.addEventListener('change', function() {
+    setFieldError('field_district', this.value === '');
+  });
+
+  // Real-time validations
+  nameInput.addEventListener('input', () => {
+    setFieldError('field_name', nameInput.value.trim().length === 0);
+  });
+
+  phoneInput.addEventListener('input', () => {
+    const val = phoneInput.value.trim().replace(/[\s.-]/g, '');
+    setFieldError('field_phone', val.length > 0 && !phoneRegex.test(val));
+  });
+
+  emailInput.addEventListener('input', () => {
+    const val = emailInput.value.trim();
+    setFieldError('field_email', val.length > 0 && !emailStrictRegex.test(val));
+  });
+
+  msgInput.addEventListener('input', () => {
+    setFieldError('field_message', msgInput.value.trim().length === 0);
+  });
+
+  form.addEventListener('submit', function(e) {
+    let isValid = true;
+
+    // Validate Name
+    if (nameInput.value.trim().length === 0) {
+      setFieldError('field_name', true);
+      isValid = false;
+    } else {
+      setFieldError('field_name', false);
+    }
+
+    // Validate Phone (10 digits Vietnamese phone)
+    const phoneVal = phoneInput.value.trim().replace(/[\s.-]/g, '');
+    if (!phoneRegex.test(phoneVal)) {
+      setFieldError('field_phone', true);
+      isValid = false;
+    } else {
+      setFieldError('field_phone', false);
+    }
+
+    // Strict Validate Email if provided
+    const emailVal = emailInput.value.trim();
+    if (emailVal.length > 0 && !emailStrictRegex.test(emailVal)) {
+      setFieldError('field_email', true);
+      isValid = false;
+    } else {
+      setFieldError('field_email', false);
+    }
+
+    // Validate Province selection
+    if (!provinceSelect.value) {
+      setFieldError('field_province', true);
+      isValid = false;
+    } else {
+      setFieldError('field_province', false);
+    }
+
+    // Validate District selection
+    if (!districtSelect.value) {
+      setFieldError('field_district', true);
+      isValid = false;
+    } else {
+      setFieldError('field_district', false);
+    }
+
+    // Validate Message
+    if (msgInput.value.trim().length === 0) {
+      setFieldError('field_message', true);
+      isValid = false;
+    } else {
+      setFieldError('field_message', false);
+    }
+
+    if (!isValid) {
+      e.preventDefault();
+      // Scroll smoothly to the first invalid element
+      const firstError = form.querySelector('.has-error input, .has-error select, .has-error textarea');
+      if (firstError) {
+        firstError.focus();
+      }
+      return false;
+    }
+
+    // Prevent duplicate multi-click submissions
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Đang gửi đăng ký...';
+  });
+})();
+</script>
+
+{% endblock %}

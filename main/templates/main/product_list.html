@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Sản phẩm – Keo Vữa Sông Hồng{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-th-large"></i> Sản phẩm</h1>
+        <p>Vữa khô trộn sẵn, Keo dán gạch và Cát sạch chất lượng cao</p>
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Trang chủ</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
+            <span>Sản phẩm</span>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <div class="container">
+        <a href="{% url 'product_list' %}" class="filter-btn {% if not current_category %}active{% endif %}">Tất cả</a>
+        {% for cat in categories %}
+        <a href="{% url 'product_list' %}?category={{ cat.slug }}" class="filter-btn {% if current_category.slug == cat.slug %}active{% endif %}">{{ cat.name }}</a>
+        {% endfor %}
+    </div>
+</div>
+
+<section class="pl-wrap">
+    <div class="container">
+        {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="pc-wrap">
+              <div class="product-card">
+                <div class="pc-visual">
+                  {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                  {% else %}
+                    <div class="pc-placeholder">
+                      <div class="pc-placeholder-icon"><i class="fas fa-box-open"></i></div>
+                    </div>
+                  {% endif %}
+                  <span class="pc-badge">{% if product.category %}{{ product.category.name }}{% else %}SHK Mortar{% endif %}</span>
+                  <span class="pc-visual-num">{{ forloop.counter }}</span>
+                </div>
+                <div class="pc-info">
+                  <div class="pc-num">{% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}</div>
+                  <div class="pc-name">{{ product.name }}</div>
+                  {% if product.short_description %}
+                  <div class="pc-desc">{{ product.short_description|truncatechars:85 }}</div>
+                  {% endif %}
+                  <a href="{% url 'product_detail' product.slug %}" class="pc-cta">
+                    Xem chi tiết <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center;padding:80px 0;">
+            <i class="fas fa-box-open" style="font-size:56px;margin-bottom:16px;display:block;color:rgba(212,146,42,.25);"></i>
+            <p style="font-size:16px;color:rgba(255,255,255,.4);">Chưa có sản phẩm nào. Vui lòng quay lại sau.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
