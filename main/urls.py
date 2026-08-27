@@ -16,4 +16,7 @@ urlpatterns = [
     path('du-an/', views.project_list, name='project_list'),
     path('du-an/<slug:slug>/', views.project_detail, name='project_detail'),
     path('dang-ky-tu-van/', views.consultation, name='consultation'),
+    path('xuat-excel-tu-van/', views.download_consultations_excel, name='export_consultations_excel'),
+    path('xuat-word-tu-van/<int:pk>/', views.download_consultation_word, name='export_consultation_word'),
 ]
+

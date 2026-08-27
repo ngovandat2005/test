@@ -73,6 +73,50 @@ class ConsultationRequestAdmin(admin.ModelAdmin):
     list_editable = ['is_processed']
     readonly_fields = ['created_at']
     search_fields = ['full_name', 'phone', 'company']
+    actions = ['export_to_excel_action', 'export_to_word_action']
+
+    @admin.action(description="📥 Xuất danh sách đã chọn ra file Excel (.xlsx)")
+    def export_to_excel_action(self, request, queryset):
+        from django.http import HttpResponse
+        from django.utils import timezone
+        from .export_utils import export_consultations_to_excel
+
+        wb = export_consultations_to_excel(queryset)
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="Danh_Sach_Tu_Van_{timezone.now().strftime("%Y%m%d_%H%M")}.xlsx"'
+        wb.save(response)
+        return response
+
+    @admin.action(description="📄 Xuất phiếu tư vấn đã chọn ra file Word (.docx)")
+    def export_to_word_action(self, request, queryset):
+        from io import BytesIO
+        from django.http import HttpResponse
+        from django.utils import timezone
+        from .export_utils import export_consultation_to_docx
+        from docx import Document
+
+        # Tạo file word gộp tất cả phiếu được chọn
+        combined_doc = Document()
+        first = True
+        for obj in queryset:
+            if not first:
+                combined_doc.add_page_break()
+            export_consultation_to_docx(obj, doc=combined_doc)
+            first = False
+
+        doc_io = BytesIO()
+        combined_doc.save(doc_io)
+        doc_io.seek(0)
+
+        response = HttpResponse(
+            doc_io.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        )
+        response['Content-Disposition'] = f'attachment; filename="Phieu_Dang_Ky_Tu_Van_{timezone.now().strftime("%Y%m%d_%H%M")}.docx"'
+        return response
+
 
 
 @admin.register(Catalogue)

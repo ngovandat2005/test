@@ -214,15 +214,58 @@ def consultation(request):
             full_message_parts.append(f"Nhu cầu: {interest or message_text}")
         full_message = "\n".join(full_message_parts)
 
-        ConsultationRequest.objects.create(
+        consultation_obj = ConsultationRequest.objects.create(
             full_name=full_name, phone=phone_cleaned, email=email,
             company=company, interest=interest or province or "Tư vấn sản phẩm", message=full_message
         )
+        
+        # Tự động xuất và cập nhật ra file Excel và Word
+        try:
+            from .export_utils import auto_save_consultation_to_files
+            auto_save_consultation_to_files(consultation_obj)
+        except Exception:
+            pass
+
         messages.success(request, 'Đăng ký tư vấn thành công! Chuyên viên của SHK Mortar sẽ liên hệ với bạn trong thời gian sớm nhất.')
         return redirect(referer)
 
     products = Product.objects.filter(is_active=True).values('name')
     return render(request, 'main/consultation.html', {'products': products})
+
+
+def download_consultations_excel(request):
+    """Tải file Excel danh sách khách hàng đăng ký tư vấn"""
+    from .export_utils import export_consultations_to_excel
+    queryset = ConsultationRequest.objects.all().order_by('-created_at')
+    wb = export_consultations_to_excel(queryset)
+    
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = f'attachment; filename="Danh_Sach_Dang_Ky_Tu_Van_{timezone.now().strftime("%Y%m%d_%H%M")}.xlsx"'
+    wb.save(response)
+    return response
+
+
+def download_consultation_word(request, pk):
+    """Tải file Word phiếu yêu cầu tư vấn cho 1 khách hàng cụ thể"""
+    from io import BytesIO
+    from .export_utils import export_consultation_to_docx
+    consultation_obj = get_object_or_404(ConsultationRequest, pk=pk)
+    doc = export_consultation_to_docx(consultation_obj)
+    
+    doc_io = BytesIO()
+    doc.save(doc_io)
+    doc_io.seek(0)
+    
+    response = HttpResponse(
+        doc_io.getvalue(),
+        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    )
+    safe_phone = str(consultation_obj.phone).replace(' ', '')
+    response['Content-Disposition'] = f'attachment; filename="Phieu_Tu_Van_SHK_{consultation_obj.pk}_{safe_phone}.docx"'
+    return response
+
 
 
 CALCULATOR_PRODUCT_MAP = {
