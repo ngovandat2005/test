@@ -116,14 +116,15 @@ h4 { font-size: 18px; font-weight: 600; }
   flex-shrink: 0;
 }
 .nav-logo-img {
-  height: 48px;
+  height: 52px;
   width: auto;
   object-fit: contain;
-  background: #ffffff;
-  padding: 2px 6px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
   transition: transform .2s ease;
+  display: block;
 }
 .nav-logo:hover .nav-logo-img {
   transform: scale(1.03);
