@@ -105,7 +105,7 @@ h4 { font-size: 18px; font-weight: 600; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  height: 68px;
+  height: 78px;
 }
 
 .nav-logo {
@@ -116,8 +116,9 @@ h4 { font-size: 18px; font-weight: 600; }
   flex-shrink: 0;
 }
 .nav-logo-img {
-  height: 52px;
+  height: 70px;
   width: auto;
+  max-height: 74px;
   object-fit: contain;
   background: transparent;
   padding: 0;
