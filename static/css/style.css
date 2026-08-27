@@ -1832,8 +1832,8 @@ main.main-home { padding-top: 0; }
 }
 
 .footer-company-info .info-label {
-  font-weight: 500;
-  color: #333333; /* Xám đậm, không in đậm */
+  font-weight: 700;
+  color: #222222; /* In đậm */
 }
 
 .footer-company-info .info-val {
@@ -1888,9 +1888,9 @@ main.main-home { padding-top: 0; }
 .footer-link-list a {
   font-family: 'Bai Jamjuree', sans-serif;
   font-size: 14px;
-  color: #555555;
+  color: #333333;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700; /* In đậm */
   transition: color .2s ease;
 }
 
@@ -1906,8 +1906,8 @@ main.main-home { padding-top: 0; }
 .footer-group-item a {
   font-family: 'Bai Jamjuree', sans-serif;
   font-size: 14px;
-  font-weight: 600;
-  color: #555555;
+  font-weight: 700; /* In đậm */
+  color: #333333;
   text-decoration: none;
   transition: color .2s ease;
 }
@@ -1931,9 +1931,9 @@ main.main-home { padding-top: 0; }
 .footer-social-col a {
   font-family: 'Bai Jamjuree', sans-serif;
   font-size: 14px;
-  color: #555555;
+  color: #333333;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700; /* In đậm */
   transition: color .2s ease;
 }
 
