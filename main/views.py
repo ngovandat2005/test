@@ -133,7 +133,7 @@ def home(request):
     all_video_items = []
     # Các bài viết admin tạo mới LUÔN ĐƯỢC ƯU TIÊN HIỆN ĐẦU TIÊN
     for n in phong_su_db:
-        vid_id = n.get_video_id()
+        vid_id = n.get_video_id() if hasattr(n, 'get_video_id') else 'N-FLw-piwlc'
         thumb = n.image.url if n.image else (f'https://img.youtube.com/vi/{vid_id}/hqdefault.jpg' if vid_id and vid_id != 'N-FLw-piwlc' else 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80')
         all_video_items.append({
             'title': n.title,

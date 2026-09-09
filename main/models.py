@@ -182,6 +182,23 @@ class News(models.Model):
     def video_embed_url(self):
         return youtube_embed_url(self.video_url)
 
+    def get_video_id(self):
+        if not self.video_url:
+            return 'N-FLw-piwlc'
+        url = self.video_url.strip()
+        if 'youtu.be/' in url:
+            return url.split('youtu.be/')[-1].split('?')[0].split('&')[0]
+        elif 'youtube.com/watch' in url:
+            import urllib.parse
+            qs = urllib.parse.urlparse(url).query
+            v = urllib.parse.parse_qs(qs).get('v', [None])[0]
+            return v or 'N-FLw-piwlc'
+        elif 'youtube.com/embed/' in url:
+            return url.split('youtube.com/embed/')[-1].split('?')[0]
+        elif 'youtube-nocookie.com/embed/' in url:
+            return url.split('youtube-nocookie.com/embed/')[-1].split('?')[0]
+        return 'N-FLw-piwlc'
+
     def __str__(self):
         return self.title
 
