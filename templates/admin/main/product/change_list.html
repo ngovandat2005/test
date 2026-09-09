@@ -2,33 +2,7 @@
 {% load i18n static %}
 
 {% block content %}
-<div class="sp-wrap" x-data="{
-    selected: [],
-    get count() { return this.selected.length; },
-    toggleAll(e) {
-        const checked = e.target.checked;
-        this.selected = checked ? Array.from(document.querySelectorAll('.sp-row-check')).map(el => el.value) : [];
-        document.querySelectorAll('.sp-row-check').forEach(el => el.checked = checked);
-    },
-    toggleOne(e) {
-        const v = e.target.value;
-        if (e.target.checked) { if (!this.selected.includes(v)) this.selected.push(v); }
-        else { this.selected = this.selected.filter(x => x !== v); }
-    },
-    clearAll() {
-        this.selected = [];
-        document.querySelectorAll('.sp-row-check, #sp-select-all').forEach(el => el.checked = false);
-    },
-    editSelected() {
-        if (this.selected.length === 1) {
-            window.location.href = '/admin/main/product/' + this.selected[0] + '/change/';
-        }
-    },
-    submitAction(action) {
-        document.getElementById('sp-action-input').value = action;
-        document.getElementById('sp-changelist-form').submit();
-    }
-}">
+<div class="sp-wrap">
     <div class="flex items-center justify-between mb-4">
         <div>
             <div class="flex items-center gap-3">
@@ -45,16 +19,6 @@
     </div>
 
     <div class="bg-white border border-base-200 rounded-default dark:bg-base-900 dark:border-base-800">
-        <div class="flex items-center gap-4 px-4 py-3 border-b border-base-200 bg-base-50 dark:bg-base-800/40 dark:border-base-800" x-show="count > 0" x-cloak>
-            <label class="flex items-center gap-2 text-sm">
-                <input type="checkbox" x-on:click="toggleAll($event)" x-bind:checked="count > 0">
-                {% trans "Đã chọn" %} <span x-text="count"></span> {% trans "sản phẩm" %}
-            </label>
-            <a href="#" class="text-sm text-primary-600 hover:underline" x-on:click.prevent="editSelected()">{% trans "Sửa sản phẩm" %}</a>
-            <a href="#" class="text-sm text-primary-600 hover:underline" x-on:click.prevent="submitAction('delete_selected')">{% trans "Xóa sản phẩm" %}</a>
-            <a href="#" class="ml-auto text-sm text-subtle hover:underline" x-on:click.prevent="clearAll()">{% trans "Bỏ chọn" %}</a>
-        </div>
-
         <form method="get" class="flex flex-wrap items-center gap-3 px-4 py-3 border-b border-base-200 dark:border-base-800">
             <div class="flex items-center bg-white border border-base-200 rounded-default px-3 grow min-w-64 dark:bg-base-900 dark:border-base-700">
                 <span class="material-symbols-outlined md-18 text-base-400">search</span>
@@ -89,47 +53,35 @@
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b border-base-200 text-left text-subtle dark:border-base-800">
-                        <th class="px-2 py-3 w-8 text-center" title="{% trans 'Kéo thả để sắp xếp' %}"><span class="material-symbols-outlined md-16 text-subtle">drag_indicator</span></th>
-                        <th class="px-4 py-3 w-10"><input type="checkbox" id="sp-select-all" x-on:click="toggleAll($event)"></th>
-                        <th class="px-2 py-3">{% trans "Ảnh" %}</th>
-                        <th class="px-2 py-3">{% trans "Tên sản phẩm & SKU" %}</th>
-                        <th class="px-2 py-3">{% trans "Danh mục vật liệu" %}</th>
-                        <th class="px-2 py-3 w-24">{% trans "Thứ tự" %}</th>
-                        <th class="px-2 py-3">{% trans "Hiển thị web" %}</th>
-                        <th class="px-2 py-3 text-right">{% trans "Hành động" %}</th>
+                        <th class="px-3 py-3 w-14">{% trans "Ảnh" %}</th>
+                        <th class="px-3 py-3 font-semibold">{% trans "Tên sản phẩm & SKU" %}</th>
+                        <th class="px-3 py-3 font-semibold">{% trans "Danh mục vật liệu" %}</th>
+                        <th class="px-3 py-3 font-semibold">{% trans "Hiển thị web" %}</th>
+                        <th class="px-3 py-3 font-semibold text-right">{% trans "Hành động" %}</th>
                     </tr>
                 </thead>
                 <tbody id="sp-products-tbody">
                     {% for obj in cl.result_list %}
-                    <tr class="border-b border-base-100 last:border-0 dark:border-base-800/60 sp-draggable-row" data-pk="{{ obj.pk }}">
-                        <td class="px-2 py-3 w-8 text-center sp-drag-handle" title="{% trans 'Giữ và kéo để đổi vị trí sản phẩm' %}">
-                            <span class="material-symbols-outlined md-18 text-base-400 hover:text-primary-600 select-none">drag_indicator</span>
-                        </td>
-                        <td class="px-4 py-3">
-                            <input type="checkbox" name="_selected_action" value="{{ obj.pk }}" class="sp-row-check" x-on:click="toggleOne($event)">
-                        </td>
-                        <td class="px-2 py-3">
+                    <tr class="border-b border-base-100 last:border-0 dark:border-base-800/60 hover:bg-base-50/50 dark:hover:bg-base-800/30 transition-colors" data-pk="{{ obj.pk }}">
+                        <td class="px-3 py-3">
                             {% if obj.image %}
-                                <img src="{{ obj.image.url }}" class="w-10 h-10 object-cover rounded-default">
+                                <img src="{{ obj.image.url }}" class="w-10 h-10 object-cover rounded-default border border-base-200 dark:border-base-700">
                             {% else %}
                                 <div class="w-10 h-10 bg-base-100 rounded-default dark:bg-base-800"></div>
                             {% endif %}
                         </td>
-                        <td class="px-2 py-3">
+                        <td class="px-3 py-3">
                             <a href="/admin/main/product/{{ obj.pk }}/change/" class="sp-plain-text block font-medium hover:underline">{{ obj.name }}</a>
                             <span class="sp-plain-text text-xs">SKU: {{ obj.sku|default:"—" }}</span>
                         </td>
-                        <td class="px-2 py-3">
+                        <td class="px-3 py-3">
                             {% if obj.category %}
                                 <span class="sp-plain-text">{{ obj.category.name }}</span>
                             {% else %}
                                 <span class="sp-plain-text">—</span>
                             {% endif %}
                         </td>
-                        <td class="px-2 py-3">
-                            <input type="number" value="{{ obj.order }}" data-pk="{{ obj.pk }}" class="sp-order-input sp-plain-text w-16 text-sm">
-                        </td>
-                        <td class="px-2 py-3">
+                        <td class="px-3 py-3">
                             <button type="button" class="sp-toggle-active" data-pk="{{ obj.pk }}" data-active="{{ obj.is_active|yesno:"1,0" }}">
                                 <span class="sp-toggle-track {% if obj.is_active %}sp-toggle-on{% endif %}">
                                     <span class="sp-toggle-thumb"></span>
@@ -139,22 +91,22 @@
                                 </span>
                             </button>
                         </td>
-                        <td class="px-2 py-3">
+                        <td class="px-3 py-3">
                             <div class="flex items-center justify-end gap-1">
-                                <a href="{% url 'product_detail' obj.slug %}" target="_blank" title="{% trans 'Xem trên web' %}" class="w-8 h-8 flex items-center justify-center rounded-default hover:bg-base-100 dark:hover:bg-base-800">
+                                <a href="{% url 'product_detail' obj.slug %}" target="_blank" title="{% trans 'Xem trên web' %}" class="w-8 h-8 flex items-center justify-center rounded-default hover:bg-base-100 dark:hover:bg-base-800 text-base-500 hover:text-primary-600 transition-colors">
                                     <span class="material-symbols-outlined md-18 sp-plain-text">visibility</span>
                                 </a>
-                                <a href="/admin/main/product/{{ obj.pk }}/change/" title="{% trans 'Sửa' %}" class="w-8 h-8 flex items-center justify-center rounded-default hover:bg-base-100 dark:hover:bg-base-800">
+                                <a href="/admin/main/product/{{ obj.pk }}/change/" title="{% trans 'Sửa' %}" class="w-8 h-8 flex items-center justify-center rounded-default hover:bg-base-100 dark:hover:bg-base-800 text-base-500 hover:text-[#8C5A2B] transition-colors">
                                     <span class="material-symbols-outlined md-18 sp-plain-text">edit</span>
                                 </a>
-                                <a href="/admin/main/product/{{ obj.pk }}/delete/" title="{% trans 'Xóa' %}" class="w-8 h-8 flex items-center justify-center rounded-default hover:bg-base-100 dark:hover:bg-base-800">
+                                <a href="/admin/main/product/{{ obj.pk }}/delete/" onclick="return confirm('{% trans "Bạn có chắc chắn muốn xóa sản phẩm này không?" %}');" title="{% trans 'Xóa' %}" class="w-8 h-8 flex items-center justify-center rounded-default hover:bg-base-100 dark:hover:bg-base-800 text-base-500 hover:text-red-600 transition-colors">
                                     <span class="material-symbols-outlined md-18 sp-plain-text">delete</span>
                                 </a>
                             </div>
                         </td>
                     </tr>
                     {% empty %}
-                    <tr><td colspan="8" class="px-4 py-8 text-center text-subtle">{% trans "Không có sản phẩm nào." %}</td></tr>
+                    <tr><td colspan="5" class="px-4 py-8 text-center text-subtle">{% trans "Không có sản phẩm nào." %}</td></tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -368,102 +320,6 @@ document.addEventListener('DOMContentLoaded', function () {
         toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
         }, 2500);
-    }
-
-    if (tbody) {
-        const rows = tbody.querySelectorAll('.sp-draggable-row');
-        rows.forEach(row => {
-            // Cho phép kéo từ icon tay cầm
-            const handle = row.querySelector('.sp-drag-handle');
-            if (handle) {
-                handle.setAttribute('draggable', 'true');
-
-                handle.addEventListener('dragstart', (e) => {
-                    draggedRow = row;
-                    row.classList.add('is-dragging');
-                    e.dataTransfer.effectAllowed = 'move';
-                    e.dataTransfer.setData('text/plain', row.dataset.pk);
-                });
-
-                handle.addEventListener('dragend', () => {
-                    if (draggedRow) {
-                        draggedRow.classList.remove('is-dragging');
-                        draggedRow = null;
-                    }
-                    tbody.querySelectorAll('.sp-draggable-row').forEach(r => {
-                        r.classList.remove('drag-over-top', 'drag-over-bottom');
-                    });
-                });
-            }
-
-            row.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                if (!draggedRow || draggedRow === row) return;
-
-                const rect = row.getBoundingClientRect();
-                const midY = rect.top + rect.height / 2;
-                tbody.querySelectorAll('.sp-draggable-row').forEach(r => {
-                    r.classList.remove('drag-over-top', 'drag-over-bottom');
-                });
-
-                if (e.clientY < midY) {
-                    row.classList.add('drag-over-top');
-                } else {
-                    row.classList.add('drag-over-bottom');
-                }
-            });
-
-            row.addEventListener('dragleave', () => {
-                row.classList.remove('drag-over-top', 'drag-over-bottom');
-            });
-
-            row.addEventListener('drop', (e) => {
-                e.preventDefault();
-                if (!draggedRow || draggedRow === row) return;
-
-                const rect = row.getBoundingClientRect();
-                const midY = rect.top + rect.height / 2;
-
-                if (e.clientY < midY) {
-                    tbody.insertBefore(draggedRow, row);
-                } else {
-                    tbody.insertBefore(draggedRow, row.nextSibling);
-                }
-
-                row.classList.remove('drag-over-top', 'drag-over-bottom');
-                if (draggedRow) draggedRow.classList.remove('is-dragging');
-
-                saveNewOrder();
-            });
-        });
-
-        function saveNewOrder() {
-            const currentRows = Array.from(tbody.querySelectorAll('.sp-draggable-row'));
-            const pks = currentRows.map(r => r.dataset.pk);
-
-            // Cập nhật số thứ tự trực tiếp trên từng ô input
-            currentRows.forEach((r, idx) => {
-                const input = r.querySelector('.sp-order-input');
-                if (input) input.value = idx;
-            });
-
-            // Gửi API lưu thứ tự lên server
-            fetch('/admin/main/product/reorder-products/', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ pks: pks, start_order: 0 })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.ok) {
-                    showToast('{% trans "Đã cập nhật vị trí sản phẩm thành công!" %}');
-                }
-            })
-            .catch(err => console.error(err));
-        }
     }
 });
 </script>

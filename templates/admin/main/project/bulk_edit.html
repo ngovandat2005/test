@@ -36,9 +36,9 @@
             <a href="{% url 'admin:main_project_changelist' %}" class="px-4 py-2 border border-base-300 text-base-700 bg-white hover:bg-base-100 text-sm font-medium rounded-default transition-colors dark:bg-base-800 dark:border-base-700 dark:text-base-300">
                 {% trans "Hủy bỏ" %}
             </a>
-            <button type="button" x-on:click="submitForm()" x-bind:disabled="submitting" class="flex items-center gap-2 px-5 py-2 bg-[#8C5A2B] hover:bg-[#70441E] text-white text-sm font-semibold rounded-default transition-colors shadow-xs cursor-pointer disabled:opacity-50 border-none">
+            <button type="submit" form="bulk-edit-form" class="flex items-center gap-2 px-5 py-2 bg-[#8C5A2B] hover:bg-[#70441E] text-white text-sm font-semibold rounded-default transition-colors shadow-xs cursor-pointer border-none">
                 <span class="material-symbols-outlined text-[18px]">save</span>
-                <span x-text="submitting ? '{% trans 'Đang lưu...' %}' : '{% trans 'Lưu thay đổi' %}'"></span>
+                <span>{% trans 'Lưu thay đổi' %}</span>
             </button>
         </div>
     </div>
@@ -183,9 +183,9 @@
                 <a href="{% url 'admin:main_project_changelist' %}" class="px-4 py-2 border border-base-300 text-base-700 bg-white hover:bg-base-100 text-sm font-medium rounded-default transition-colors dark:bg-base-800 dark:border-base-700 dark:text-base-300">
                     {% trans "Hủy bỏ" %}
                 </a>
-                <button type="button" x-on:click="submitForm()" x-bind:disabled="submitting" class="flex items-center gap-2 px-5 py-2 bg-[#8C5A2B] hover:bg-[#70441E] text-white text-sm font-semibold rounded-default transition-colors shadow-xs cursor-pointer disabled:opacity-50 border-none">
+                <button type="submit" form="bulk-edit-form" class="flex items-center gap-2 px-5 py-2 bg-[#8C5A2B] hover:bg-[#70441E] text-white text-sm font-semibold rounded-default transition-colors shadow-xs cursor-pointer border-none">
                     <span class="material-symbols-outlined text-[18px]">save</span>
-                    <span x-text="submitting ? '{% trans 'Đang lưu...' %}' : '{% trans 'Lưu thay đổi' %}'"></span>
+                    <span>{% trans 'Lưu thay đổi' %}</span>
                 </button>
             </div>
         </div>
