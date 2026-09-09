@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*', '192.168.1.118', '127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,132 +41,132 @@ INSTALLED_APPS = [
     'main',
 ]
 
-JAZZMIN_SETTINGS = {
-    # Tiêu đề & thương hiệu
-    "site_title": "Keo Vữa Sông Hồng",
-    "site_header": "SHK Mortar Admin",
-    "site_brand": "SHK MORTAR",
-    "welcome_sign": "Chào mừng đến trang quản trị Keo Vữa Sông Hồng",
-    "copyright": "© 2025 Công ty TNHH Keo Vữa Sông Hồng",
-
-    # Logo (để trống nếu chưa có, dùng text)
-    "site_logo": None,
-    "site_icon": None,
-    "site_logo_classes": "img-circle",
-
-    # Tìm kiếm
-    "search_model": ["main.Product", "main.News", "main.Distributor"],
-
-    # User avatar
-    "user_avatar": None,
-
-    # Top menu
-    "topmenu_links": [
-        {"name": "Trang chủ web", "url": "/", "new_window": True, "icon": "fas fa-globe"},
-        {"name": "Sản phẩm", "url": "/san-pham/", "new_window": True, "icon": "fas fa-box"},
+UNFOLD = {
+    "SITE_TITLE": "Keo Vữa Sông Hồng Admin",
+    "SITE_HEADER": "SHK Mortar Admin",
+    "SITE_URL": "/",
+    "SITE_ICON": {
+        "light": lambda request: "/static/images/logo.png",
+        "dark": lambda request: "/static/images/logo.png",
+    },
+    "SITE_LOGO": {
+        "light": lambda request: "/static/images/logo.png",
+        "dark": lambda request: "/static/images/logo.png",
+    },
+    "SITE_SYMBOL": "speed",
+    "BORDER_RADIUS": "0px",
+    "STYLES": [
+        "/static/css/admin_custom.css"
     ],
-
-    # Menu trái (sidebar) — chia theo nhóm
-    "show_sidebar": True,
-    "navigation_expanded": True,
-    "hide_apps": [],
-    "hide_models": [],
-
-    "order_with_respect_to": [
-        "main.Product",
-        "main.ProductCategory",
-        "main.Project",
-        "main.ConsultationRequest",
-        "main.Catalogue",
-        "main.News",
-        "main.NewsCategory",
-        "main.Banner",
-        "main.Distributor",
-        "main.DealerRegistration",
-        "main.ContactMessage",
-        "auth",
+    "SCRIPTS": [
+        "/static/js/admin_custom_delete.js"
     ],
-
-    "icons": {
-        "auth":                         "fas fa-users-cog",
-        "auth.user":                    "fas fa-user",
-        "auth.Group":                   "fas fa-users",
-        "main.Product":                 "fas fa-box-open",
-        "main.ProductCategory":         "fas fa-tags",
-        "main.Project":                 "fas fa-hard-hat",
-        "main.ConsultationRequest":     "fas fa-comments",
-        "main.Catalogue":               "fas fa-file-pdf",
-        "main.News":                    "fas fa-newspaper",
-        "main.NewsCategory":            "fas fa-folder",
-        "main.Banner":                  "fas fa-image",
-        "main.Distributor":             "fas fa-store",
-        "main.DealerRegistration":      "fas fa-handshake",
-        "main.ContactMessage":          "fas fa-envelope",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+    "COLORS": {
+        "primary": {
+            "50": "255 247 237",
+            "100": "255 237 213",
+            "200": "254 215 170",
+            "300": "253 186 116",
+            "400": "251 146 60",
+            "500": "249 115 22",
+            "600": "234 88 12",
+            "700": "194 65 12",
+            "800": "154 52 18",
+            "900": "124 45 18",
+        },
     },
-
-    "default_icon_parents": "fas fa-chevron-circle-right",
-    "default_icon_children": "fas fa-circle",
-
-    # Custom sidebar links
-    "custom_links": {
-        "main": [{
-            "name": "Xem website",
-            "url": "/",
-            "icon": "fas fa-external-link-alt",
-            "new_window": True,
-        }]
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": "Quản lý hệ thống",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Sản phẩm",
+                        "icon": "inventory_2",
+                        "link": "/admin/main/product/",
+                        "items": [
+                            {
+                                "title": "Danh sách sản phẩm",
+                                "link": "/admin/main/product/",
+                            },
+                            {
+                                "title": "Danh mục sản phẩm",
+                                "link": "/admin/main/productcategory/",
+                            },
+                        ],
+                    },
+                    {
+                        "title": "Dự án",
+                        "icon": "apartment",
+                        "link": "/admin/main/project/",
+                        "items": [
+                            {
+                                "title": "Danh sách dự án",
+                                "link": "/admin/main/project/",
+                            },
+                            {
+                                "title": "Danh mục dự án",
+                                "link": "/admin/main/projectcategory/",
+                            },
+                        ],
+                    },
+                    {
+                        "title": "Tin tức",
+                        "icon": "newspaper",
+                        "link": "/admin/main/news/",
+                        "items": [
+                            {
+                                "title": "Danh sách tin tức",
+                                "link": "/admin/main/news/",
+                            },
+                            {
+                                "title": "Danh mục tin tức",
+                                "link": "/admin/main/newscategory/",
+                            },
+                        ],
+                    },
+                    {
+                        "title": "Đại lý phân phối",
+                        "link": "/admin/main/distributor/",
+                    },
+                    {
+                        "title": "E-catalog",
+                        "link": "/admin/main/catalogue/",
+                    },
+                    {
+                        "title": "Công cụ tính",
+                        "link": "/cong-cu-tinh/",
+                    },
+                    {
+                        "title": "Đăng ký đại lý",
+                        "link": "/admin/main/dealerregistration/",
+                    },
+                    {
+                        "title": "Đăng ký tư vấn",
+                        "link": "/admin/main/consultationrequest/",
+                    },
+                ],
+            },
+            {
+                "title": "Kênh bán hàng",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Giao diện",
+                        "link": "/admin/main/themesettings/",
+                    },
+                ],
+            },
+        ],
     },
-
-    # Related modal
-    "related_modal_active": True,
-
-    # UI config
-    "custom_css": "css/admin_custom.css",
-    "custom_js": None,
-    "use_google_fonts_cdn": False,
-    "show_ui_builder": False,
-
-    "changeform_format": "horizontal_tabs",
-    "changeform_format_overrides": {
-        "auth.user": "collapsible",
-        "auth.group": "vertical_tabs",
-    },
-
-    # Language
-    "language_chooser": False,
 }
 
-JAZZMIN_UI_TWEAKS = {
-    "navbar_small_text": False,
-    "footer_small_text": False,
-    "body_small_text": False,
-    "brand_small_text": False,
-    "brand_colour": "navbar-dark",
-    "accent": "accent-warning",
-    "navbar": "navbar-dark",
-    "no_navbar_border": True,
-    "navbar_fixed": True,
-    "layout_boxed": False,
-    "footer_fixed": False,
-    "sidebar_fixed": True,
-    "sidebar": "sidebar-dark-warning",
-    "sidebar_nav_small_text": False,
-    "sidebar_disable_expand": False,
-    "sidebar_nav_child_indent": True,
-    "sidebar_nav_compact_style": False,
-    "sidebar_nav_legacy_style": False,
-    "sidebar_nav_flat_style": False,
-    "theme": "darkly",
-    "dark_mode_theme": "darkly",
-    "button_classes": {
-        "primary": "btn-primary",
-        "secondary": "btn-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success",
-    },
-}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -178,18 +178,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 ROOT_URLCONF = 'WebSongHong.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.theme_settings',
             ],
         },
     },
@@ -250,3 +253,22 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ── EMAIL CONFIGURATION (Gmail SMTP) ──────────────────────────────
+# Hướng dẫn tạo App Password:
+# 1. Vào https://myaccount.google.com/security
+# 2. Bật "Xác minh 2 bước" nếu chưa bật
+# 3. Tìm "Mật khẩu ứng dụng" (App passwords)
+# 4. Chọn ứng dụng: Mail / Other, đặt tên "SHK Website"
+# 5. Copy 16 ký tự được tạo ra → điền vào EMAIL_HOST_PASSWORD bên dưới
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'admin@keovuasonghong.vn'
+EMAIL_HOST_PASSWORD = 'qgml wafp nuvt uzyf'      
+DEFAULT_FROM_EMAIL = 'SHK Mortar <admin@keovuasonghong.vn>'
+
+# Email nhận thông báo đăng ký
+NOTIFY_EMAIL = 'admin@keovuasonghong.vn'

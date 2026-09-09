@@ -6,67 +6,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Keo Vữa Sông Hồng - SHK Mortar{% endblock %}</title>
     <meta name="description" content="{% block meta_desc %}Keo Vữa Sông Hồng – Nhà sản xuất vữa khô trộn sẵn, keo dán gạch và cát sạch chất lượng cao tại Hưng Yên{% endblock %}">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=209">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=305">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-<!-- ── HEADER ── -->
 <header class="header {% if request.resolver_match.url_name == 'home' %}header-transparent{% endif %}" id="header">
+    
     <div class="header-nav-bar">
         <div class="header-nav-container">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
             <a href="{% url 'home' %}" class="nav-logo">
-                <img src="{% static 'img/Logo.png' %}?v=2" alt="Keo Vữa Sông Hồng" class="nav-logo-img"
+                <img id="theme-logo-img" src="{% if theme and theme.logo %}{{ theme.logo.url }}{% else %}{% static 'images/Logo.png' %}{% endif %}?v=2" alt="Keo Vữa Sông Hồng" class="nav-logo-img"
                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div class="logo-text" style="display:none">
                     <span class="logo-main" style="color:#fff">KEO VỮA SÔNG HỒNG</span>
                     <span class="logo-sub" style="color:#FF7E2E">SHK MORTAR</span>
                 </div>
             </a>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
             <nav class="nav" id="nav">
                 <button class="nav-close" id="navClose"><i class="fas fa-times"></i></button>
                 <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Trang Chủ</a>
                 <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">Giới Thiệu</a>
                 <div class="nav-drop">
                     <a href="{% url 'product_list' %}" class="nav-link {% if 'product' in request.resolver_match.url_name %}active{% endif %}">
-                        Sản Phẩm <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
+                        SẢN PHẨM <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
                     </a>
                     <div class="drop-menu">
-                        <a href="{% url 'product_list' %}?category=vua-kho-tron-san"><i class="fas fa-layer-group"></i> Vữa khô trộn sẵn</a>
-                        <a href="{% url 'product_list' %}?category=keo-dan-gach-da"><i class="fas fa-th-large"></i> Keo dán gạch & đá</a>
-                        <a href="{% url 'product_list' %}?category=cat-sach-say-kho"><i class="fas fa-filter"></i> Cát sạch sấy khô</a>
+                        <a href="{% url 'product_list' %}#cat-vua-kho-tron-san">VỮA KHÔ TRỘN SẴN</a>
+                        <a href="{% url 'product_list' %}#cat-vua-xay-trat-aac">VỮA XÂY AAC</a>
+                        <a href="{% url 'product_list' %}#cat-keo-dan-gach-da">KEO DÁN GẠCH</a>
+                        <a href="{% url 'product_list' %}#cat-cat-sach-say-kho">CÁT SẤY KHÔ</a>
                     </div>
                 </div>
                 <div class="nav-drop">
                     <a href="{% url 'project_list' %}" class="nav-link {% if 'project' in request.resolver_match.url_name %}active{% endif %}">
-                        Dự Án <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
+                        DỰ ÁN <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
                     </a>
                     <div class="drop-menu">
-                        <a href="{% url 'project_list' %}?category=dan-dung"><i class="fas fa-home"></i> Dự án dân dụng</a>
-                        <a href="{% url 'project_list' %}?category=cong-nghiep"><i class="fas fa-industry"></i> Công nghiệp - Thương mại</a>
+                        <a href="{% url 'project_list' %}?category=dan-dung">DỰ ÁN DÂN DỤNG</a>
+                        <a href="{% url 'project_list' %}?category=cong-nghiep">DỰ ÁN CÔNG NGHIỆP - THƯƠNG MẠI</a>
                     </div>
                 </div>
-                <a href="{% url 'distributors' %}" class="nav-link {% if request.resolver_match.url_name == 'distributors' %}active{% endif %}">Phân Phối</a>
-                <a href="{% url 'catalogue' %}" class="nav-link {% if request.resolver_match.url_name == 'catalogue' %}active{% endif %}">E-Catalog</a>
-                <a href="{% url 'calculator' %}" class="nav-link {% if request.resolver_match.url_name == 'calculator' %}active{% endif %}">Công Cụ Tính</a>
+                <a href="{% url 'distributors' %}" class="nav-link {% if request.resolver_match.url_name == 'distributors' %}active{% endif %}">ĐẠI LÝ PHÂN PHỐI</a>
+                <a href="{% url 'catalogue' %}" class="nav-link {% if request.resolver_match.url_name == 'catalogue' %}active{% endif %}">E-CATALOG</a>
+                <a href="{% url 'calculator' %}" class="nav-link {% if request.resolver_match.url_name == 'calculator' %}active{% endif %}">CÔNG CỤ TÍNH</a>
                 <div class="nav-drop">
                     <a href="{% url 'news_list' %}" class="nav-link {% if 'news' in request.resolver_match.url_name %}active{% endif %}">
-                        Tin Tức <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
+                        TIN TỨC <i class="fas fa-chevron-down" style="font-size:9px;margin-left:4px;"></i>
                     </a>
                     <div class="drop-menu">
-                        <a href="{% url 'news_list' %}?category=kien-thuc-chuyen-mon"><i class="fas fa-lightbulb"></i> Kiến thức chuyên môn</a>
-                        <a href="{% url 'news_list' %}?category=van-hoa-doanh-nghiep"><i class="fas fa-building"></i> Văn hoá doanh nghiệp</a>
-                        <a href="{% url 'news_list' %}?category=phong-su-thuc-te"><i class="fas fa-video"></i> Phóng sự thực tế</a>
+                        <a href="{% url 'news_list' %}?category=phong-su-thuc-te">PHÓNG SỰ THỰC TẾ</a>
+                        <a href="{% url 'news_list' %}?category=kien-thuc-chuyen-mon">KIẾN THỨC CHUYÊN MÔN</a>
+                        <a href="{% url 'news_list' %}?category=van-hoa-doanh-nghiep">VĂN HOÁ DOANH NGHIỆP</a>
                     </div>
                 </div>
-                <a href="{% url 'consultation' %}" class="nav-cta-pill">Đăng Ký Đại Lý</a>
+                <a href="{% url 'dealer_register' %}" class="nav-cta-pill">ĐĂNG KÝ ĐẠI LÝ</a>
             </nav>
             <div class="lang-switcher">
                 <button type="button" class="lang-btn active" data-lang="vi" title="Tiếng Việt" aria-label="Tiếng Việt">
@@ -106,10 +108,10 @@
         <div class="footer-col footer-col-company">
             <h3 class="footer-company-title">Công ty TNHH Keo Vữa Sông Hồng</h3>
             <div class="footer-company-info">
-                <p><span class="info-label">Nhà Máy:</span> <span class="info-val">Thôn Ninh Tập, xã Châu Ninh, Hưng Yên</span></p>
+                <p><span class="info-label">Nhà Máy:</span> <span class="info-val">{% if theme.footer_address %}{{ theme.footer_address }}{% else %}Thôn Ninh Tập, xã Châu Ninh, Hưng Yên{% endif %}</span></p>
                 <p><span class="info-label">Văn Phòng:</span> <span class="info-val">Vinhomes Ocean Park 2, Văn Giang, Hưng Yên</span></p>
-                <p><span class="info-label">Email Phòng Kinh Doanh:</span> <a href="mailto:kinhdoanh@keovuasonghong.vn" class="info-val">kinhdoanh@keovuasonghong.vn</a></p>
-                <p><span class="info-label">Hợp tác Truyền Thông:</span> <a href="mailto:admin@keovuasonghong.vn" class="info-val">admin@keovuasonghong.vn</a></p>
+                <p><span class="info-label">Email Phòng Kinh Doanh:</span> <br><a href="mailto:{% if theme.footer_email %}{{ theme.footer_email }}{% else %}kinhdoanh@keovuasonghong.vn{% endif %}" class="info-val">{% if theme.footer_email %}{{ theme.footer_email }}{% else %}kinhdoanh@keovuasonghong.vn{% endif %}</a></p>
+                <p><span class="info-label">Số Điện Thoại: </span><a href="tel:{% if theme.footer_phone %}{{ theme.footer_phone }}{% else %}0386360797{% endif %}" class="info-val">{% if theme.footer_phone %}{{ theme.footer_phone }}{% else %}0386360797 - 0938016788{% endif %}</a></p>
             </div>
         </div>
 
@@ -121,6 +123,7 @@
                     <li><a href="{% url 'catalogue' %}">Chính Sách Khách Hàng</a></li>
                     <li><a href="{% url 'catalogue' %}">Chính Sách Bảo Hành</a></li>
                     <li><a href="{% url 'catalogue' %}">Hồ Sơ Năng Lực</a></li>
+                    <li><a href="{% url 'catalogue' %}">Hồ Sơ Kỹ Thuật</a></li>
                 </ul>
             </div>
             <div class="footer-bct-badge-wrap">
@@ -133,18 +136,18 @@
             <div class="footer-col-top">
                 <h4 class="footer-section-title">Kết nối với doanh nghiệp</h4>
                 <div class="footer-group-item">
-                    <a href="https://www.facebook.com/groups/4105613262904191" target="_blank" rel="noopener noreferrer">Group Cộng Đồng Kết Nối Vật Liệu</a>
+                    <a href="https://www.facebook.com/groups/4105613262904191" target="_blank" rel="noopener noreferrer">Group Cộng Đồng Đại Lý SHK</a>
                 </div>
                 <div class="footer-social-duo-grid">
                     <div class="footer-social-col">
-                        <a href="https://www.facebook.com/keovuasonghong.vn/" target="_blank" rel="noopener noreferrer">Fanpage</a>
+                        <a href="{% if theme.footer_facebook %}{{ theme.footer_facebook }}{% else %}https://www.facebook.com/keovuasonghong.vn/{% endif %}" target="_blank" rel="noopener noreferrer">Fanpage</a>
                         <a href="https://www.tiktok.com/@shkmortar" target="_blank" rel="noopener noreferrer">TikTok</a>
-                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">Youtube</a>
+                        <a href="{% if theme.footer_youtube %}{{ theme.footer_youtube }}{% else %}https://www.youtube.com/@keovuasonghong{% endif %}" target="_blank" rel="noopener noreferrer">Youtube</a>
                     </div>
                     <div class="footer-social-col">
                         <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">Linkedin</a>
                         <a href="https://shopee.vn/shop/1658539442" target="_blank" rel="noopener noreferrer">Shopee</a>
-                        <a href="https://zalo.me/3423135266242009757" target="_blank" rel="noopener noreferrer">Zalo OA</a>
+                        <a href="{% if theme.footer_zalo %}{{ theme.footer_zalo }}{% else %}https://zalo.me/3423135266242009757{% endif %}" target="_blank" rel="noopener noreferrer">Zalo OA</a>
                     </div>
                 </div>
             </div>
@@ -171,8 +174,10 @@
 
 <!-- Floating -->
 <div class="floating-actions">
-    <a href="tel:0386360797" class="float-btn float-phone" title="Gọi ngay"><i class="fas fa-phone-alt"></i></a>
-    <a href="https://zalo.me/3423135266242009757" target="_blank" class="float-btn float-zalo" title="Zalo"><i class="fas fa-comment-dots"></i></a>
+    <a href="https://www.facebook.com/keovuasonghong.vn/" target="_blank" rel="noopener noreferrer" class="float-btn float-facebook" title="Fanpage Facebook"><img src="{% static 'images/float_facebook.png' %}" alt="Facebook"></a>
+    <a href="https://www.youtube.com/@keovuasonghong" target="_blank" rel="noopener noreferrer" class="float-btn float-youtube" title="Kênh YouTube"><img src="{% static 'images/float_youtube.png' %}" alt="YouTube"></a>
+    <a href="https://zalo.me/3423135266242009757" target="_blank" rel="noopener noreferrer" class="float-btn float-zalo" title="Chat Zalo"><img src="{% static 'images/float_zalo.png' %}" alt="Zalo Official Account"></a>
+    <a href="tel:0386360797" class="float-btn float-phone" title="Gọi hotline"><img src="{% static 'images/float_phone.png' %}" alt="Hotline"></a>
     <button class="float-btn float-top" id="backToTop" title="Lên đầu trang"><i class="fas fa-chevron-up"></i></button>
 </div>
 
@@ -185,6 +190,39 @@ function googleTranslateElementInit() {
         autoDisplay: false
     }, 'google_translate_element');
 }
+
+// Live preview logic for Theme Customizer
+window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'theme_update') {
+        const field = event.data.field;
+        const value = event.data.value;
+
+        if (field === 'header_text') {
+            const topBar = document.getElementById('theme-top-bar');
+            const headerText = document.getElementById('theme-header-text');
+            if (topBar && headerText) {
+                if (value) {
+                    headerText.innerText = value;
+                    topBar.style.display = 'block';
+                } else {
+                    topBar.style.display = 'none';
+                }
+            }
+        } else if (field === 'logo') {
+            const logoImg = document.getElementById('theme-logo-img');
+            if (logoImg && value) {
+                logoImg.src = value;
+                logoImg.style.display = 'block';
+                logoImg.nextElementSibling.style.display = 'none';
+            }
+        } else if (field === 'show_megamenu') {
+            // In a real implementation this would toggle the menu style, 
+            // but for now we just show a console log since the current HTML 
+            // doesn't have a distinct megamenu structure vs standard dropdown
+            console.log('Megamenu toggled:', value);
+        }
+    }
+});
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script src="{% static 'js/main.js' %}?v=3"></script>

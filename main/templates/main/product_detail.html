@@ -3,155 +3,443 @@
 {% block title %}{{ product.name }} – Keo Vữa Sông Hồng{% endblock %}
 {% block content %}
 
-<div class="page-hero">
-    <div class="container">
-        <h1>{{ product.name }}</h1>
-        <div class="breadcrumb">
-            <a href="{% url 'home' %}">Trang chủ</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
-            <a href="{% url 'product_list' %}">Sản phẩm</a> <i class="fas fa-chevron-right" style="font-size:10px"></i>
-            <span>{{ product.name|truncatechars:40 }}</span>
+<!-- ── FULL-WIDTH HERO BANNER (GIỐNG GIỚI THIỆU & E-CATALOG) ── -->
+<div class="cat-hero-banner-wrap">
+  <div class="cat-hero-bg">
+    <div class="cat-hero-overlay">
+      <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 32px;">
+        <div class="cat-hero-content">
+          <h1 class="cat-hero-title">{{ product.name }}</h1>
+          <nav class="cat-hero-breadcrumb">
+            <a href="{% url 'home' %}">Trang chủ</a>
+            <span class="sep">&gt;</span>
+            <a href="{% url 'product_list' %}">Sản phẩm</a>
+            {% if product.category %}
+            <span class="sep">&gt;</span>
+            <a href="{% url 'product_list' %}#cat-{{ product.category.slug }}">{{ product.category.name }}</a>
+            {% endif %}
+            <span class="sep">&gt;</span>
+            <span class="curr">{{ product.name|truncatechars:35 }}</span>
+          </nav>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<section class="section">
-    <div class="container">
-        <div class="product-detail-grid">
-            <div class="product-main-img">
-                {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                {% else %}
-                <img src="{% static 'img/1.png' %}" alt="{{ product.name }}">
-                {% endif %}
-            </div>
-            <div class="product-info">
-                {% if product.category %}
-                <div style="margin-bottom:12px;">
-                    <a href="{% url 'product_list' %}?category={{ product.category.slug }}" style="font-size:12px;background:#fef2f2;color:var(--red);padding:3px 12px;border-radius:10px;font-weight:600;">{{ product.category.name }}</a>
-                </div>
-                {% endif %}
-                <h1>{{ product.name }}</h1>
-                {% if product.short_description %}
-                <p class="short-desc">{{ product.short_description }}</p>
-                {% endif %}
-                {% if product.specifications %}
-                <div class="specs">
-                    <h4><i class="fas fa-list-ul"></i> Thông số kỹ thuật</h4>
-                    <p>{{ product.specifications }}</p>
-                </div>
-                {% endif %}
-                <div class="product-cta">
-                    <a href="tel:0386360797" class="btn-call"><i class="fas fa-phone"></i> Gọi tư vấn: 0386.360.797</a>
-                    <a href="https://zalo.me/0386360797" target="_blank" class="btn-zalo"><i class="fas fa-comment"></i> Zalo</a>
-                </div>
-                <div style="margin-top:20px;padding:16px;background:#f0fdf4;border-radius:8px;border:1px solid #86efac;font-size:13px;color:#166534;">
-                    <i class="fas fa-shield-alt"></i> &nbsp;Sản phẩm đạt tiêu chuẩn ISO 9001 và TCVN. Bảo hành chất lượng toàn diện.
-                </div>
-            </div>
+<!-- ── MAIN PRODUCT DETAIL BODY ── -->
+<div class="pd-page-container">
+  <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 32px;">
+    
+    <!-- KHỐI SHOWCASE SẢN PHẨM: ẢNH + THUMBNAILS (TRÁI) & TÊN + META + TABS (PHẢI) -->
+    <div class="pd-showcase-grid">
+      
+      <!-- CỘT TRÁI: ẢNH / VIDEO LỚN + DÃY 4 THUMBNAIL BÊN DƯỚI -->
+      <div class="pd-visual-wrap">
+        <h2 class="pd-visual-label">Chi tiết sản phẩm</h2>
+        <div class="pd-visual-box">
+          <!-- Nút chuyển media Trước / Kế tiếp -->
+          <button type="button" class="pd-nav-arrow pd-nav-prev" id="pdPrevBtn" title="Media trước">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button type="button" class="pd-nav-arrow pd-nav-next" id="pdNextBtn" title="Media tiếp theo">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <!-- Video giới thiệu sản phẩm (Hiển thị đầu tiên) -->
+          <iframe id="pdMainVideo" 
+                  src="{% if product.video_embed_url %}{{ product.video_embed_url }}{% else %}https://www.youtube-nocookie.com/embed/N-FLw-piwlc?rel=0&enablejsapi=1{% endif %}" 
+                  class="pd-main-media" 
+                  style="width: 100%; height: 100%; display: block; border: 0;" 
+                  title="Video giới thiệu sản phẩm {{ product.name }}"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerpolicy="strict-origin-when-cross-origin" 
+                  allowfullscreen>
+          </iframe>
+
+          <!-- Ảnh sản phẩm (Hiển thị khi chọn thumb ảnh) -->
+          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/Vua_kho_chon_san.png' %}{% endif %}" alt="{{ product.name }}" id="pdMainImg" class="pd-main-media" style="width: 100%; height: 100%; object-fit: contain; display: none; padding: 20px;">
         </div>
 
-        {% if product.description %}
-        <div class="product-tabs">
-            <div class="tab-nav">
-                <button class="tab-btn active" data-tab="tab-desc">Mô tả chi tiết</button>
-                {% if product.specifications %}<button class="tab-btn" data-tab="tab-spec">Thông số kỹ thuật</button>{% endif %}
-                <button class="tab-btn" data-tab="tab-guide">Hướng dẫn sử dụng</button>
+        <!-- Dãy Thumbnail nhỏ ngay dưới media chính: video đứng đầu rồi mới đến ảnh -->
+        <div class="pd-thumb-strip">
+          <div class="pd-thumb-mini active pd-thumb-video" data-type="video" title="Xem video giới thiệu sản phẩm">
+            <div class="pd-thumb-video-box">
+              <i class="fa-solid fa-video"></i>
+              <span>VIDEO</span>
             </div>
-            <div id="tab-desc" class="tab-pane active">
-                <div class="tab-pane-content">{{ product.description }}</div>
-            </div>
-            {% if product.specifications %}
-            <div id="tab-spec" class="tab-pane">
-                <div class="tab-pane-content">{{ product.specifications }}</div>
-            </div>
-            {% endif %}
-            <div id="tab-guide" class="tab-pane">
-                <div class="tab-pane-content">Vui lòng liên hệ hotline <strong>0386.360.797</strong> hoặc email <strong>admin@keovuasonghong.vn</strong> để được hỗ trợ hướng dẫn sử dụng chi tiết và tư vấn kỹ thuật.</div>
-            </div>
-        </div>
-        {% endif %}
-
-        {% if related %}
-        <div style="margin-top:60px;">
-            <h2 style="font-size:18px;font-weight:800;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--text);">Sản phẩm cùng danh mục</h2>
-            <div class="products-grid">
-                {% for p in related %}
-                <div class="product-card">
-                    <div class="product-card-img">
-                        {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}">{% else %}<div class="product-no-img"><i class="fas fa-box"></i></div>{% endif %}
-                    </div>
-                    <div class="product-card-body">
-                        <h3>{{ p.name }}</h3>
-                        {% if p.short_description %}<p>{{ p.short_description|truncatechars:80 }}</p>{% endif %}
-                        <a href="{% url 'product_detail' p.slug %}" class="btn-detail">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Cross-links: Dự án sử dụng sản phẩm -->
-        {% if related_projects %}
-        <div style="margin-top:56px;">
-          <h2 style="font-size:18px;font-weight:800;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--line);color:var(--text);">Dự án sử dụng sản phẩm này</h2>
-          <div class="project-grid" style="grid-template-columns:repeat(3,1fr);">
-            {% for proj in related_projects %}
-            <a href="{% url 'project_detail' proj.slug %}" class="project-card">
-              <div class="project-img">
-                {% if proj.image %}<img src="{{ proj.image.url }}" alt="{{ proj.title }}" loading="lazy">
-                {% else %}<div class="project-img-placeholder"><i class="fas fa-building"></i></div>{% endif %}
-                <span class="project-cat-badge">{{ proj.get_category_display }}</span>
-              </div>
-              <div class="project-info">
-                <h3>{{ proj.title }}</h3>
-                {% if proj.location %}<p class="project-meta"><i class="fas fa-map-marker-alt"></i> {{ proj.location }}</p>{% endif %}
-                <span class="project-link">Xem dự án <i class="fas fa-arrow-right"></i></span>
-              </div>
-            </a>
-            {% endfor %}
           </div>
-        </div>
-        {% endif %}
 
-        <!-- Cross-links: Catalogue & Calculator -->
-        <div style="margin-top:56px;display:grid;grid-template-columns:{% if related_catalogues %}1fr 1fr{% else %}1fr{% endif %};gap:24px;">
-          {% if related_catalogues %}
-          <div style="background:var(--br2);border-radius:var(--rad);padding:28px;border:1px solid var(--line);">
-            <h3 style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;"><i class="fas fa-file-pdf"></i> Catalogue liên quan</h3>
-            {% for cat in related_catalogues %}
-            <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);">
-              <i class="fas fa-file-pdf" style="color:var(--amber);font-size:18px;flex-shrink:0;"></i>
-              <div style="flex:1;min-width:0;">
-                <p style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;">{{ cat.title }}</p>
-                <p style="font-size:11px;color:var(--muted);">{{ cat.get_category_display }}</p>
-              </div>
-              {% if cat.file %}
-              <a href="{{ cat.file.url }}" target="_blank" style="font-size:10px;font-weight:800;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;"><i class="fas fa-download"></i> Tải</a>
-              {% endif %}
-            </div>
-            {% endfor %}
-            <a href="{% url 'catalogue' %}" style="display:block;text-align:center;margin-top:16px;font-size:11px;font-weight:800;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;">Xem tất cả catalogue <i class="fas fa-arrow-right"></i></a>
+          {% if product.image %}
+          <div class="pd-thumb-mini" data-type="image" data-img-url="{{ product.image.url }}" title="Ảnh chính">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
           </div>
           {% endif %}
 
-          <div style="background:var(--br2);border-radius:var(--rad);padding:28px;border:1px solid var(--line);">
-            <h3 style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;"><i class="fas fa-calculator"></i> Công cụ tính</h3>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;">Tính lượng vật liệu cần dùng cho diện tích thi công của bạn.</p>
-            <a href="{% url 'calculator' %}" class="btn-gold" style="width:100%;justify-content:center;"><i class="fas fa-calculator"></i> Tính ngay</a>
+          {% for img in product.gallery_images.all %}
+            {% if img.media_type == 'video' %}
+              {% if img.video_embed_url %}
+              <div class="pd-thumb-mini pd-thumb-video" data-type="video" data-video-embed="{{ img.video_embed_url }}" title="Xem video">
+                <div class="pd-thumb-video-box">
+                  <i class="fa-solid fa-video"></i>
+                  <span>VIDEO</span>
+                </div>
+              </div>
+              {% endif %}
+            {% elif img.display_url %}
+              <div class="pd-thumb-mini" data-type="image" data-img-url="{{ img.display_url }}" title="Ảnh sản phẩm">
+                <img src="{{ img.display_url }}" alt="{{ product.name }}">
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% if not product.image and not product.gallery_images.all %}
+          <div class="pd-thumb-mini" data-type="image" data-img-url="{% static 'images/Vua_kho_chon_san.png' %}" title="Ảnh mặc định">
+            <img src="{% static 'images/Vua_kho_chon_san.png' %}" alt="{{ product.name }}">
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- CỘT PHẢI: TÊN SẢN PHẨM + TÌNH TRẠNG + MÃ SP + NÚT CTA + TABS THÔNG TIN -->
+      <div class="pd-info-col">
+        <h1 class="pd-title">{{ product.name }}</h1>
+
+        <!-- Dòng Tình trạng & Mã sản phẩm (Giống hệt ảnh mẫu) -->
+        <div class="pd-meta-row">
+          <p class="pd-meta-item"><span class="pd-meta-label">Mã sản phẩm:</span> <span class="pd-meta-val">{% if product.sku %}{{ product.sku }}{% else %}{% if 'aac' in product.slug %}AAC{% elif 'keo' in product.slug %}KDG{% elif 'cat' in product.slug %}CSK{% else %}SHV{% endif %}{{ product.id|stringformat:"02d" }}{% endif %}</span></p>
+        </div>
+
+        <!-- Khối 2 nút hành động: E-catalog & Chứng chỉ chất lượng -->
+        <div class="pd-consult-action-box">
+          {% if product.ecatalog_file %}
+          <a href="{{ product.ecatalog_file.url }}" target="_blank" class="btn-pd-consult" title="Xem E-Catalog sản phẩm {{ product.name }}">
+            E-catalog
+          </a>
+          {% elif related_catalogues and related_catalogues.0.file %}
+          <a href="{{ related_catalogues.0.file.url }}" target="_blank" class="btn-pd-consult" title="Xem E-Catalog sản phẩm {{ product.name }}">
+            E-catalog
+          </a>
+          {% else %}
+          <a href="{% url 'catalogue' %}?doc={{ product.slug }}" class="btn-pd-consult" title="Xem E-Catalog sản phẩm {{ product.name }}">
+            E-catalog
+          </a>
+          {% endif %}
+
+          {% if product.certificate_file %}
+          <a href="{{ product.certificate_file.url }}" target="_blank" class="btn-pd-consult" title="Xem chứng chỉ chất lượng sản phẩm {{ product.name }}">
+            Chứng chỉ chất lượng
+          </a>
+          {% elif 'cát sấy khô' not in product.name|lower %}
+          <a href="{% url 'catalogue' %}?doc=ho-so-nang-luc" class="btn-pd-consult" title="Xem Hồ sơ năng lực Keo Vữa Sông Hồng">
+            Chứng chỉ chất lượng
+          </a>
+          {% endif %}
+        </div>
+
+        <!-- Khối Tabs Thông tin sản phẩm -->
+        <div class="pd-tabs-card">
+          <div class="pd-tabs-nav">
+            <button type="button" class="pd-tab-btn active" data-tab="tab-desc">
+              Thông tin chung 
+            </button>
+
+            <button type="button" class="pd-tab-btn" data-tab="tab-guide">
+              {% if 'cát sấy khô' in product.name|lower %}
+                Ứng dụng
+              {% else %}
+                Hướng dẫn thi công
+              {% endif %}
+            </button>
+            {% if 'cát sấy khô' not in product.name|lower %}
+            <button type="button" class="pd-tab-btn" data-tab="tab-coverage">
+              Định mức sử dụng
+            </button>
+            {% endif %}
+          </div>
+
+          <div class="pd-tab-content">
+            <!-- Tab 1: Thông tin chung (Đoạn giới thiệu tổng quan + Ưu điểm vượt trội, nhập trong admin) -->
+            <div id="tab-desc" class="pd-tab-pane active">
+              {% if product.short_description %}
+                <div class="pd-desc-lead">{{ product.short_description|linebreaksbr }}</div>
+              {% else %}
+                <p class="pd-desc-lead">Sản phẩm <strong>{{ product.name }}</strong> là dòng vật liệu xây dựng chất lượng cao được sản xuất trên dây chuyền công nghệ tự động hóa hiện đại của <strong>Công ty TNHH Keo Vữa Sông Hồng (SHK Mortar)</strong>.</p>
+              {% endif %}
+
+              {% if product.highlights.all %}
+                <h4 class="pd-desc-subhead">Ưu điểm vượt trội:</h4>
+                <ul class="pd-feature-list">
+                  {% for h in product.highlights.all %}
+                  <li>{{ h.text }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+
+            <!-- Tab 2: Hướng dẫn thi công (nhập trong admin) -->
+            <div id="tab-guide" class="pd-tab-pane">
+              {% if product.description %}
+                {{ product.description|linebreaksbr }}
+              {% else %}
+                <p><strong>1. Chuẩn bị bề mặt:</strong> Bề mặt thi công phải sạch sẽ, không bám bụi bẩn, dầu mỡ hay tạp chất. Làm ẩm bề mặt trước khi thi công đối với các bề mặt có tính hút nước cao.</p>
+                <p><strong>2. Trộn vật liệu:</strong> Trộn đều với nước sạch theo tỷ lệ quy định (khoảng 18 - 22% lượng nước tính theo khối lượng). Sử dụng máy khuấy tốc độ chậm từ 3 - 5 phút cho đến khi hỗn hợp đồng nhất, dẻo quánh.</p>
+                <p><strong>3. Thi công & Bảo dưỡng:</strong> Dùng bay răng cưa hoặc bay xây chuyên dụng để trải đều vữa/keo. Bảo dưỡng ẩm liên tục trong 2 - 3 ngày đầu đối với điều kiện thời tiết hanh khô hoặc nắng gắt.</p>
+                <p><strong>4. Bảo quản:</strong> Để nơi khô ráo, thoáng mát, có mái che và cách mặt đất ít nhất 10cm.</p>
+              {% endif %}
+            </div>
+
+            {% if 'cát sấy khô' not in product.name|lower %}
+            <!-- Tab 3: Định mức sử dụng (nhập trong admin) -->
+            <div id="tab-coverage" class="pd-tab-pane">
+              {% if product.usage_norms %}
+                {{ product.usage_norms|linebreaksbr }}
+              {% else %}
+                <p><strong>Định mức tiêu hao:</strong> Khoảng 1.6 - 1.8 kg/m²/mm chiều dày lớp thi công (tùy thuộc vào bề mặt và công trình).</p>
+              {% endif %}
+            </div>
+            {% endif %}
           </div>
         </div>
 
-        <!-- CTA -->
-        <div style="margin-top:40px;background:var(--gold);border-radius:var(--rad);padding:40px;text-align:center;color:#fff;">
-          <h3 style="font-size:20px;font-weight:900;margin-bottom:10px;">Cần tư vấn sản phẩm này?</h3>
-          <p style="font-size:14px;opacity:.85;margin-bottom:24px;">Chuyên gia SHK Mortar sẽ liên hệ trong vòng 24 giờ làm việc</p>
-          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-            <a href="{% url 'consultation' %}" style="padding:12px 28px;background:#fff;color:var(--gold);border-radius:20px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;">Đăng ký tư vấn</a>
-            <a href="tel:0386360797" style="padding:12px 28px;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:20px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;">Gọi: 0386.360.797</a>
+      </div>
+    </div>
+
+    <!-- ── KHỐI THÔNG TIN SẢN PHẨM (CÓ THU GỌN / ĐÓNG MỞ) ── -->
+    <div class="pd-single-accordion-section">
+      <div class="pd-acc-item active">
+        <button type="button" class="pd-acc-btn">
+          <span class="pd-acc-tag">THÔNG TIN SẢN PHẨM</span>
+          <span class="pd-acc-line"></span>
+          <span class="pd-acc-icon"><i class="fa-solid fa-play"></i></span>
+        </button>
+        <div class="pd-acc-content" style="display: block;">
+          <div class="pd-acc-inner">
+            <div class="pd-specs-text-body">
+              {% if product.specifications %}
+                {{ product.specifications|linebreaksbr }}
+              {% else %}
+                <p>• <strong>Tên sản phẩm:</strong> {{ product.name }}</p>
+                <p>• <strong>Mã sản phẩm:</strong> {% if 'aac' in product.slug %}AAC{% elif 'keo' in product.slug %}KDG{% elif 'cat' in product.slug %}CSK{% else %}SHV{% endif %}{{ product.id|stringformat:"02d" }}</p>
+                <p>• <strong>Danh mục:</strong> {{ product.category.name|default:"Vật liệu xây dựng cao cấp" }}</p>
+                <p>• <strong>Tiêu chuẩn:</strong> {% if 'aac' in product.slug %}TCVN 9028:2011 / ISO 9001:2015{% elif 'keo' in product.slug %}TCVN 7899-1:2008 / ISO 9001:2015{% elif 'cat' in product.slug %}Cát sạch sấy khô SHK / ISO 9001:2015{% else %}TCVN 4314:2022 / ISO 9001:2015{% endif %}</p>
+                <p>• <strong>Đóng gói:</strong> {% if '25kg' in product.slug %}Bao 25kg / Pallet{% elif '50kg' in product.slug %}Bao 50kg / Pallet (hoặc Silo / Jumbo){% elif 'jumbo' in product.slug %}Bao Jumbo 1000kg - 1500kg / Silo bơm rời{% else %}Bao 25kg - 50kg / Bao Jumbo{% endif %}</p>
+                <p>• <strong>Cường độ:</strong> {% if 'm100' in product.slug %}≥ 10.0 MPa (Mac M100){% elif 'm75' in product.slug %}≥ 7.5 MPa (Mac M75){% elif 'keo' in product.slug %}≥ 1.0 N/mm² (Cường độ bám dính tiêu chuẩn){% else %}Đạt chuẩn kiểm định Viện KHCN Xây Dựng{% endif %}</p>
+                <p>• <strong>Bảo quản:</strong> 06 – 12 tháng (nơi khô ráo, có mái che, cách sàn 10cm)</p>
+              {% endif %}
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- SẢN PHẨM LIÊN QUAN -->
+    {% if related %}
+    <div class="pd-related-section">
+      <div class="pd-section-title-wrap">
+        <h2 class="pd-section-title">Sản phẩm liên quan</h2>
+        <a href="{% url 'product_list' %}{% if product.category %}#cat-{{ product.category.slug }}{% endif %}" class="btn-prod-detail" style="font-size: 13.5px;">
+          <span>Xem tất cả</span> <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="prod-grid-4">
+        {% for p in related %}
+        <div class="prod-card-box">
+          <a href="{% url 'product_detail' p.slug %}" class="prod-card-visual" title="{{ p.name }}">
+            {% if p.image %}
+              <img src="{{ p.image.url }}" alt="{{ p.name }}" loading="lazy">
+            {% else %}
+              <img src="{% static 'images/Vua_kho_chon_san.png' %}" alt="{{ p.name }}" loading="lazy">
+            {% endif %}
+          </a>
+          <div class="prod-card-body">
+            <div class="prod-card-main">
+              <a href="{% url 'product_detail' p.slug %}" class="prod-card-name" title="{{ p.name }}">{{ p.name }}</a>
+              {% if p.short_description %}
+              <p class="prod-card-desc">{{ p.short_description }}</p>
+              {% endif %}
+            </div>
+            <div class="prod-card-footer">
+              <a href="{% url 'product_detail' p.slug %}" class="btn-prod-detail">
+                <span>Xem chi tiết</span> <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<!-- ── SUPPORT BANNER SECTION (YÊU CẦU HỖ TRỢ ĐỒNG BỘ) ── -->
+<section class="cat-support-banner-section">
+  <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 32px;">
+    <div class="cat-support-inner">
+      
+      <!-- Cột Trái: Tiêu đề & phụ đề -->
+      <div class="cat-support-left">
+        <h2 class="cat-support-title">Yêu cầu hỗ trợ</h2>
+        <p class="cat-support-subtitle">Vui lòng liên hệ với đội ngũ của chúng tôi<br>để nhận được sự hỗ trợ nhanh chóng nhất</p>
+      </div>
+
+      <!-- Cột Phải: Thông tin liên hệ (Zalo OA, Email, Phone) -->
+      <div class="cat-support-right">
+        <div class="cat-support-items">
+          
+          <!-- Zalo OA -->
+          <a href="https://zalo.me/3423135266242009757" target="_blank" rel="noopener noreferrer" class="cat-support-item">
+            <div class="cat-support-icon cat-zalo-icon-box">
+              <img src="{% static 'images/zalo-oa-logo.svg' %}" alt="Zalo Official Account" class="cat-zalo-img">
+            </div>
+            <div class="cat-support-info">
+              <span class="cat-support-label">Zalo OA</span>
+              <span class="cat-support-val">Công ty TNHH Keo Vữa Sông Hồng</span>
+            </div>
+          </a>
+
+          <!-- Email (Mở Gmail gửi đến admin@keovuasonghong.vn) -->
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=admin@keovuasonghong.vn" target="_blank" rel="noopener noreferrer" class="cat-support-item" title="Soạn email gửi đến admin@keovuasonghong.vn qua Gmail">
+            <div class="cat-support-icon cat-circle-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="cat-support-info">
+              <span class="cat-support-label">Email</span>
+              <span class="cat-support-val">admin@keovuasonghong.vn</span>
+            </div>
+          </a>
+
+          <!-- Phone -->
+          <a href="tel:+84938016788" class="cat-support-item">
+            <div class="cat-support-icon cat-circle-icon">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <div class="cat-support-info">
+              <span class="cat-support-label">Phone</span>
+              <span class="cat-support-val">+84 938 016 788 / +84 386 360 797</span>
+            </div>
+          </a>
+
+        </div>
+        <!-- Đường nét đứt trang trí bên dưới -->
+        <div class="cat-support-divider"></div>
+      </div>
 
     </div>
+  </div>
 </section>
+
+<!-- ── JAVASCRIPT XỬ LÝ TABS & CHUYỂN ẢNH SẢN PHẨM ── -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. Chuyển đổi tabs thông tin
+  const tabBtns = document.querySelectorAll('.pd-tab-btn');
+  const tabPanes = document.querySelectorAll('.pd-tab-pane');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+      
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanes.forEach(p => p.classList.remove('active'));
+
+      this.classList.add('active');
+      const targetPane = document.getElementById(targetTab);
+      if (targetPane) {
+        targetPane.classList.add('active');
+      }
+    });
+  });
+
+  // 2. Chuyển đổi media chính (Video / Ảnh) qua thumbnail và nút mũi tên < >
+  const mainImg = document.getElementById('pdMainImg');
+  const mainVideo = document.getElementById('pdMainVideo');
+  const thumbItems = Array.from(document.querySelectorAll('.pd-thumb-mini'));
+  const prevBtn = document.getElementById('pdPrevBtn');
+  const nextBtn = document.getElementById('pdNextBtn');
+  let currentThumbIdx = 0;
+
+  function switchMedia(index) {
+    if (!thumbItems.length) return;
+    if (index < 0) index = thumbItems.length - 1;
+    if (index >= thumbItems.length) index = 0;
+    currentThumbIdx = index;
+
+    const targetThumb = thumbItems[currentThumbIdx];
+    if (targetThumb) {
+      const type = targetThumb.getAttribute('data-type') || 'image';
+      
+      if (type === 'video') {
+        if (mainImg) mainImg.style.display = 'none';
+        if (mainVideo) {
+          const embedUrl = targetThumb.getAttribute('data-video-embed');
+          if (embedUrl) mainVideo.src = embedUrl;
+          mainVideo.style.display = 'block';
+        }
+      } else {
+        const newImgUrl = targetThumb.getAttribute('data-img-url');
+        if (mainVideo) {
+          mainVideo.style.display = 'none';
+        }
+        if (mainImg && newImgUrl) {
+          mainImg.style.transition = 'opacity 0.2s ease, transform 0.3s ease';
+          mainImg.style.opacity = '0.2';
+          mainImg.src = newImgUrl;
+          mainImg.style.display = 'block';
+          setTimeout(function() {
+            mainImg.style.opacity = '1';
+          }, 100);
+        }
+      }
+
+      thumbItems.forEach(t => t.classList.remove('active'));
+      targetThumb.classList.add('active');
+    }
+  }
+
+  thumbItems.forEach((thumb, idx) => {
+    thumb.addEventListener('click', function() {
+      switchMedia(idx);
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      switchMedia(currentThumbIdx - 1);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      switchMedia(currentThumbIdx + 1);
+    });
+  }
+
+  // 3. Xử lý đóng / mở Accordion Thông số & Đặc tính kỹ thuật
+  const accBtns = document.querySelectorAll('.pd-acc-btn');
+  accBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const item = this.closest('.pd-acc-item');
+      if (item) {
+        item.classList.toggle('active');
+        const content = item.querySelector('.pd-acc-content');
+        if (content) {
+          if (item.classList.contains('active')) {
+            content.style.display = 'block';
+          } else {
+            content.style.display = 'none';
+          }
+        }
+      }
+    });
+  });
+});
+</script>
+
 {% endblock %}

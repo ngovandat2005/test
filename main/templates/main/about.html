@@ -1,146 +1,304 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Giới thiệu – Keo Vữa Sông Hồng{% endblock %}
+{% block title %}Giới thiệu – Công ty TNHH Keo Vữa Sông Hồng (SHK Mortar){% endblock %}
+{% block meta_desc %}Tìm hiểu về Công ty TNHH Keo Vữa Sông Hồng - Nhà sản xuất vữa khô trộn sẵn, keo dán gạch và cát sấy khô chất lượng cao tại Hưng Yên.{% endblock %}
+
 {% block content %}
 
-<div class="about-hero">
-    <div class="container">
-        <h1>Về Công ty Keo Vữa Sông Hồng</h1>
-        <p>Nhà sản xuất và phân phối vật liệu xây dựng chất lượng cao tại Hưng Yên</p>
+<!-- ── FULL-WIDTH HERO BANNER (GIỐNG E-CATALOG) ── -->
+<div class="cat-hero-banner-wrap">
+  <div class="cat-hero-bg">
+    <div class="cat-hero-overlay">
+      <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 32px;">
+        <div class="cat-hero-content">
+          <h1 class="cat-hero-title">Về chúng tôi</h1>
+          <nav class="cat-hero-breadcrumb">
+            <a href="{% url 'home' %}">Trang chủ</a>
+            <span class="sep">&gt;</span>
+            <span class="curr">Giới thiệu</span>
+          </nav>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<section class="section">
-    <div class="container">
-        <div class="about-intro">
-            <div class="about-intro-text">
-                <h2>Công ty TNHH<br><span>Keo Vữa Sông Hồng</span></h2>
-                <p>Công ty TNHH Keo Vữa Sông Hồng (SHK Mortar) là đơn vị chuyên sản xuất và cung ứng các sản phẩm vật liệu xây dựng đáp ứng tiêu chuẩn TCVN và hệ thống quản lý chất lượng ISO 9001.</p>
-                <p>Với nhà máy đặt tại Hưng Yên và đội ngũ kỹ sư giàu kinh nghiệm, chúng tôi cam kết mang đến cho thị trường những sản phẩm vữa khô, keo dán gạch và cát sạch chất lượng ổn định, giá cạnh tranh.</p>
-                <p>Phương châm hoạt động: <strong style="color:var(--red)">"Chất lượng hàng đầu – Giá thành hợp lý – Dịch vụ tốt nhất"</strong> luôn là kim chỉ nam cho mọi hoạt động của chúng tôi.</p>
-                <div class="about-highlights">
-                    <div class="highlight-item">
-                        <i class="fas fa-certificate"></i>
-                        <div><strong>Chứng nhận ISO 9001:2015</strong><br><span style="font-size:13px;color:#666">Hệ thống quản lý chất lượng quốc tế</span></div>
-                    </div>
-                    <div class="highlight-item">
-                        <i class="fas fa-flask"></i>
-                        <div><strong>Phòng thử nghiệm nội bộ</strong><br><span style="font-size:13px;color:#666">Kiểm tra chất lượng từng lô sản phẩm</span></div>
-                    </div>
-                    <div class="highlight-item">
-                        <i class="fas fa-truck"></i>
-                        <div><strong>Giao hàng toàn quốc</strong><br><span style="font-size:13px;color:#666">Mạng lưới phân phối rộng khắp</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="about-intro-visual">
-                <div class="about-visual-card">
-                    <span class="big-number">5+</span>
-                    <p class="big-label">Năm kinh nghiệm trong ngành</p>
-                </div>
-                <div class="about-stats-row">
-                    <div class="about-stat-item"><div class="num">500+</div><div class="lbl">Đại lý</div></div>
-                    <div class="about-stat-item"><div class="num">10+</div><div class="lbl">Sản phẩm</div></div>
-                    <div class="about-stat-item"><div class="num">63</div><div class="lbl">Tỉnh/TP</div></div>
-                </div>
-            </div>
+<!-- ══════════════════════════════════════════════════════════════ 
+     PHẦN 1: ẢNH/VIDEO 16:9 + TEXT GIỚI THIỆU + 3 TAB SẢN PHẨM CỐT LÕI
+     ══════════════════════════════════════════════════════════════ -->
+<section class="about-sec-1">
+  <div class="container">
+    <div class="about-s1-grid">
+      
+      <!-- Cột Trái: Ảnh 16:9 chất lượng cao -->
+      <div class="about-s1-media">
+        <div class="about-media-16x9">
+          <img src="{% static 'images/construction_bg_mortar.jpg' %}" alt="Nhà máy Công ty TNHH Keo Vữa Sông Hồng" class="about-media-img">
         </div>
+      </div>
+
+      <!-- Cột Phải: Text Giới Thiệu + 3 Tab Nút [Vữa khô] [Keo dán] [Cát sấy] + Text chuyển đổi -->
+      <div class="about-s1-content">
+        <h2 class="about-main-heading">Giới thiệu<br>Công ty TNHH Keo Vữa Sông Hồng</h2>
+        
+        <div class="about-intro-paras">
+          <p class="about-lead-para">
+            Công ty TNHH Keo Vữa Sông Hồng (SHK Mortar) được thành lập năm 2025, hoạt động trong lĩnh vực sản xuất và phân phối vật liệu xây dựng, với nhà máy đầu tiên đặt tại Hưng Yên, có quy mô hơn 3.000 m².
+          </p>
+          <p class="about-lead-para">
+            Nhà máy được đầu tư máy móc hiện đại, hệ thống sản xuất bán tự động và quy trình vận hành bài bản, với hai dây chuyền chuyên sản xuất vữa khô trộn sẵn, keo dán gạch và cát tự nhiên sấy khô, đáp ứng đa dạng nhu cầu của thị trường.
+          </p>
+          <p class="about-lead-para">
+            Sở hữu đội ngũ giàu kinh nghiệm và am hiểu thực tiễn ngành vật liệu xây dựng, SHK Mortar chú trọng kiểm soát chất lượng từ nguồn nguyên liệu đầu vào đến quá trình sản xuất, nhằm tạo ra những sản phẩm ổn định, chất lượng và phù hợp với yêu cầu thi công.
+          </p>
+          <p class="about-lead-para">
+            Với lợi thế về vị trí nhà máy, nguồn nguyên vật liệu dồi dào và năng lực sản xuất, Keo Vữa Sông Hồng hướng tới xây dựng hệ thống cung ứng vật liệu xây dựng chất lượng, vận chuyển nhanh chóng và dịch vụ hậu mãi chuyên nghiệp, trở thành đối tác tin cậy của khách hàng và các đơn vị thi công.
+          </p>
+        </div>
+
+      </div>
+
     </div>
+  </div>
 </section>
 
-<section class="section section-alt">
-    <div class="container">
-        <div class="section-header">
-            <div class="section-tag">Tầm nhìn & Sứ mệnh</div>
-            <h2 class="section-title">Định hướng <span>phát triển</span></h2>
+<!-- ══════════════════════════════════════════════════════════════
+     PHẦN 2: THÔNG ĐIỆP & NĂNG LỰC CỐT LÕI (2 CỘT TEXT CÂN ĐỐI)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="about-sec-statement">
+  <div class="container">
+    <div class="about-statement-wrap">
+      
+      <!-- Big Headline on Top -->
+      <h2 class="about-statement-heading">
+        Sự khởi nguồn của mọi công trình bền vững 
+      </h2>
+
+      <!-- 2 Balanced Columns of Text Below -->
+      <div class="about-statement-grid">
+        <div class="about-statement-col">
+          <p>
+            Chúng tôi mang đến hệ sản phẩm vật liệu xây dựng <strong>tối ưu cho thi công</strong>, giúp người thợ <strong>đơn giản hóa quy trình</strong>, <strong>tiết kiệm thời gian</strong> và nâng cao hiệu quả công việc. Thay thế những hạn chế của phương pháp truyền thống bằng các giải pháp vật liệu hiện đại, ổn định và phù hợp với yêu cầu ngày càng cao của công trình.
+          </p>
         </div>
-        <div class="mvv-grid">
-            <div class="mvv-card">
-                <div class="mvv-icon red"><i class="fas fa-bullseye"></i></div>
-                <h3>Sứ mệnh</h3>
-                <p>Cung cấp các giải pháp vật liệu xây dựng hiện đại, đạt tiêu chuẩn kỹ thuật cao, hỗ trợ các công trình xây dựng phát triển bền vững trên khắp Việt Nam.</p>
-            </div>
-            <div class="mvv-card">
-                <div class="mvv-icon gold"><i class="fas fa-eye"></i></div>
-                <h3>Tầm nhìn</h3>
-                <p>Trở thành thương hiệu vật liệu xây dựng được tin dùng hàng đầu tại Việt Nam, đặc biệt trong phân khúc vữa khô trộn sẵn và keo dán gạch cao cấp.</p>
-            </div>
-            <div class="mvv-card">
-                <div class="mvv-icon blue"><i class="fas fa-heart"></i></div>
-                <h3>Giá trị cốt lõi</h3>
-                <ul>
-                    <li>Chất lượng là ưu tiên số 1</li>
-                    <li>Trung thực và minh bạch</li>
-                    <li>Đổi mới và sáng tạo không ngừng</li>
-                    <li>Phát triển bền vững</li>
-                    <li>Tôn trọng khách hàng và đối tác</li>
-                </ul>
-            </div>
+        <div class="about-statement-col">
+          <p>
+            Đồng thời không ngừng <strong>mở rộng và đồng hành cùng hệ thống đại lý</strong>, kết nối sâu hơn với các đội thợ và nhà thầu từ quy mô vừa đến nhỏ. Bằng việc đưa giải pháp vật liệu chất lượng đến từng công trình, từng ngôi nhà, góp phần kiến tạo hàng vạn công trình bền vững, hiện thực hóa <strong>sứ mệnh "Khởi nguồn cho hàng vạn công trình bền vững"</strong>.
+          </p>
         </div>
+      </div>
+
     </div>
+  </div>
 </section>
 
-<section class="section">
-    <div class="container">
-        <div class="section-header">
-            <div class="section-tag">Thông tin liên hệ</div>
-            <h2 class="section-title">Tìm chúng tôi <span>ở đây</span></h2>
+<!-- ══════════════════════════════════════════════════════════════
+     PHẦN 3: CÂU CHUYỆN THƯƠNG HIỆU (BRAND STORY)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="about-sec-3">
+  <div class="container">
+    <div class="about-s3-grid">
+      
+      <!-- Cột Trái: Tiêu đề CÂU CHUYỆN THƯƠNG HIỆU + Đoạn văn -->
+      <div class="about-s3-content">
+        
+        <h2 class="about-main-heading">Câu chuyện thương hiệu</h2>
+        <div class="about-story-text">
+          <p>
+            SHK Mortar ra đời từ mong muốn giúp người thợ thi công hiệu quả hơn — nhanh hơn, tiết 
+            kiệm hơn và bền vững hơn. Từ hành trình nghiên cứu, hoàn thiện công thức phối trộn đến 
+            đồng hành cùng đại lý, đội thợ và nhà thầu, chúng tôi tạo ra những giải pháp vật liệu phù hợp 
+            với thực tế, góp phần kiến tạo những công trình trọn vẹn và bền vững.          </p>
+         
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
-            <div>
-                <div class="contact-info-item">
-                    <div class="icon"><i class="fas fa-building"></i></div>
-                    <div>
-                        <h4>Văn phòng</h4>
-                        <p>San hô 6-30, Vinhomes Ocean Park 2, Văn Giang, Hưng Yên</p>
-                    </div>
-                </div>
-                <div class="contact-info-item">
-                    <div class="icon"><i class="fas fa-industry"></i></div>
-                    <div>
-                        <h4>Nhà máy sản xuất</h4>
-                        <p>Thôn Ninh Tập, Xã Châu Ninh, Hưng Yên</p>
-                    </div>
-                </div>
-                <div class="contact-info-item">
-                    <div class="icon"><i class="fas fa-phone"></i></div>
-                    <div>
-                        <h4>Hotline</h4>
-                        <p><a href="tel:0386360797" style="color:var(--red);font-weight:700">0386.360.797</a> &nbsp;|&nbsp; <a href="tel:0938016788" style="color:var(--red);font-weight:700">0938.016.788</a></p>
-                    </div>
-                </div>
-                <div class="contact-info-item">
-                    <div class="icon"><i class="fas fa-envelope"></i></div>
-                    <div>
-                        <h4>Email</h4>
-                        <p><a href="mailto:admin@keovuasonghong.vn">admin@keovuasonghong.vn</a></p>
-                    </div>
-                </div>
-            </div>
-            <div style="border-radius:16px;overflow:hidden;border:1px solid var(--line);">
-                <iframe
-                    src="https://maps.google.com/maps?q=San+h%C3%B4+6-30%2C+Vinhomes+Ocean+Park+2%2C+V%C4%83n+Giang%2C+H%C6%B0ng+Y%C3%AAn&output=embed&hl=vi&z=16"
-                    width="100%"
-                    height="380"
-                    style="border:0;display:block;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    title="Vị trí Keo Vữa Sông Hồng – San hô 6-30, Vinhomes Ocean Park 2, Văn Giang, Hưng Yên">
-                </iframe>
-                <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--br3);">
-                    <div style="display:flex;align-items:center;gap:10px;">
-                        <i class="fas fa-map-marker-alt" style="color:#FF7E2E;font-size:16px;"></i>
-                        <span style="font-size:13px;font-weight:700;color:var(--text);">San hô 6-30, Vinhomes Ocean Park 2, Văn Giang, Hưng Yên</span>
-                    </div>
-                    <a href="https://maps.google.com/?q=San+h%C3%B4+6-30,+Vinhomes+Ocean+Park+2,+V%C4%83n+Giang,+H%C6%B0ng+Y%C3%AAn" target="_blank"
-                       style="flex-shrink:0;display:inline-flex;align-items:center;gap:7px;padding:8px 18px;background:#8C5A2B;color:#fff;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap;transition:background .25s;">
-                        <i class="fas fa-directions"></i> Chỉ đường
-                    </a>
-                </div>
-            </div>
+      </div>
+
+      <!-- Cột Phải: Ảnh hình chữ nhật chân thực -->
+      <div class="about-s3-media">
+        <div class="about-story-card">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=80" alt="Câu chuyện thương hiệu Keo Vữa Sông Hồng" class="about-story-img">
+         
         </div>
+      </div>
+
     </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PHẦN 4A: DẢI MÀU NÂU - TẦM NHÌN
+     ══════════════════════════════════════════════════════════════ -->
+<section class="about-sec-vision">
+  <div class="container">
+    <div class="about-s4-centered">
+      <h2 class="about-vision-title">Tầm nhìn</h2>
+      <p class="about-vision-desc">
+        Trở thành thương hiệu vữa khô trộn sẵn và keo dán gạch hàng đầu trên thị trường, mở rộng hệ thống phân phối đại lý tới khắp các tỉnh thành tại Việt Nam.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DẢI CAM MỎNG PHÂN CÁCH -->
+<div class="about-vision-cam-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PHẦN 4B: NỀN TRẮNG - CAM KẾT
+     ══════════════════════════════════════════════════════════════ -->
+<section class="about-sec-commitment">
+  <div class="container">
+    <div class="about-s4-centered">
+      <h2 class="about-commitment-title">Cam kết của chúng tôi</h2>
+      <p class="about-commitment-desc">
+        SHK Mortar cam kết cung cấp sản phẩm chất lượng, tối ưu chi phí và dịch vụ chu đáo; chúng tôi lấy khách hàng làm trọng tâm của mọi sự phát triển, liên tục cập nhật và chuyển mình để phù hợp với nhu cầu của khách hàng mục tiêu.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PHẦN 5: SHK GALLERY (MASONRY 3 CỘT STYLE EVERYHALF - 12 ẢNH)
+     ══════════════════════════════════════════════════════════════ -->
+<section class="about-sec-5">
+  <div class="container">
+    
+    <div class="about-gallery-header">
+      <h2 class="about-main-heading gallery-memories-title">Thư viện ảnh SHK</h2>
+    </div>
+
+    <!-- Bố cục Masonry 3 Cột so le nghệ thuật -->
+    <div class="everyhalf-gallery-grid">
+      
+      <!-- CỘT 1 (4 Ảnh) -->
+      <div class="everyhalf-col">
+        
+        <!-- Ảnh 1: Vuông / Nhà máy -->
+        <div class="eh-item eh-ratio-square">
+          <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&auto=format&fit=crop&q=80" alt="Nhà máy SHK Mortar" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Nhà máy SHK Mortar</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 2: Đứng cao / Xưởng sản xuất -->
+        <div class="eh-item eh-ratio-tall">
+          <img src="https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=800&auto=format&fit=crop&q=80" alt="Xưởng vận hành hiện đại" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Thi công thực tế công trình</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 3: Đứng cao / Công trình cao tầng -->
+        <div class="eh-item eh-ratio-tall">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=80" alt="Dự án cao tầng ứng dụng SHK" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Dự án tòa nhà cao tầng</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 4: Vuông / Cát sạch tự nhiên -->
+        <div class="eh-item eh-ratio-square">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80" alt="Nguyên liệu cát sấy sạch" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Cát tự nhiên sấy khô</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CỘT 2 (5 Ảnh) -->
+      <div class="everyhalf-col">
+        
+        <!-- Ảnh 5: Đứng lớn / Dây chuyền tự động hóa -->
+        <div class="eh-item eh-ratio-big-tall">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=80" alt="Dây chuyền tự động hóa khép kín" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Dây chuyền tự động hóa 100%</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 6: Ngang hẹp / Hệ thống điều khiển -->
+        <div class="eh-item eh-ratio-pano">
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80" alt="Phòng điều khiển SCADA" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Trung tâm kiểm soát mẻ trộn</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 7: Đứng vừa / Kỹ sư kiểm định Lab -->
+        <div class="eh-item eh-ratio-portrait">
+          <img src="https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop&q=80" alt="Kiểm định chất lượng phòng Lab" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Kiểm định chuẩn ISO 9001</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 8: Đứng vừa / Đóng bao lưu kho -->
+        <div class="eh-item eh-ratio-portrait">
+          <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&auto=format&fit=crop&q=80" alt="Kho bãi và vận chuyển SHK" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Kho hàng & Đóng bao thành phẩm</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 8b: Ảnh bé ở giữa (Small) -->
+        <div class="eh-item eh-ratio-small">
+          <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=600&auto=format&fit=crop&q=80" alt="Quy trình kiểm soát tự động" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Kiểm soát chuẩn kỹ thuật</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CỘT 3 (5 Ảnh) -->
+      <div class="everyhalf-col">
+        
+        <!-- Ảnh 9: Ngang / Không gian showroom -->
+        <div class="eh-item eh-ratio-landscape">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80" alt="Showroom vật liệu xây dựng" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Không gian giải pháp vật liệu</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 10: Đứng cao / Kiến trúc góc cạnh -->
+        <div class="eh-item eh-ratio-tall">
+          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&auto=format&fit=crop&q=80" alt="Kiến trúc công trình biểu tượng" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Kiến trúc công trình bền vững</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 11: Ngang / Đội ngũ thợ và kỹ sư -->
+        <div class="eh-item eh-ratio-landscape">
+          <img src="https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&auto=format&fit=crop&q=80" alt="Đội ngũ kỹ thuật SHK Mortar" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Đồng hành kỹ thuật tại công trình</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 12: Ngang / Công trình hoàn thiện -->
+        <div class="eh-item eh-ratio-landscape">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80" alt="Công trình hoàn thiện đẳng cấp" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Khởi nguồn công trình bền vững</span>
+          </div>
+        </div>
+
+        <!-- Ảnh 13: Ảnh góc dưới bên phải -->
+        <div class="eh-item eh-ratio-portrait">
+          <img src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=800&auto=format&fit=crop&q=80" alt="Đồng hành cùng mọi công trình" loading="lazy">
+          <div class="eh-overlay">
+            <span class="eh-caption">Đồng hành cùng mọi công trình</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
 {% endblock %}

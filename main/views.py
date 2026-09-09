@@ -3,23 +3,164 @@ from datetime import timedelta
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import Product, ProductCategory, News, NewsCategory, Banner, Distributor, DealerRegistration, ContactMessage, Project, ConsultationRequest, Catalogue
 
 
 def home(request):
     banners = Banner.objects.filter(is_active=True)
-    featured_products = Product.objects.filter(is_featured=True, is_active=True)[:6]
+    featured_products_qs = list(Product.objects.filter(is_featured=True, is_active=True))
+    
+    # Sắp xếp tùy chỉnh cho featured products: Ưu tiên M7.5 -> M10 -> Jumbo -> Các sản phẩm khác
+    def featured_sort(p):
+        if 'M7.5' in p.name: return 1
+        if 'M10' in p.name: return 2
+        if 'Jumbo' in p.name: return 3
+        return 4
+    featured_products_qs.sort(key=featured_sort)
+    featured_products = featured_products_qs[:6]
+    
     featured_projects = Project.objects.filter(is_featured=True, is_active=True)[:3]
+    
+    # Lấy các bài viết phóng sự thực tế (Ưu tiên bài mới đăng lên đầu tiên)
     try:
         phong_su_cat = NewsCategory.objects.get(slug='phong-su')
-        phong_su_news = News.objects.filter(category=phong_su_cat, is_active=True)[:6]
+        phong_su_db = list(News.objects.filter(category=phong_su_cat, is_active=True).order_by('-published_at', '-id'))
     except NewsCategory.DoesNotExist:
-        phong_su_news = News.objects.none()
+        phong_su_db = []
+
+    # Danh sách video mặc định phong phú
+    default_videos = [
+        {
+            'title': 'Khảo sát chất lượng vữa khô trộn sẵn tại công trình',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'QZ9jP3b47xU',
+            'thumb': 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#FF7E2E',
+        },
+        {
+            'title': '(Công trình thực tế) Phản hồi thợ xây khi dùng vữa khô SHK',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#FF7E2E',
+        },
+        {
+            'title': 'Công ty TNHH Keo Vữa Sông Hồng - SHK Mortar TVC 2025',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#FF7E2E',
+        },
+        {
+            'title': 'Vữa khô SHK, sản phẩm hướng tới tương lai #vuakhotronsan',
+            'channel': 'Mortar keovuasonghong',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#6F8A3A',
+        },
+        {
+            'title': 'Quy trình kiểm định và thử nghiệm độ bám dính keo dán gạch SHK',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#FF7E2E',
+        },
+        {
+            'title': 'Giải pháp vữa xây trát chuyên dụng cho tường gạch nhẹ AAC & ALC',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#8C5A2B',
+        },
+        {
+            'title': 'Thử nghiệm độ dẻo và tính công tác của vữa tô tường cao cấp SHK',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#FF7E2E',
+        },
+        {
+            'title': 'Toàn cảnh dây chuyền sấy và đóng bao cát sạch tự động 100%',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#8C5A2B',
+        },
+        {
+            'title': 'Ứng dụng keo dán gạch khổ lớn C2 tại khu biệt thự cao cấp',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#6F8A3A',
+        },
+        {
+            'title': 'Phỏng vấn kỹ sư công trình về hiệu quả rút ngắn tiến độ với vữa trộn sẵn',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#FF7E2E',
+        },
+        {
+            'title': 'Hướng dẫn kỹ thuật trộn vữa và dán gạch chống trượt cho sàn hồ bơi',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#6F8A3A',
+        },
+        {
+            'title': 'Lễ ký kết hợp tác cung ứng vật tư xây dựng cho các dự án trọng điểm 2026',
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': 'N-FLw-piwlc',
+            'thumb': 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80',
+            'tag': 'SHK',
+            'tag_bg': '#8C5A2B',
+        },
+    ]
+
+    all_video_items = []
+    # Các bài viết admin tạo mới LUÔN ĐƯỢC ƯU TIÊN HIỆN ĐẦU TIÊN
+    for n in phong_su_db:
+        vid_id = n.get_video_id()
+        thumb = n.image.url if n.image else (f'https://img.youtube.com/vi/{vid_id}/hqdefault.jpg' if vid_id and vid_id != 'N-FLw-piwlc' else 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80')
+        all_video_items.append({
+            'title': n.title,
+            'channel': 'Keo Vữa Sông Hồng - SHK Mortar',
+            'video_id': vid_id,
+            'thumb': thumb,
+            'tag': 'SHK',
+            'tag_bg': '#FF7E2E',
+            'news_slug': n.slug,
+        })
+    
+    # Bổ sung video để đủ ít nhất 4 trang (mỗi trang 6 video)
+    for d in default_videos:
+        if len(all_video_items) < 24:
+            if not any(item['title'] == d['title'] for item in all_video_items):
+                all_video_items.append(d)
+
+    # Chia thành các trang 6 video
+    phong_su_pages = [all_video_items[i:i + 6] for i in range(0, len(all_video_items), 6)]
+    if not phong_su_pages:
+        phong_su_pages = [default_videos[:6]]
+
     context = {
         'banners': banners,
         'featured_products': featured_products,
         'featured_projects': featured_projects,
-        'phong_su_news': phong_su_news,
+        'phong_su_pages': phong_su_pages,
     }
     return render(request, 'main/home.html', context)
 
@@ -29,43 +170,96 @@ def about(request):
 
 
 def product_list(request):
-    categories = ProductCategory.objects.all()
-    cat_slug = request.GET.get('category')
-    if cat_slug:
-        category = get_object_or_404(ProductCategory, slug=cat_slug)
-        products = Product.objects.filter(category=category, is_active=True)
-    else:
-        category = None
-        products = Product.objects.filter(is_active=True)
+    preferred_order = ['vua-kho-tron-san', 'vua-xay-trat-aac', 'keo-dan-gach-da', 'cat-sach-say-kho']
+    all_cats = list(ProductCategory.objects.all())
+    categories = sorted(all_cats, key=lambda c: preferred_order.index(c.slug) if c.slug in preferred_order else 99)
+    
+    cat_meta = {
+        'vua-kho-tron-san': {'img': 'img/Vua_kho_chon_san.png', 'name': 'Vữa khô trộn sẵn'},
+        'vua-xay-trat-aac': {'img': 'img/Vua_kho.png', 'name': 'Vữa xây AAC'},
+        'keo-dan-gach-da': {'img': 'img/keo_dan_gach_c1.png', 'name': 'Keo dán gạch'},
+        'cat-sach-say-kho': {'img': 'img/Cat_say.png', 'name': 'Cát sấy khô'},
+    }
+    
+    category_list = []
+    for cat in categories:
+        meta = cat_meta.get(cat.slug, {'img': 'img/Vua_kho_chon_san.png', 'name': cat.name})
+        prods = list(Product.objects.filter(category=cat, is_active=True))
+        
+        # Sắp xếp tùy chỉnh cho Vữa khô trộn sẵn: M7.5 -> M10 -> Jumbo
+        if cat.slug == 'vua-kho-tron-san':
+            def custom_sort(p):
+                if 'M7.5' in p.name: return 1
+                if 'M10' in p.name: return 2
+                if 'Jumbo' in p.name: return 3
+                return 4
+            prods.sort(key=custom_sort)
+            
+        category_list.append({
+            'slug': cat.slug,
+            'name': meta['name'],
+            'image': meta['img'],
+            'products': prods,
+            'count': len(prods),
+        })
+        
+    all_products = list(Product.objects.filter(is_active=True))
+    cat_slug = request.GET.get('category', '')
+    
     return render(request, 'main/product_list.html', {
-        'products': products, 'categories': categories, 'current_category': category,
+        'category_list': category_list,
+        'all_products': all_products,
+        'selected_cat_slug': cat_slug,
     })
 
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
+    category_products = Product.objects.filter(category=product.category, is_active=True) if product.category else [product]
     related = Product.objects.filter(category=product.category, is_active=True).exclude(pk=product.pk)[:4]
     related_projects = product.project_set.filter(is_active=True)[:3]
     related_catalogues = product.related_catalogues.filter(is_active=True)[:3]
     return render(request, 'main/product_detail.html', {
         'product': product,
+        'category_products': category_products,
         'related': related,
         'related_projects': related_projects,
         'related_catalogues': related_catalogues,
     })
 
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
 def news_list(request):
-    categories = NewsCategory.objects.all()
-    cat_slug = request.GET.get('category')
+    preferred_order = ['phong-su-thuc-te', 'kien-thuc-chuyen-mon', 'van-hoa-doanh-nghiep']
+    categories = list(NewsCategory.objects.all())
+    categories.sort(key=lambda c: preferred_order.index(c.slug) if c.slug in preferred_order else 99)
+    
+    cat_slug = request.GET.get('category', '')
     if cat_slug:
         category = get_object_or_404(NewsCategory, slug=cat_slug)
-        news_items = News.objects.filter(category=category, is_active=True)
+        news_qs = News.objects.filter(category=category, is_active=True).order_by('-published_at', '-id')
+        
+        paginator = Paginator(news_qs, 9)
+        page_number = request.GET.get('page', 1)
+        try:
+            page_obj = paginator.get_page(page_number)
+        except (EmptyPage, PageNotAnInteger):
+            page_obj = paginator.get_page(1)
+            
+        news_items = page_obj
     else:
         category = None
-        news_items = News.objects.filter(is_active=True)
+        news_items = list(News.objects.filter(is_active=True).order_by('-published_at', '-id')[:6])
+        page_obj = None
+
     return render(request, 'main/news_list.html', {
-        'news_items': news_items, 'categories': categories, 'current_category': category,
+        'news_items': news_items,
+        'page_obj': page_obj,
+        'categories': categories,
+        'current_category': category,
+        'selected_cat_slug': cat_slug,
     })
 
 
@@ -82,36 +276,106 @@ def news_detail(request, slug):
     })
 
 
+VIETNAM_PROVINCES = [
+    'Hà Nội', 'Vĩnh Phúc', 'Bắc Ninh', 'Hưng Yên', 'Hà Nam', 
+    'Hải Dương', 'Hải Phòng', 'Thái Bình', 'Nam Định', 'Ninh Bình', 
+    'Phú Thọ', 'Lào Cai', 'Yên Bái',
+    'An Giang', 'Bà Rịa - Vũng Tàu', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 
+    'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận', 
+    'Cà Mau', 'Cần Thơ', 'Cao Bằng', 'Đà Nẵng', 'Đắk Lắk', 'Đắk Nông', 
+    'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Tĩnh', 
+    'Hậu Giang', 'Hòa Bình', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 
+    'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Long An', 'Nghệ An', 'Ninh Thuận', 
+    'Phú Yên', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 
+    'Quảng Trị', 'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Nguyên', 
+    'Thanh Hóa', 'Thừa Thiên Huế', 'Tiền Giang', 'TP Hồ Chí Minh', 
+    'Trà Vinh', 'Tuyên Quang', 'Vĩnh Long'
+]
+
+
 def distributors(request):
     province = request.GET.get('province', '')
-    all_distributors = Distributor.objects.filter(is_active=True)
-    if province:
-        all_distributors = all_distributors.filter(province__icontains=province)
-    provinces = Distributor.objects.filter(is_active=True).values_list('province', flat=True).distinct().order_by('province')
+    all_distributors = list(Distributor.objects.filter(is_active=True).order_by('province', 'name'))
     return render(request, 'main/distributors.html', {
-        'distributors': all_distributors, 'provinces': provinces, 'selected_province': province,
+        'distributors': all_distributors,
+        'provinces': VIETNAM_PROVINCES,
+        'selected_province': province,
     })
 
 
 def dealer_register(request):
     if request.method == 'POST':
-        full_name = request.POST.get('full_name', '').strip()
         company = request.POST.get('company', '').strip()
+        tax_id = request.POST.get('tax_id', '').strip()
+        full_name = request.POST.get('full_name', '').strip()
         phone = request.POST.get('phone', '').strip()
         email = request.POST.get('email', '').strip()
-        address = request.POST.get('address', '').strip()
-        province = request.POST.get('province', '').strip()
+        province = request.POST.get('province_name', '').strip() or request.POST.get('province', '').strip()
+        district = request.POST.get('district_name', '').strip() or request.POST.get('district', '').strip()
+        ward = request.POST.get('ward_name', '').strip() or request.POST.get('ward', '').strip()
         note = request.POST.get('note', '').strip()
-        if full_name and phone and address and province:
+
+        address_parts = [p for p in [ward, district, province] if p]
+        address = ", ".join(address_parts) if address_parts else province
+        products = request.POST.getlist('products_distributed')
+        products_distributed = ", ".join(products)
+
+        if company and phone and province:
             DealerRegistration.objects.create(
-                full_name=full_name, company=company, phone=phone,
-                email=email, address=address, province=province, note=note
+                company=company, tax_id=tax_id, full_name=full_name,
+                phone=phone, email=email if email else None,
+                address=address, province=province,
+                products_distributed=products_distributed,
+                note=note if note else None
             )
+            # Gửi email thông báo về admin
+            try:
+                admin_link = 'http://192.168.1.103:8000/admin/main/dealerregistration/'
+                subject = f'[SHK] Đăng ký đại lý – {company}'
+                rows = [
+                    ('Doanh nghiệp', company),
+                    ('Người đại diện', full_name or '(chưa điền)'),
+                    ('Mã số thuế', tax_id or '(chưa điền)'),
+                    ('Điện thoại', phone),
+                    ('Email', email or '(chưa điền)'),
+                    ('Khu vực', address or province),
+                    ('Sản phẩm', products_distributed or '(chưa chọn)'),
+                    ('Ghi chú', note or '(không có)'),
+                ]
+                body = (
+                    'Có đăng ký đại lý mới từ website SHK Mortar:\n\n'
+                    + '\n'.join(f'{label}: {value}' for label, value in rows)
+                    + f'\n\nVào admin để xem chi tiết: {admin_link}'
+                )
+                rows_html = ''.join(
+                    f'<tr><td style="padding:6px 16px 6px 0;color:#666;white-space:nowrap;vertical-align:top;">{label}</td>'
+                    f'<td style="padding:6px 0;color:#111;font-weight:600;">{value}</td></tr>'
+                    for label, value in rows
+                )
+                html_body = f'''
+                <div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;">
+                    <h2 style="color:#1a2a5e;border-bottom:2px solid #f26522;padding-bottom:10px;">Đăng ký đại lý</h2>
+                    <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+                        {rows_html}
+                    </table>
+                    <p style="margin-top:20px;">
+                        <a href="{admin_link}" style="color:#f26522;">Vào admin để xem chi tiết</a>
+                    </p>
+                    <p style="color:#999;font-size:12px;margin-top:10px;border-top:1px solid #eee;padding-top:10px;">
+                        Thời gian đăng ký: {timezone.now().strftime('%d/%m/%Y %H:%M:%S')}
+                    </p>
+                </div>
+                '''
+                send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [settings.NOTIFY_EMAIL],
+                          fail_silently=True, html_message=html_body)
+            except Exception:
+                pass
             messages.success(request, 'Đăng ký đại lý thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.')
             return redirect('dealer_register')
         else:
             messages.error(request, 'Vui lòng điền đầy đủ thông tin bắt buộc.')
-    return render(request, 'main/dealer_register.html')
+    all_products = Product.objects.filter(is_active=True).order_by('name')
+    return render(request, 'main/dealer_register.html', {'all_products': all_products})
 
 
 def contact(request):
@@ -140,24 +404,35 @@ def catalogue(request):
     })
 
 
+from django.core.paginator import Paginator
+
 def project_list(request):
     cat = request.GET.get('category', '')
-    projects = Project.objects.filter(is_active=True)
+    projects = Project.objects.filter(is_active=True).order_by('-published_at', '-created_at')
+    
     if cat:
         projects = projects.filter(category=cat)
+        paginator = Paginator(projects, 9)
+    else:
+        # Nếu ở mục "Tất cả", chỉ lấy 6 bài mới nhất, không có các trang sau
+        projects = projects[:6]
+        paginator = Paginator(projects, 6)
+        
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     return render(request, 'main/project_list.html', {
-        'projects': projects,
+        'projects': page_obj.object_list,
+        'page_obj': page_obj,
         'current_category': cat,
     })
 
 
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug, is_active=True)
-    related = Project.objects.filter(category=project.category, is_active=True).exclude(pk=project.pk)[:3]
     related_catalogues = project.related_catalogues.filter(is_active=True)[:3]
     return render(request, 'main/project_detail.html', {
         'project': project,
-        'related': related,
         'related_catalogues': related_catalogues,
     })
 
@@ -218,7 +493,25 @@ def consultation(request):
             full_name=full_name, phone=phone_cleaned, email=email,
             company=company, interest=interest or province or "Tư vấn sản phẩm", message=full_message
         )
-        
+
+        # Gửi email thông báo về admin
+        try:
+            subject = f'[SHK] Đăng ký tư vấn mới – {full_name} ({phone_cleaned})'
+            body = (
+                f'Có đăng ký tư vấn mới từ website SHK Mortar:\n\n'
+                f'Họ tên      : {full_name}\n'
+                f'Điện thoại  : {phone_cleaned}\n'
+                f'Email       : {email or "(chưa điền)"}\n'
+                f'Công ty     : {company or "(chưa điền)"}\n'
+                f'Khu vực     : {area_full or "(chưa điền)"}\n'
+                f'Quan tâm    : {interest or "(chưa điền)"}\n'
+                f'Nội dung    : {message_text or "(không có)"}\n\n'
+                f'Vào admin để xem chi tiết: http://192.168.1.103:8000/admin/main/consultationrequest/'
+            )
+            send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [settings.NOTIFY_EMAIL], fail_silently=True)
+        except Exception:
+            pass
+
         # Tự động xuất và cập nhật ra file Excel và Word
         try:
             from .export_utils import auto_save_consultation_to_files

@@ -17,11 +17,12 @@
     <h1 class="hero-title">Công ty TNHH Keo Vữa Sông Hồng</h1>
     <p class="hero-desc">Nhà máy sản xuất vữa khô trộn sẵn, keo dán gạch chất lượng cao</p>
     <div class="hero-btns hero-btns-center">
-      <a href="{% url 'product_list' %}" class="btn-hero-brown">Khám Phá Sản Phẩm</a>
+      <a href="{% url 'product_list' %}#plStickyNav" class="btn-hero-brown">Khám Phá Sản Phẩm</a>
     </div>
   </div>
 </section>
 
+{% if not theme or theme.show_intro %}
 <!-- ── GIỚI THIỆU / VỀ CHÚNG TÔI ── -->
 <section class="section" style="background:#FAF7F2;padding:44px 0 36px;">
   <div class="container">
@@ -30,7 +31,7 @@
       <div class="about-home-video reveal">
         <div class="video-tvc-wrap" style="border-radius:0 !important; border:none !important; box-shadow:none !important;">
           <iframe 
-            src="https://www.youtube.com/embed/N-FLw-piwlc" 
+            src="{% if theme and theme.intro_youtube_url %}{{ theme.intro_youtube_url }}{% else %}https://www.youtube.com/embed/N-FLw-piwlc{% endif %}" 
             title="Keo Vữa Sông Hồng - SHK Mortar" 
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -44,9 +45,14 @@
       <div class="about-home-text reveal">
         <div class="about-title-block">
           <span class="about-pre-title">Giới thiệu</span>
-          <h2 class="about-main-title">Về chúng tôi</h2>
+          <h2 class="about-main-title">{% if theme and theme.intro_title %}{{ theme.intro_title }}{% else %}Về chúng tôi{% endif %}</h2>
         </div>
         
+        {% if theme and theme.intro_description %}
+        <div class="about-para" style="margin-bottom: 20px;">
+          {{ theme.intro_description|linebreaksbr }}
+        </div>
+        {% else %}
         <p class="about-para">
           Công ty TNHH Keo Vữa Sông Hồng là đơn vị hoạt động trong lĩnh vực sản xuất vật liệu xây dựng tại Hưng Yên. Với kinh nghiệm trong ngành cùng hệ thống dây chuyền, máy móc và công nghệ hiện đại, chúng tôi tập trung nghiên cứu và sản xuất những sản phẩm đáp ứng yêu cầu ngày càng cao của thị trường.
         </p>
@@ -56,10 +62,12 @@
         <p class="about-para">
           Với định hướng đưa các sản phẩm chất lượng đến gần hơn với thị trường, từ dự án đến công trình dân dụng, SHK Mortar từng bước phát triển hệ giải pháp vật liệu giúp tối ưu quy trình thi công và chi phí, hướng tới một phương thức xây dựng hiệu quả hơn và tạo nên một cách tiếp cận mới cho ngành xây dựng.
         </p>
+        {% endif %}
       </div>
     </div>
   </div>
 </section>
+{% endif %}
 
 <!-- ── SẢN PHẨM ── -->
 <section class="section" style="background:#FAF7F2;padding:36px 0 44px;">
@@ -70,7 +78,7 @@
         <span class="about-pre-title">Khám phá</span>
         <h2 class="about-main-title">Danh mục sản phẩm</h2>
       </div>
-      <a href="{% url 'product_list' %}" class="btn-prod-all">
+      <a href="{% url 'product_list' %}#plStickyNav" class="btn-prod-all">
         Xem tất cả sản phẩm
       </a>
     </div>
@@ -78,44 +86,44 @@
     <!-- 4-Column Responsive Grid (Exactly 4 Products) -->
     <div class="prod-grid-4">
       <!-- Sản phẩm 1: Vữa khô trộn sẵn -->
-      <a href="{% url 'product_list' %}?category=vua-kho-tron-san" class="prod-unit-card">
-        <div class="prod-unit-img-box">
-          <img src="{% static 'img/Vua_kho_chon_san.png' %}" alt="Vữa khô trộn sẵn SHK Mortar" loading="lazy">
-        </div>
+      <div class="prod-unit-card">
+        <a href="{% url 'product_list' %}#cat-vua-kho-tron-san" class="prod-unit-img-box" title="Vữa khô trộn sẵn SHK Mortar">
+          <img src="{% static 'images/Vua_kho_chon_san.png' %}" alt="Vữa khô trộn sẵn SHK Mortar" loading="lazy">
+        </a>
         <div class="prod-unit-info">
-          <h2 class="prod-unit-title">Vữa khô trộn sẵn</h2>
+          <a href="{% url 'product_list' %}#cat-vua-kho-tron-san" class="prod-unit-title">Vữa khô trộn sẵn</a>
         </div>
-      </a>
+      </div>
 
       <!-- Sản phẩm 2: Vữa xây trát AAC -->
-      <a href="{% url 'product_list' %}?category=vua-kho-tron-san" class="prod-unit-card">
-        <div class="prod-unit-img-box">
-          <img src="{% static 'img/Vua_kho.png' %}" alt="Vữa xây trát AAC SHK Mortar" loading="lazy">
-        </div>
+      <div class="prod-unit-card">
+        <a href="{% url 'product_list' %}#cat-vua-xay-trat-aac" class="prod-unit-img-box" title="Vữa xây trát AAC SHK Mortar">
+          <img src="{% static 'images/Vua_kho.png' %}" alt="Vữa xây trát AAC SHK Mortar" loading="lazy">
+        </a>
         <div class="prod-unit-info">
-          <h2 class="prod-unit-title">Vữa xây trát AAC</h2>
+          <a href="{% url 'product_list' %}#cat-vua-xay-trat-aac" class="prod-unit-title">Vữa xây trát AAC</a>
         </div>
-      </a>
+      </div>
 
       <!-- Sản phẩm 3: Keo dán gạch -->
-      <a href="{% url 'product_list' %}?category=keo-dan-gach-da" class="prod-unit-card">
-        <div class="prod-unit-img-box">
-          <img src="{% static 'img/keo_dan_gach_c1.png' %}" alt="Keo dán gạch SHK Mortar" loading="lazy">
-        </div>
+      <div class="prod-unit-card">
+        <a href="{% url 'product_list' %}#cat-keo-dan-gach-da" class="prod-unit-img-box" title="Keo dán gạch SHK Mortar">
+          <img src="{% static 'images/keo_dan_gach_c1.png' %}" alt="Keo dán gạch SHK Mortar" loading="lazy">
+        </a>
         <div class="prod-unit-info">
-          <h2 class="prod-unit-title">Keo dán gạch</h2>
+          <a href="{% url 'product_list' %}#cat-keo-dan-gach-da" class="prod-unit-title">Keo dán gạch</a>
         </div>
-      </a>
+      </div>
 
       <!-- Sản phẩm 4: Cát sấy khô -->
-      <a href="{% url 'product_list' %}?category=cat-say-kho" class="prod-unit-card">
-        <div class="prod-unit-img-box">
-          <img src="{% static 'img/Cat_say.png' %}" alt="Cát sấy khô SHK Mortar" loading="lazy">
-        </div>
+      <div class="prod-unit-card">
+        <a href="{% url 'product_list' %}#cat-cat-sach-say-kho" class="prod-unit-img-box" title="Cát sấy khô SHK Mortar">
+          <img src="{% static 'images/Cat_say.png' %}" alt="Cát sấy khô SHK Mortar" loading="lazy">
+        </a>
         <div class="prod-unit-info">
-          <h2 class="prod-unit-title">Cát sấy khô</h2>
+          <a href="{% url 'product_list' %}#cat-cat-sach-say-kho" class="prod-unit-title">Cát sấy khô</a>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>
@@ -138,164 +146,82 @@
         <div class="ps-banner-subtitle">Xem thêm</div>
         <h3 class="ps-banner-heading">Phóng sự thực tế</h3>
         <p class="ps-banner-desc">Theo sát những công trình thực tế, ghi nhận câu chuyện và trải nghiệm từ thợ thi công, đại lý, nhà thầu và chủ đầu tư. Qua đó, thương hiệu giới thiệu chất lượng sản phẩm, giải pháp thi công và dấu ấn đồng hành trên từng công trình.</p>
-        <a href="{% url 'news_list' %}?category=phong-su" class="btn-ps-more">
+        <a href="{% url 'news_list' %}?category=phong-su-thuc-te" class="btn-ps-more">
           XEM TẤT CẢ
         </a>
       </div>
     </div>
 
-    <!-- Right 3x2 Grid (6 Featured 16:9 Videos) -->
-    <div class="ps-right-grid">
-      <!-- Video 1 -->
-      <div class="ps-grid-item" onclick="playPsVideo(this, 'QZ9jP3b47xU')">
-        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80');">
-          <div class="ps-card-topbar">
-            <div class="ps-card-channel">
-              <div class="ps-channel-avatar"><i class="fas fa-user-circle"></i></div>
-              <div class="ps-channel-info">
-                <div class="ps-card-title">Khảo sát chất lượng vữa khô trộn sẵn tại công trình</div>
-                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
+    <!-- Right Multi-Page Slider Container -->
+    <div class="ps-right-slider-wrapper">
+      <div class="ps-pages-track" id="psPagesTrack">
+        {% for page in phong_su_pages %}
+        <div class="ps-page-slide {% if forloop.first %}active{% endif %}" data-page="{{ forloop.counter0 }}">
+          <div class="ps-right-grid">
+            {% for item in page %}
+            <div class="ps-grid-item" onclick="playPsVideo(this, '{{ item.video_id }}')">
+              <div class="ps-card-preview" style="background-image: url('{{ item.thumb }}');">
+                <div class="ps-card-topbar">
+                  <div class="ps-card-channel">
+                    <div class="ps-channel-avatar" style="background:{{ item.tag_bg|default:'#FF7E2E' }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">{{ item.tag|default:'SHK' }}</div>
+                    <div class="ps-channel-info">
+                      <div class="ps-card-title">{{ item.title }}</div>
+                      <div class="ps-card-sub">{{ item.channel }}</div>
+                    </div>
+                  </div>
+                  <div class="ps-card-icons">
+                    <i class="fa-solid fa-volume-high"></i>
+                    <i class="fa-solid fa-closed-captioning"></i>
+                    <i class="fa-solid fa-gear"></i>
+                  </div>
+                </div>
+                <div class="ps-yt-play-btn"><i class="fa-brands fa-youtube"></i></div>
+                <div class="ps-card-bottombar">
+                  <div class="ps-card-left-icons"><i class="fa-solid fa-link"></i></div>
+                </div>
               </div>
             </div>
-            <div class="ps-card-icons">
-              <i class="fas fa-volume-up"></i>
-              <i class="fas fa-closed-captioning"></i>
-              <i class="fas fa-cog"></i>
-            </div>
-          </div>
-          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
-          <div class="ps-card-bottombar">
-            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
+            {% endfor %}
           </div>
         </div>
-      </div>
-
-      <!-- Video 2: Phản hồi thợ xây -->
-      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
-        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&auto=format&fit=crop&q=80');">
-          <div class="ps-card-topbar">
-            <div class="ps-card-channel">
-              <div class="ps-channel-avatar" style="background:#FF7E2E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
-              <div class="ps-channel-info">
-                <div class="ps-card-title">(Công trình thực tế) Phản hồi thợ xây khi dùng vữa khô SHK</div>
-                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
-              </div>
-            </div>
-            <div class="ps-card-icons">
-              <i class="fas fa-volume-up"></i>
-              <i class="fas fa-closed-captioning"></i>
-              <i class="fas fa-cog"></i>
-            </div>
-          </div>
-          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
-          <div class="ps-card-bottombar">
-            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Video 3: TVC Keo Vữa Sông Hồng 2025 -->
-      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
-        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80');">
-          <div class="ps-card-topbar">
-            <div class="ps-card-channel">
-              <div class="ps-channel-avatar" style="background:#FF7E2E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
-              <div class="ps-channel-info">
-                <div class="ps-card-title">Công ty TNHH Keo Vữa Sông Hồng - SHK Mortar TVC 2025</div>
-                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
-              </div>
-            </div>
-            <div class="ps-card-icons">
-              <i class="fas fa-volume-up"></i>
-              <i class="fas fa-closed-captioning"></i>
-              <i class="fas fa-cog"></i>
-            </div>
-          </div>
-          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
-          <div class="ps-card-bottombar">
-            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Video 4: Vữa khô SHK Hướng tới tương lai -->
-      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
-        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&auto=format&fit=crop&q=80');">
-          <div class="ps-card-topbar">
-            <div class="ps-card-channel">
-              <div class="ps-channel-avatar" style="background:#6F8A3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
-              <div class="ps-channel-info">
-                <div class="ps-card-title">Vữa khô SHK, sản phẩm hướng tới tương lai #vuakhotronsan</div>
-                <div class="ps-card-sub">Mortar keovuasonghong</div>
-              </div>
-            </div>
-            <div class="ps-card-icons">
-              <i class="fas fa-volume-up"></i>
-              <i class="fas fa-closed-captioning"></i>
-              <i class="fas fa-cog"></i>
-            </div>
-          </div>
-          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
-          <div class="ps-card-bottombar">
-            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Video 5: Thử nghiệm độ bám dính keo dán gạch SHK -->
-      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
-        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=600&auto=format&fit=crop&q=80');">
-          <div class="ps-card-topbar">
-            <div class="ps-card-channel">
-              <div class="ps-channel-avatar" style="background:#FF7E2E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
-              <div class="ps-channel-info">
-                <div class="ps-card-title">Quy trình kiểm định và thử nghiệm độ bám dính keo dán gạch SHK</div>
-                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
-              </div>
-            </div>
-            <div class="ps-card-icons">
-              <i class="fas fa-volume-up"></i>
-              <i class="fas fa-closed-captioning"></i>
-              <i class="fas fa-cog"></i>
-            </div>
-          </div>
-          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
-          <div class="ps-card-bottombar">
-            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Video 6: Giải pháp vữa xây trát gạch nhẹ AAC -->
-      <div class="ps-grid-item" onclick="playPsVideo(this, 'N-FLw-piwlc')">
-        <div class="ps-card-preview" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80');">
-          <div class="ps-card-topbar">
-            <div class="ps-card-channel">
-              <div class="ps-channel-avatar" style="background:#8C5A2B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border-radius:50%;">SHK</div>
-              <div class="ps-channel-info">
-                <div class="ps-card-title">Giải pháp vữa xây trát chuyên dụng cho tường gạch nhẹ AAC & ALC</div>
-                <div class="ps-card-sub">Keo Vữa Sông Hồng - SHK Mortar</div>
-              </div>
-            </div>
-            <div class="ps-card-icons">
-              <i class="fas fa-volume-up"></i>
-              <i class="fas fa-closed-captioning"></i>
-              <i class="fas fa-cog"></i>
-            </div>
-          </div>
-          <div class="ps-yt-play-btn"><i class="fab fa-youtube"></i></div>
-          <div class="ps-card-bottombar">
-            <div class="ps-card-left-icons"><i class="fas fa-link"></i></div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
+  </div>
+
+  <!-- ── PAGINATION DOTS (THANH CHUYỂN ĐỔI BẰNG HÌNH CHỮ NHẬT / VUÔNG) ── -->
+  <div class="ps-pagination-bar" id="psPaginationBar">
+    {% for page in phong_su_pages %}
+    <button type="button" class="ps-dot-btn {% if forloop.first %}active{% endif %}" onclick="goToPsPage({{ forloop.counter0 }})" aria-label="Trang {{ forloop.counter }}"></button>
+    {% endfor %}
   </div>
 </section>
 
 <script>
 function playPsVideo(container, videoId) {
+  if (container.querySelector('iframe')) return;
   container.innerHTML = '<iframe src="https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0" title="YouTube Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width:100%;height:100%;border:none;display:block;"></iframe>';
+}
+
+function goToPsPage(pageIndex) {
+  const slides = document.querySelectorAll('.ps-page-slide');
+  const dots = document.querySelectorAll('.ps-dot-btn');
+  
+  slides.forEach((slide, idx) => {
+    if (idx === pageIndex) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+
+  dots.forEach((dot, idx) => {
+    if (idx === pageIndex) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
 }
 </script>
 
@@ -312,7 +238,7 @@ function playPsVideo(container, videoId) {
     <div class="featured-proj-slider-wrapper">
       <!-- Left Floating Navigation Arrow -->
       <button type="button" class="proj-nav-arrow-float prev" onclick="prevProjSlide()" aria-label="Previous Projects">
-        <i class="fas fa-chevron-left"></i>
+        <i class="fa-solid fa-chevron-left"></i>
       </button>
 
       <!-- Multi-page Projects Container (4 Pages of 6 Projects) -->
@@ -480,7 +406,7 @@ function playPsVideo(container, videoId) {
 
       <!-- Right Floating Navigation Arrow -->
       <button type="button" class="proj-nav-arrow-float next" onclick="nextProjSlide()" aria-label="Next Projects">
-        <i class="fas fa-chevron-right"></i>
+        <i class="fa-solid fa-chevron-right"></i>
       </button>
     </div>
 
@@ -523,37 +449,37 @@ function nextProjSlide() { showProjSlide(currentProjIdx + 1); }
         <div class="proof-overlap-card">
           <!-- Slide items (Images/Certificates) - 11 Slides -->
           <div class="proof-slide active" id="proofSlide-0">
-            <img src="{% static 'img/certificates/iso-9001_2015.jpg' %}" alt="Giấy chứng nhận ISO 9001:2015 Quản lý chất lượng SHK Mortar">
+            <img src="{% static 'images/certificates/iso-9001_2015.jpg' %}" alt="Giấy chứng nhận ISO 9001:2015 Quản lý chất lượng SHK Mortar">
           </div>
           <div class="proof-slide" id="proofSlide-1">
-            <img src="{% static 'img/certificates/tcvn-4314_2022-shk.jpg' %}" alt="Giấy chứng nhận Hợp chuẩn TCVN 4314:2022 Vữa xây dựng SHK">
+            <img src="{% static 'images/certificates/tcvn-4314_2022-shk.jpg' %}" alt="Giấy chứng nhận Hợp chuẩn TCVN 4314:2022 Vữa xây dựng SHK">
           </div>
           <div class="proof-slide" id="proofSlide-2">
-            <img src="{% static 'img/certificates/tcvn-7899_2008-shk.jpg' %}" alt="Giấy chứng nhận Tiêu chuẩn TCVN 7899-1:2008 Keo dán gạch SHK">
+            <img src="{% static 'images/certificates/tcvn-7899_2008-shk.jpg' %}" alt="Giấy chứng nhận Tiêu chuẩn TCVN 7899-1:2008 Keo dán gạch SHK">
           </div>
           <div class="proof-slide" id="proofSlide-3">
-            <img src="{% static 'img/certificates/tcvn-9028_2011-shk.jpg' %}" alt="Giấy chứng nhận Hợp chuẩn TCVN 9028:2011 Vữa xây dựng SHK">
+            <img src="{% static 'images/certificates/tcvn-9028_2011-shk.jpg' %}" alt="Giấy chứng nhận Hợp chuẩn TCVN 9028:2011 Vữa xây dựng SHK">
           </div>
           <div class="proof-slide" id="proofSlide-4">
-            <img src="{% static 'img/certificates/keo-c1-shk-test.jpg' %}" alt="Kết quả thử nghiệm Keo dán gạch C1 SHK">
+            <img src="{% static 'images/certificates/keo-c1-shk-test.jpg' %}" alt="Kết quả thử nghiệm Keo dán gạch C1 SHK">
           </div>
           <div class="proof-slide" id="proofSlide-5">
-            <img src="{% static 'img/certificates/keo-c2-shk-test.jpg' %}" alt="Kết quả thử nghiệm Keo dán gạch C2 SHK">
+            <img src="{% static 'images/certificates/keo-c2-shk-test.jpg' %}" alt="Kết quả thử nghiệm Keo dán gạch C2 SHK">
           </div>
           <div class="proof-slide" id="proofSlide-6">
-            <img src="{% static 'img/certificates/vua-mac-5-shk-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 5.0 SHK">
+            <img src="{% static 'images/certificates/vua-mac-5-shk-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 5.0 SHK">
           </div>
           <div class="proof-slide" id="proofSlide-7">
-            <img src="{% static 'img/certificates/vua-mac-75-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 7.5 SHK">
+            <img src="{% static 'images/certificates/vua-mac-75-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 7.5 SHK">
           </div>
           <div class="proof-slide" id="proofSlide-8">
-            <img src="{% static 'img/certificates/vua-mac-10-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 10 SHK">
+            <img src="{% static 'images/certificates/vua-mac-10-test.jpg' %}" alt="Kết quả thử nghiệm Vữa Mác 10 SHK">
           </div>
           <div class="proof-slide" id="proofSlide-9">
-            <img src="{% static 'img/certificates/vua-xay-aac-75-shk-test.jpg' %}" alt="Kết quả thử nghiệm Vữa xây AAC Mác 7.5 SHK">
+            <img src="{% static 'images/certificates/vua-xay-aac-75-shk-test.jpg' %}" alt="Kết quả thử nghiệm Vữa xây AAC Mác 7.5 SHK">
           </div>
           <div class="proof-slide" id="proofSlide-10">
-            <img src="{% static 'img/certificates/vua-trat-aac-75-test-shk.jpg' %}" alt="Kết quả thử nghiệm Vữa trát AAC Mác 7.5 SHK">
+            <img src="{% static 'images/certificates/vua-trat-aac-75-test-shk.jpg' %}" alt="Kết quả thử nghiệm Vữa trát AAC Mác 7.5 SHK">
           </div>
         </div>
 
@@ -645,71 +571,87 @@ setInterval(() => {
       </p>
     </div>
 
-    <!-- Right Column: 1-Column Step Slider (4 Visible Columns x 3 Rows = 12 Cards on screen) -->
+    <!-- Right Column: 1-Column Step Slider -->
     <div class="partners-slider-viewport" id="partnersViewport">
       <div class="partners-track-flex" id="partnersTrackFlex">
+        {% if theme and theme.partners.all %}
+          {% for partner in theme.partners.all %}
+            {% if forloop.counter0|divisibleby:3 %}
+            <div class="p-col-unit">
+            {% endif %}
+              <div class="p-logo-card">
+                {% if partner.link %}<a href="{{ partner.link }}" target="_blank" style="display:block;width:100%;height:100%;">{% endif %}
+                <img src="{{ partner.image.url }}" alt="{{ partner.name|default:'Đối tác' }}" loading="lazy">
+                {% if partner.link %}</a>{% endif %}
+              </div>
+            {% if forloop.counter|divisibleby:3 or forloop.last %}
+            </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
         <!-- Column 1 (1 - 3) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/1.jpg' %}" alt="Đối tác 1" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/2.jpg' %}" alt="Đối tác 2" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/3.jpg' %}" alt="Đối tác 3" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/1.jpg' %}" alt="Đối tác 1" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/2.jpg' %}" alt="Đối tác 2" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/3.jpg' %}" alt="Đối tác 3" loading="lazy"></div>
         </div>
 
         <!-- Column 2 (4 - 6) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/4.jpg' %}" alt="Đối tác 4" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/5.jpg' %}" alt="Đối tác 5" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/6.jpg' %}" alt="Đối tác 6" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/4.jpg' %}" alt="Đối tác 4" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/5.jpg' %}" alt="Đối tác 5" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/6.jpg' %}" alt="Đối tác 6" loading="lazy"></div>
         </div>
 
         <!-- Column 3 (7 - 9) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/7.jpg' %}" alt="Đối tác 7" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/8.jpg' %}" alt="Đối tác 8" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/9.jpg' %}" alt="Đối tác 9" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/7.jpg' %}" alt="Đối tác 7" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/8.jpg' %}" alt="Đối tác 8" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/9.jpg' %}" alt="Đối tác 9" loading="lazy"></div>
         </div>
 
         <!-- Column 4 (10 - 12) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/10.jpg' %}" alt="Đối tác 10" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/11.jpg' %}" alt="Đối tác 11" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/12.jpg' %}" alt="Đối tác 12" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/10.jpg' %}" alt="Đối tác 10" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/11.jpg' %}" alt="Đối tác 11" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/12.jpg' %}" alt="Đối tác 12" loading="lazy"></div>
         </div>
 
         <!-- Column 5 (13 - 15) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/13.jpg' %}" alt="Đối tác 13" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/14.jpg' %}" alt="Đối tác 14" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/15.jpg' %}" alt="Đối tác 15" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/13.jpg' %}" alt="Đối tác 13" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/14.jpg' %}" alt="Đối tác 14" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/15.jpg' %}" alt="Đối tác 15" loading="lazy"></div>
         </div>
 
         <!-- Column 6 (16 - 18) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/16.jpg' %}" alt="Đối tác 16" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/17.jpg' %}" alt="Đối tác 17" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/18.jpg' %}" alt="Đối tác 18" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/16.jpg' %}" alt="Đối tác 16" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/17.jpg' %}" alt="Đối tác 17" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/18.jpg' %}" alt="Đối tác 18" loading="lazy"></div>
         </div>
 
         <!-- Column 7 (19 - 21) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/19.jpg' %}" alt="Đối tác 19" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/20.jpg' %}" alt="Đối tác 20" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/21.jpg' %}" alt="Đối tác 21" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/19.jpg' %}" alt="Đối tác 19" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/20.jpg' %}" alt="Đối tác 20" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/21.jpg' %}" alt="Đối tác 21" loading="lazy"></div>
         </div>
 
         <!-- Column 8 (22 - 24) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/22.jpg' %}" alt="Đối tác 22" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/23.jpg' %}" alt="Đối tác 23" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/24.jpg' %}" alt="Đối tác 24" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/22.jpg' %}" alt="Đối tác 22" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/23.jpg' %}" alt="Đối tác 23" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/24.jpg' %}" alt="Đối tác 24" loading="lazy"></div>
         </div>
 
         <!-- Column 9 (25 - 27) -->
         <div class="p-col-unit">
-          <div class="p-logo-card"><img src="{% static 'img/Logo/25.jpg' %}" alt="Đối tác 25" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/26.jpg' %}" alt="Đối tác 26" loading="lazy"></div>
-          <div class="p-logo-card"><img src="{% static 'img/Logo/27.jpg' %}" alt="Đối tác 27" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/25.jpg' %}" alt="Đối tác 25" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/26.jpg' %}" alt="Đối tác 26" loading="lazy"></div>
+          <div class="p-logo-card"><img src="{% static 'images/Logo/27.jpg' %}" alt="Đối tác 27" loading="lazy"></div>
         </div>
+        {% endif %}
       </div>
 
       <!-- Pagination Controls -->
@@ -736,9 +678,9 @@ setInterval(() => {
   const dotsContainer = document.getElementById('partnerDotsContainer');
   if (!track || !viewport) return;
 
-  // Lấy danh sách các cột gốc ban đầu (8 cột)
+  // Lấy danh sách các cột gốc ban đầu (9 cột)
   const originalCols = Array.from(track.children);
-  const numOriginalCols = originalCols.length; // 8
+  const numOriginalCols = originalCols.length;
   if (numOriginalCols === 0) return;
 
   // Nhân bản cột trước và sau để tạo vòng lặp vô tận liền mạch (Infinite Loop)
@@ -751,10 +693,11 @@ setInterval(() => {
     track.appendChild(cloneAfter);
   });
 
-  let currentIndex = numOriginalCols; // Bắt đầu tại vị trí của tập gốc (index 8)
+  let currentIndex = numOriginalCols; // Bắt đầu tại vị trí của tập gốc
   let isAnimating = false;
+  let animTimer = null;
   let autoPlayTimer = null;
-  const AUTOPLAY_DELAY = 4000; // 4 giây tự chuyển 1 cột mượt mà
+  const AUTOPLAY_DELAY = 4000;
 
   function getMetrics() {
     const isMobile = window.innerWidth <= 768;
@@ -768,16 +711,16 @@ setInterval(() => {
   function updateActiveDot() {
     const dots = dotsContainer ? dotsContainer.querySelectorAll('.p-dot') : [];
     if (dots.length === 0) return;
-    const activeDotIdx = (currentIndex % numOriginalCols) % dots.length;
+    const activeDotIdx = ((currentIndex % numOriginalCols) + numOriginalCols) % numOriginalCols;
     dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === activeDotIdx);
+      dot.classList.toggle('active', i === (activeDotIdx % dots.length));
     });
   }
 
   function setTrackPosition(index, animate = true) {
     const { stepDistance } = getMetrics();
     if (animate) {
-      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+      track.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
     } else {
       track.style.transition = 'none';
     }
@@ -789,9 +732,9 @@ setInterval(() => {
   // Khởi tạo vị trí ban đầu
   setTrackPosition(currentIndex, false);
 
-  // Xử lý chuyển dịch vòng lặp liền mạch khi kết thúc chuyển động
-  track.addEventListener('transitionend', () => {
+  function handleLoopBoundary() {
     isAnimating = false;
+    clearTimeout(animTimer);
     // Nếu đi quá tập gốc về phía sau
     if (currentIndex >= numOriginalCols * 2) {
       currentIndex -= numOriginalCols;
@@ -802,11 +745,29 @@ setInterval(() => {
       currentIndex += numOriginalCols;
       setTrackPosition(currentIndex, false);
     }
+  }
+
+  track.addEventListener('transitionend', (e) => {
+    if (e.target !== track) return;
+    handleLoopBoundary();
   });
 
   function goToStep(index) {
-    if (isAnimating) return;
+    if (currentIndex === index) {
+      isAnimating = false;
+      return;
+    }
+    if (isAnimating) {
+      // Nếu đang chuyển động mà người dùng bấm tiếp, ngắt hoạt ảnh và chuyển vị trí ngay
+      handleLoopBoundary();
+    }
     isAnimating = true;
+    clearTimeout(animTimer);
+    // Khóa an toàn 500ms tự giải phóng nếu browser không bắn transitionend
+    animTimer = setTimeout(() => {
+      handleLoopBoundary();
+    }, 500);
+
     currentIndex = index;
     setTrackPosition(currentIndex, true);
   }
@@ -820,7 +781,8 @@ setInterval(() => {
   }
 
   window.setPartnerStep = function(dotIdx) {
-    goToStep(numOriginalCols + dotIdx);
+    const targetIdx = numOriginalCols + dotIdx;
+    goToStep(targetIdx);
     resetAutoPlay();
   };
 
@@ -848,7 +810,7 @@ setInterval(() => {
   let prevTranslate = 0;
 
   function getPosX(e) {
-    return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    return e.type.includes('mouse') ? e.pageX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
   }
 
   viewport.addEventListener('touchstart', (e) => {
@@ -873,9 +835,9 @@ setInterval(() => {
     if (!isDragging) return;
     isDragging = false;
     const moved = dragTranslate - prevTranslate;
-    if (moved < -40) {
+    if (moved < -35) {
       nextStep();
-    } else if (moved > 40) {
+    } else if (moved > 35) {
       prevStep();
     } else {
       setTrackPosition(currentIndex, true);
@@ -917,12 +879,55 @@ setInterval(() => {
     resetAutoPlay();
   });
 
+  let isSectionInView = false;
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    if (!isSectionInView) return;
+    autoPlayTimer = setInterval(nextStep, AUTOPLAY_DELAY);
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayTimer) {
+      clearInterval(autoPlayTimer);
+      autoPlayTimer = null;
+    }
+  }
+
+  function resetAutoPlay() {
+    stopAutoPlay();
+    if (isSectionInView) {
+      startAutoPlay();
+    }
+  }
+
   viewport.addEventListener('mouseenter', stopAutoPlay);
   viewport.addEventListener('mouseleave', () => {
-    if (!isDragging) startAutoPlay();
+    if (!isDragging && isSectionInView) startAutoPlay();
   });
 
-  startAutoPlay();
+  // Chỉ kích hoạt tự động chạy khi người dùng cuộn đến phần Đối tác
+  if ('IntersectionObserver' in window) {
+    const partnerSection = document.querySelector('.partners-section-wrap') || viewport;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          isSectionInView = true;
+          startAutoPlay();
+        } else {
+          isSectionInView = false;
+          stopAutoPlay();
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+    observer.observe(partnerSection);
+  } else {
+    // Dự phòng cho trình duyệt cũ không hỗ trợ IntersectionObserver
+    isSectionInView = true;
+    startAutoPlay();
+  }
 
   window.addEventListener('resize', () => {
     setTrackPosition(currentIndex, false);
@@ -964,10 +969,10 @@ setInterval(() => {
       <div class="consult-left-info">
         <h2 class="consult-home-title">ĐĂNG KÝ TƯ VẤN</h2>
         <p class="consult-home-desc">
-          Để lại thông tin để nhận tư vấn về sản phẩm, giải pháp và chính sách phù hợp với nhu cầu của bạn.
+          Để lại thông tin để nhận tư vấn về sản phẩm,<br> giải pháp và chính sách phù hợp với nhu cầu của bạn.
         </p>
         <div class="consult-home-img-holder">
-          <img src="{% static 'img/quality_lab_bg.jpg' %}" alt="Đăng ký tư vấn SHK Mortar" loading="lazy">
+          <img src="{% static 'images/quality_lab_bg.jpg' %}" alt="Đăng ký tư vấn SHK Mortar" loading="lazy">
         </div>
       </div>
 

@@ -1,0 +1,43 @@
+{% load i18n static unfold %}
+
+<div class="flex flex-row gap-3 items-center ml-auto">
+    {% if environment %}
+        {% include "unfold/helpers/label.html" with text=environment.0 type=environment.1 %}
+    {% endif %}
+
+    {% if request.user.is_staff %}
+        <span class="cursor-pointer flex items-center h-[18px] hover:text-base-700 dark:hover:text-base-200" x-on:click="$dispatch('opencommand')" title="{% trans 'Search apps and models...' %}">
+            <span class="material-symbols-outlined md-18">search</span>
+        </span>
+    {% endif %}
+
+    <!-- Góc này để Admin -->
+    <div class="relative flex items-center" x-data="{ openAdminMenu: false }">
+        <button type="button" @click="openAdminMenu = !openAdminMenu" class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold text-base-800 hover:text-primary-600 dark:text-base-100 dark:hover:text-primary-400 rounded-default cursor-pointer bg-transparent border-none">
+            <span class="material-symbols-outlined md-20">account_circle</span>
+            <span>Admin</span>
+            <span class="material-symbols-outlined md-16 text-base-400">expand_more</span>
+        </button>
+        <div x-show="openAdminMenu" @click.outside="openAdminMenu = false" x-cloak class="absolute right-0 top-full mt-1 w-44 bg-white dark:bg-base-800 rounded-default shadow-lg border border-base-200 dark:border-base-700 py-1 z-50 text-sm">
+            <a href="/" target="_blank" class="flex items-center gap-2 px-3 py-2 hover:bg-base-50 dark:hover:bg-base-700/50 text-base-700 dark:text-base-200 no-underline">
+                <span class="material-symbols-outlined md-18">public</span> {% trans "Xem website" %}
+            </a>
+            <a href="{% url 'admin:password_change' %}" class="flex items-center gap-2 px-3 py-2 hover:bg-base-50 dark:hover:bg-base-700/50 text-base-700 dark:text-base-200 no-underline">
+                <span class="material-symbols-outlined md-18">lock</span> {% trans "Đổi mật khẩu" %}
+            </a>
+            <div class="border-t border-base-200 dark:border-base-700 my-1"></div>
+            <form method="post" action="{% url 'admin:logout' %}" class="m-0">
+                {% csrf_token %}
+                <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-left cursor-pointer border-none bg-transparent text-sm">
+                    <span class="material-symbols-outlined md-18 text-red-600">logout</span> {% trans "Đăng xuất" %}
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% action_list %}
+
+    {% if nav_global_side %}
+        {{ nav_global_side }}
+    {% endif %}
+</div>
