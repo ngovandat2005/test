@@ -325,15 +325,82 @@ class ProjectAdmin(ModelAdmin):
     date_hierarchy = 'published_at'
     fields = ['title', 'category', 'author', 'image', 'description']
 
+    actions = ['bulk_edit_action']
+
+    @admin.action(description='Chỉnh sửa các dự án đã chọn')
+    def bulk_edit_action(self, request, queryset):
+        from django.shortcuts import redirect
+        from django.urls import reverse
+        pks = ','.join(str(p.pk) for p in queryset)
+        return redirect(f"{reverse('admin:main_project_bulk_edit')}?ids={pks}")
+
     def get_urls(self):
         from django.urls import path
         urls = super().get_urls()
         custom_urls = [
+            path('bulk-edit/', self.admin_site.admin_view(self.bulk_edit_view), name='main_project_bulk_edit'),
             path('toggle-active/<int:pk>/', self.admin_site.admin_view(self.toggle_active), name='main_project_toggle_active'),
             path('update-order/<int:pk>/', self.admin_site.admin_view(self.update_order), name='main_project_update_order'),
             path('reorder-projects/', self.admin_site.admin_view(self.reorder_projects), name='main_project_reorder_projects'),
         ]
         return custom_urls + urls
+
+    def bulk_edit_view(self, request):
+        from django.shortcuts import render, redirect
+        from django.contrib import messages
+        from .models import PROJECT_CATEGORY_CHOICES
+
+        if not request.user.has_perm('main.change_project'):
+            messages.error(request, 'Bạn không có quyền chỉnh sửa dự án.')
+            return redirect('admin:main_project_changelist')
+
+        if request.method == 'POST':
+            pks = request.POST.getlist('project_ids')
+            updated_count = 0
+            for pk in pks:
+                try:
+                    project = Project.objects.get(pk=pk)
+                    title = request.POST.get(f'title_{pk}')
+                    category = request.POST.get(f'category_{pk}')
+                    author = request.POST.get(f'author_{pk}')
+                    client = request.POST.get(f'client_{pk}')
+                    location = request.POST.get(f'location_{pk}')
+                    is_active = request.POST.get(f'is_active_{pk}') == '1'
+
+                    if title:
+                        project.title = title.strip()
+                    if category:
+                        project.category = category.strip()
+                    if author is not None:
+                        project.author = author.strip()
+                    if client is not None:
+                        project.client = client.strip()
+                    if location is not None:
+                        project.location = location.strip()
+                    project.is_active = is_active
+                    project.save()
+                    updated_count += 1
+                except Project.DoesNotExist:
+                    continue
+
+            messages.success(request, f'Đã cập nhật thành công {updated_count} dự án.')
+            return redirect('admin:main_project_changelist')
+
+        ids_str = request.GET.get('ids', '')
+        if ids_str:
+            id_list = [int(x.strip()) for x in ids_str.split(',') if x.strip().isdigit()]
+            projects = Project.objects.filter(id__in=id_list).order_by('order', 'id')
+        else:
+            projects = Project.objects.all().order_by('order', 'id')
+
+        context = {
+            **self.admin_site.each_context(request),
+            'title': 'Chỉnh sửa nhiều dự án',
+            'projects': projects,
+            'categories': PROJECT_CATEGORY_CHOICES,
+            'opts': self.model._meta,
+        }
+        return render(request, 'admin/main/project/bulk_edit.html', context)
 
     def toggle_active(self, request, pk):
         from django.http import JsonResponse

@@ -20,9 +20,8 @@
         document.querySelectorAll('.sp-row-check, #sp-select-all').forEach(el => el.checked = false);
     },
     editSelected() {
-        if (this.selected.length === 1) {
-            window.location.href = '/admin/main/project/' + this.selected[0] + '/change/';
-        }
+        if (this.selected.length === 0) return;
+        window.location.href = "{% url 'admin:main_project_bulk_edit' %}?ids=" + this.selected.join(',');
     },
     submitAction(action) {
         document.getElementById('sp-action-input').value = action;
