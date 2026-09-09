@@ -351,22 +351,23 @@ html.dark .sp-tab-pill.active {
     padding: 0;
 }
 
-/* Drag & Drop reorder rows */
+/* Drag & Drop reorder rows (SortableJS) */
 .sp-drag-handle {
     cursor: grab !important;
 }
 .sp-drag-handle:active {
     cursor: grabbing !important;
 }
-.sp-draggable-row.is-dragging {
-    opacity: 0.4;
-    background-color: rgba(22, 119, 255, 0.08) !important;
+.sp-sortable-ghost {
+    opacity: 0.3 !important;
+    background-color: rgba(140, 90, 43, 0.15) !important;
 }
-.sp-draggable-row.drag-over-top {
-    border-top: 3px solid #1677FF !important;
+.sp-sortable-chosen {
+    background-color: rgba(140, 90, 43, 0.08) !important;
 }
-.sp-draggable-row.drag-over-bottom {
-    border-bottom: 3px solid #1677FF !important;
+.sp-sortable-drag {
+    background-color: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18) !important;
 }
 
 /* Toast notification */
@@ -437,9 +438,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // 2. Kéo thả (Drag & Drop) sắp xếp thứ tự tin tức
+    // 2. Kéo thả (Drag & Drop) sắp xếp thứ tự tin tức bằng SortableJS
     const tbody = document.getElementById('sp-news-tbody');
-    let draggedRow = null;
     let toastTimeout = null;
 
     function showToast(msg) {
@@ -458,70 +458,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 2500);
     }
 
-    if (tbody) {
-        const rows = tbody.querySelectorAll('.sp-draggable-row');
-        rows.forEach(row => {
-            const handle = row.querySelector('.sp-drag-handle');
-            if (handle) {
-                handle.setAttribute('draggable', 'true');
-
-                handle.addEventListener('dragstart', (e) => {
-                    draggedRow = row;
-                    row.classList.add('is-dragging');
-                    e.dataTransfer.effectAllowed = 'move';
-                    e.dataTransfer.setData('text/plain', row.dataset.pk);
-                });
-
-                handle.addEventListener('dragend', () => {
-                    if (draggedRow) {
-                        draggedRow.classList.remove('is-dragging');
-                        draggedRow = null;
-                    }
-                    tbody.querySelectorAll('.sp-draggable-row').forEach(r => {
-                        r.classList.remove('drag-over-top', 'drag-over-bottom');
-                    });
-                });
-            }
-
-            row.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                if (!draggedRow || draggedRow === row) return;
-
-                const rect = row.getBoundingClientRect();
-                const midY = rect.top + rect.height / 2;
-                tbody.querySelectorAll('.sp-draggable-row').forEach(r => {
-                    r.classList.remove('drag-over-top', 'drag-over-bottom');
-                });
-
-                if (e.clientY < midY) {
-                    row.classList.add('drag-over-top');
-                } else {
-                    row.classList.add('drag-over-bottom');
-                }
-            });
-
-            row.addEventListener('dragleave', () => {
-                row.classList.remove('drag-over-top', 'drag-over-bottom');
-            });
-
-            row.addEventListener('drop', (e) => {
-                e.preventDefault();
-                if (!draggedRow || draggedRow === row) return;
-
-                const rect = row.getBoundingClientRect();
-                const midY = rect.top + rect.height / 2;
-
-                if (e.clientY < midY) {
-                    tbody.insertBefore(draggedRow, row);
-                } else {
-                    tbody.insertBefore(draggedRow, row.nextSibling);
-                }
-
-                row.classList.remove('drag-over-top', 'drag-over-bottom');
-                if (draggedRow) draggedRow.classList.remove('is-dragging');
-
+    if (tbody && typeof Sortable !== 'undefined') {
+        new Sortable(tbody, {
+            handle: '.sp-drag-handle',
+            animation: 150,
+            ghostClass: 'sp-sortable-ghost',
+            chosenClass: 'sp-sortable-chosen',
+            dragClass: 'sp-sortable-drag',
+            onEnd: function () {
                 saveNewOrder();
-            });
+            }
         });
 
         function saveNewOrder() {
@@ -548,6 +494,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+<script src="{% static 'js/sortable.min.js' %}"></script>
 {% endblock %}
 
 {% block footer %}{% endblock %}

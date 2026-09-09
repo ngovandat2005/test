@@ -21,13 +21,13 @@ def home(request):
     featured_products_qs.sort(key=featured_sort)
     featured_products = featured_products_qs[:6]
     
-    featured_projects = Project.objects.filter(is_featured=True, is_active=True)[:3]
+    featured_projects = Project.objects.filter(is_featured=True, is_active=True).order_by('order', '-created_at')[:3]
     
-    # Lấy các bài viết phóng sự thực tế (Ưu tiên bài mới đăng lên đầu tiên)
-    try:
-        phong_su_cat = NewsCategory.objects.get(slug='phong-su')
-        phong_su_db = list(News.objects.filter(category=phong_su_cat, is_active=True).order_by('-published_at', '-id'))
-    except NewsCategory.DoesNotExist:
+    # Lấy các bài viết phóng sự thực tế (Ưu tiên theo thứ tự sắp xếp)
+    phong_su_cat = NewsCategory.objects.filter(slug__in=['phong-su', 'phong-su-thuc-te']).first()
+    if phong_su_cat:
+        phong_su_db = list(News.objects.filter(category=phong_su_cat, is_active=True).order_by('order', '-published_at', '-id'))
+    else:
         phong_su_db = []
 
     # Danh sách video mặc định phong phú
@@ -239,20 +239,19 @@ def news_list(request):
     cat_slug = request.GET.get('category', '')
     if cat_slug:
         category = get_object_or_404(NewsCategory, slug=cat_slug)
-        news_qs = News.objects.filter(category=category, is_active=True).order_by('-published_at', '-id')
-        
-        paginator = Paginator(news_qs, 9)
-        page_number = request.GET.get('page', 1)
-        try:
-            page_obj = paginator.get_page(page_number)
-        except (EmptyPage, PageNotAnInteger):
-            page_obj = paginator.get_page(1)
-            
-        news_items = page_obj
+        news_qs = News.objects.filter(category=category, is_active=True).order_by('order', '-published_at', '-id')
     else:
         category = None
-        news_items = list(News.objects.filter(is_active=True).order_by('-published_at', '-id')[:6])
-        page_obj = None
+        news_qs = News.objects.filter(is_active=True).order_by('order', '-published_at', '-id')
+        
+    paginator = Paginator(news_qs, 9)
+    page_number = request.GET.get('page', 1)
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (EmptyPage, PageNotAnInteger):
+        page_obj = paginator.get_page(1)
+        
+    news_items = page_obj
 
     return render(request, 'main/news_list.html', {
         'news_items': news_items,
@@ -408,16 +407,12 @@ from django.core.paginator import Paginator
 
 def project_list(request):
     cat = request.GET.get('category', '')
-    projects = Project.objects.filter(is_active=True).order_by('-published_at', '-created_at')
+    projects = Project.objects.filter(is_active=True).order_by('order', '-is_featured', '-created_at')
     
     if cat:
         projects = projects.filter(category=cat)
-        paginator = Paginator(projects, 9)
-    else:
-        # Nếu ở mục "Tất cả", chỉ lấy 6 bài mới nhất, không có các trang sau
-        projects = projects[:6]
-        paginator = Paginator(projects, 6)
         
+    paginator = Paginator(projects, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     

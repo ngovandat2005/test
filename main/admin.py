@@ -323,6 +323,7 @@ class ProjectAdmin(ModelAdmin):
     list_filter = ['category', 'author', 'is_active']
     search_fields = ['title', 'client', 'location']
     date_hierarchy = 'published_at'
+    ordering = ['order', '-is_featured', '-created_at']
     fields = ['title', 'category', 'author', 'image', 'description']
 
     actions = ['bulk_edit_action']
@@ -574,6 +575,7 @@ class NewsAdmin(ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ['title', 'author']
     date_hierarchy = 'published_at'
+    ordering = ['order', '-published_at']
     filter_horizontal = ['related_products', 'related_projects', 'related_articles']
     fieldsets = [
         (None, {'fields': ['title', 'slug', 'category', 'author', 'image', 'video_url', 'summary', 'content', 'order', 'published_at', 'is_active']}),
